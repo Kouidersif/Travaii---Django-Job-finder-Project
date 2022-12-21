@@ -1,0 +1,109 @@
+  {% extends 'base.html' %}
+  {% load static %}
+
+  {% block content %}
+
+  <div class="container">
+    <div class="page-header mt-9">
+      <!-- Profile Cover -->
+      <div class="profile-cover">
+        <div class="profile-cover-img-wrapper">
+          
+          {% if co_data %}
+          {% for data in co_data %}
+          {% if data.profile_bg %}
+        <img class="profile-cover-img" src="{{data.profile_bg.url}}" alt="Image Description">
+        {% else %}
+        <img class="profile-cover-img" src="{% static 'assets/img/1920x400/company.jpg' %}" alt="Image Description">
+        {% endif %}
+
+        {% endfor %}
+        {% else %}
+          <img class="profile-cover-img" src="{% static 'assets/img/1920x400/company.jpg' %}" alt="Image Description">
+          {% endif %}
+        </div>
+      </div>
+      <!-- End Profile Cover -->
+
+      <!-- Media -->
+      <div class="d-sm-flex align-items-lg-center pt-1 px-3 pb-3">
+        <div class="flex-shrink-0 mb-2 mb-sm-0 me-4">
+        {% if co_data %}
+          {% for data in co_data %}
+          {% if data.company_logo %}
+          <img class="avatar avatar-xl profile-cover-avatar shadow-sm" src="{{data.company_logo.url}}" alt="Image Description">
+          {% else %}
+          <img class="avatar avatar-xl profile-cover-avatar shadow-sm" src="{% static 'assets/img/others/building.png' %}" alt="Image Description">
+          {% endif %}
+          {% endfor %}
+          {% else %}
+
+          <img class="avatar avatar-xl profile-cover-avatar shadow-sm" src="{% static 'assets/img/others/building.png' %}" alt="Image Description">
+          {% endif %}
+        </div>
+        <div class="flex-grow-1">
+          <div class="row">
+            <div class="col-md mb-3 mb-md-0">
+              {% for data in co_data %}
+              {% empty %}
+              <h1 class="h2 mb-1">Company Name - Dafault - </h1>
+              {% endfor %}
+              
+
+              {% for data in co_data %}
+              <h1 class="h2 mb-1">{{data.company_name}} 
+              {% if data.owner.customer.membership %}
+              <img class="avatar avatar-xs" src="{% static 'assets/svg/illustrations/top-vendor.svg' %}" alt="Review rating" data-bs-toggle="tooltip" data-bs-placement="top" title="Premium profile">
+            </h1>
+              {% endif %}
+
+              {% endfor %}
+            </div>
+            <!-- End Col -->
+
+
+      </div>
+      <!-- End Media -->
+
+
+    </div>
+  </div></div>
+  <!-- Nav -->
+  <div class="text-center">
+  <ul class="nav nav-pills justify-content-center nav-light text-center" style="background: black;">
+  
+    <li class="nav-item">
+      <a class="nav-link" href="{% url 'u_profile' user.id %}">
+        <i class="bi bi-person-fill"></i> Edit User Settings
+      </a>
+    </li>
+
+
+    <li class="nav-item">
+      {% if co_data %}
+      {% for data in co_data %}
+      <a class="nav-link" href="{% url 'company_update' data.id %}">
+        <i class="bi bi-building"></i> Edit Company
+      </a>
+      {% endfor %}
+      {% else %}
+      <a class="nav-link" href="{% url 'company_setup' %}">
+        <i class="bi bi-building"></i> Set up a Company
+      </a>
+      {% endif %}
+    </li>
+  
+
+
+
+    <li class="nav-item">
+      <a class="nav-link" href="{% url 'manage-subscription' %}">
+        <i class="bi bi-wallet2"></i> Manage Subscription
+      </a>
+    </li>
+
+
+  </ul>
+  </div>
+  <!-- End Nav -->
+  {% endblock content %}

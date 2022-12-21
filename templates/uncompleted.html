@@ -1,0 +1,10 @@
+{% load static %}
+
+{% for pro in profile %}
+{% if pro %}
+<div class="alert alert-warning alert-dismissible fade show" role="alert">
+    <span class="fw-semibold">Holy guacamole!</span> You should check in on some of those fields below.
+    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+  </div>
+  {% endif %}
+  {% endfor %}

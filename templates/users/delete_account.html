@@ -1,0 +1,74 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+
+<style>
+    label{
+        font-weight: 600;
+    }
+</style>
+{% include 'parts/nav.html' %}
+
+<form method="post">
+    {% csrf_token %}
+<!-- CTA -->
+<div class="container content-space-b-2 mt-9">
+    <div class="text-start bg-img-start py-6">
+      <div class="mb-5">
+        <h2>Are you sure you want to deactivate your account?</h2>
+        <p>Reason for leaving <span class="text-danger">(Required)</span></p>
+                <!-- Checkbox -->
+        <div class="form-check mb-3">
+            <input type="radio" id="formRadio1" class="form-check-input" name="user_field" value="I don't understand how to use Travaii" required>
+            <label class="form-check-label" for="formRadio1" name="user_field">I don't understand how to use Travaii</label>
+        </div>
+        <!-- End Checkbox -->
+                <!-- Checkbox -->
+            <div class="form-check mb-3">
+                <input type="radio" id="formRadio2" class="form-check-input" name="user_field" value="I don't find Travaii useful" required>
+                <label class="form-check-label" for="formRadio2" name="user_field">I don't find Travaii useful</label>
+            </div>
+            <!-- End Checkbox -->
+                    <!-- Checkbox -->
+            <div class="form-check mb-3">
+                <input type="radio" id="formRadio3" class="form-check-input" name="user_field" value="I'm getting too many spam calls and emails" required>
+                <label class="form-check-label" for="formRadio3" name="user_field">I'm getting too many spam calls and emails</label>
+            </div>
+            <!-- End Checkbox -->
+                 <!-- Checkbox -->
+                 <div class="form-check mb-3">
+                    <input type="radio" id="formRadio4" class="form-check-input" name="user_field" value="I have privacy concerns" required>
+                    <label class="form-check-label" for="formRadio4" name="user_field">I have privacy concerns</label>
+                </div>
+                <!-- End Checkbox -->
+      </div> 
+      <div class="mb-3">
+        <label class="form-label" for="exampleFormControlTextarea1">Other</label>
+        <textarea id="exampleFormControlTextarea1" name="textfield" class="form-control" placeholder="Textarea field" rows="4"></textarea>
+      </div>
+      <!-- Form Check -->
+<div class="form-check form-check-inline">
+    <input type="checkbox" id="formInlineCheck1" class="form-check-input" required>
+    <label class="form-check-label" for="formInlineCheck1">I understand that my account will be completely deleted and i will not have access to it</label>
+  </div>
+  <!-- End Form Check -->
+      <div class="d-flex justify-content-end gap-2">
+    <a class="btn btn-outline-primary btn-transition" href="{% url 'applicant_info' user.id %}">No, take me back</a>
+        <button type="submit" class="btn btn-outline-danger btn-transition">Delete</button>
+    </div>
+    </div>
+  </div>
+  <!-- End CTA -->
+</form>
+<script>
+    function myFunction() {
+      var x = document.getElementById("formRadio1").required;
+
+    }
+    function myFunction() {
+      var x = document.getElementById("formInlineCheck1").required;
+
+    }
+    </script>
+{% endblock content %}

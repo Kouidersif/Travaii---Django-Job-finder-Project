@@ -1,0 +1,59 @@
+<div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h2 class="modal-title text-dark">Take decision</h2>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+                
+            </button>
+        </div>
+        
+        <form action="{% url 'status' object.id %}" method="post">
+        <div class="modal-body">
+            <p class="text-center">Full Name:</p><h3 class="text-center">{{object.sender.full_name}}</h3>
+            {% if object.sender.applicantprofile.applicant_cv %}
+            <hr>
+            <h4 class="text-center link-primary"><a href="{{object.sender.applicantprofile.applicant_cv.url}}" class="link-primary" target="_blank">Resume</a></h4>
+            <hr>
+            {% else %}
+            <div class="alert alert-soft-danger" role="alert">
+                No resume was provided by Applicant
+              </div>
+            {% endif %}
+            <div class="text-center">
+                <h6>{{object.sender.full_name}}'s summarry</h6>
+            <p class="text-dark">{{object.about}} </p>
+        </div>
+       <hr>
+       <div class="experience">
+        {% if object.experience == 'Yes' %}
+        <div class="alert alert-success" role="alert">
+            <i class="bi bi-check-square"></i>  {{object.sender.full_name}} has experience in the same industry
+          </div>
+        
+        {% else %}
+        <div class="alert alert-soft-dark" role="alert">
+            {{object.sender.full_name}} does not have experience in the same industry
+          </div>
+
+      {% endif %}
+       </div>
+       <hr>
+                {% csrf_token %}
+                
+                <h6>Make decision</h6>
+                         {{form.request}}
+<hr>
+                <p>If you are apporoving this applicannt, please consider that he gets a notification and will be immediately able to see the decision</p>
+       
+       
+        <div class="modal-footer">
+            <button type="button" class="btn btn-white" data-bs-dismiss="modal">Close</button>
+            <button class="btn btn-primary" type="submit">
+                Save
+            </button>
+        </div>
+    </div>
+    </form>
+    </div>
+
+</div>

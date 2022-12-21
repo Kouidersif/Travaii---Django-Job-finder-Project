@@ -1,0 +1,171 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block content %}
+<style>
+     .errorlist{
+        color: red;
+        text-transform: capitalize;
+    }
+    .errorlist li{
+      font-size: 10px;
+      font-weight: 600;
+    }
+    #header{
+      display: none;
+    }
+</style>
+{% include 'parts/nav.html' %}
+
+<!-- Contacts -->
+<div class="position-relative">
+  <div class="bg-dark bg-img-start" style="background-image: url(/static/assets/svg/components/blob.svg);">
+    <div class="container content-space-t-2 content-space-b-1">
+      <!-- Heading -->
+      <div class="w-lg-50 text-center mx-lg-auto mb-7">
+        <h2 class="text-white lh-base">Start by Setting up your company info </h2>
+      </div>
+      <!-- End Heading -->
+
+      <div class="mx-auto" style="max-width: 35rem;">
+        <!-- Card -->
+        <div class="card zi-2">
+          <div class="card-body">
+            <!-- Form -->
+            <form method="post">
+              {% csrf_token %}
+             
+              <div class="row">
+                <div class="col-sm-6">
+                  <!-- Form -->
+                  <div class="mb-4">
+                    <label class="form-label" for="hireUsFormFirstNameEg1">Company name</label>
+                    
+                    {{form.company_name}}
+                    {% if form.company_name.errors %}
+                    <p class="text-danger">{{form.company_name.errors}}</p>
+                    {% endif %}
+                  </div>
+                  <!-- End Form -->
+                </div>
+                <!-- End Col -->
+
+                <div class="col-sm-6">
+                  <!-- Form -->
+                  <div class="mb-4">
+                    <label class="form-label" for="hireUsFormLasttNameEg1">Industry</label>
+                    {{form.industry}}
+                    {% if form.industry.errors %}
+                    <p class="text-danger">{{form.industry.errors}}</p>
+                    {% endif %}
+                  </div>
+                  <!-- End Form -->
+                </div>
+                <!-- End Col -->
+              </div>
+              <!-- End Row -->
+
+              <!-- Form -->
+              <div class="row">
+                <div class="col-sm-6">
+              <div class="mb-4">
+                <label class="form-label" for="hireUsFormWorkEmailEg1">When was the company founded</label>
+                {{form.founded}}
+                {% if form.founded.errors %}
+                    <p class="text-danger">{{form.founded.errors}}</p>
+                    {% endif %}
+              </div>
+              <!-- End Form -->
+            </div>
+            <div class="col-sm-6">
+              <!-- Form -->
+              <div class="mb-4">
+                <label class="form-label" for="hireUsFormCompanyNameEg2">Company size</label>
+                {{form.co_size}}
+                {% if form.co_size.errors %}
+                    <p class="text-danger">{{form.co_size.errors}}</p>
+                    {% endif %}
+              </div>
+              <!-- End Form -->
+            </div>
+          </div>
+            <!-- Form -->
+            <div class="mb-4">
+              <label class="form-label" for="hireUsFormDetailsEg1">About the company</label>
+              {{form.about}}
+              {% if form.about.errors %}
+              <p class="text-danger">{{form.about.errors}}</p>
+              {% endif %}
+            </div>
+            <!-- End Form -->
+
+              <!-- Select -->
+              <div class="mb-4">
+                <label class="form-label" for="hireUsFormBudgetEg1">Address</label>
+                  <!-- Container For Input Field -->
+                  {{form.address}}
+                  {% if form.address.errors %}
+                  <p class="text-danger">{{form.address.errors}}</p>
+                  {% endif %}
+              </div>
+              <!-- End Select -->
+              <div class="row gx-3">
+                <div class="col-sm-6">
+                  <!-- Form -->
+                  <div class="mb-4">
+                    <label for="cityLabel" class="form-label">City</label>
+                      {{form.city}}
+                  </div>
+                  <!-- End Form -->
+                </div>
+                <!-- End Col -->
+      
+                <div class="col-6 col-sm-6">
+                  <!-- Form -->
+                  <div class="mb-4">
+                    <label for="stateLabel" class="form-label">State</label>
+                          {{form.state}}
+                      </div>
+                  <!-- End Form -->
+                </div>
+                <!-- End Col -->
+      
+                <div class="col-6 col-sm-12">
+                  <!-- Form -->
+                  <div class="mb-4">
+                    <label for="zipCodeLabel" class="form-label">ZIP code</label>
+                    {{form.zip_code}}
+                  </div>
+                  <!-- End Form -->
+                </div>
+                <!-- End Col -->
+              </div>
+              
+              <div class="d-grid mb-2">
+                <button type="submit" class="btn btn-primary btn-lg">Finish <i class="bi bi-chevron-right"></i></button>
+              </div>
+
+              <div class="text-center">
+                <span class="form-text">You can edit your company info from Settings</span>
+              </div>
+            </form>
+            <!-- End Form -->
+          </div>
+        </div>
+        <!-- End Card -->
+      </div>
+    </div>
+  </div>
+
+  <!-- Shape -->
+  <div class="shape shape-bottom zi-1">
+    <svg width="3000" height="500" viewBox="0 0 3000 500" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M0 500H3000V0L0 500Z" fill="#fff"/>
+    </svg>
+  </div>
+  <!-- End Shape -->
+</div>
+<!-- End Contacts -->
+
+{% endblock content %}

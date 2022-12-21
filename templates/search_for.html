@@ -1,0 +1,92 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+{% include 'parts/nav.html' %}
+<!-- Careers -->
+<div class="container content-space-2 content-space-lg-3">
+    <div class="w-lg-75 mx-lg-auto mb-5 mb-md-7">
+      <!-- Heading -->
+      <div class="w-lg-75 text-center mx-auto mb-5 mb-sm-9">
+        
+        <h2 class="h1"><h1>Searched Jobs</h1></h2>
+        <form method="post" action="{% url 'search_for' %}">
+            {% csrf_token %}
+          <!-- Input Card -->
+          <div class="input-card input-card-sm mb-3">
+            <div class="input-card-form">
+              <label for="jobTitleForm" class="form-label visually-hidden">Job, title, skills, or company</label>
+              <div class="input-group input-group-merge">
+                <span class="input-group-prepend input-group-text">
+                  <i class="bi-search"></i>
+                </span>
+                <input type="search" class="form-control" id="jobTitleForm" name="searched" placeholder="Job, title, skills, or company" aria-label="Job, title, skills, or company" name="searched">
+              </div>
+            </div>
+
+         
+            <button type="submit" class="btn btn-primary">Search</button>
+          </div>
+          <!-- End Input Card -->
+        </form>
+      </div>
+      <!-- End Heading -->
+  
+      <!-- List Striped -->
+      {% if searched %}
+     
+      
+      <ul class="list-group list-group-lg">
+        {% if jobs %}
+        {% for job in jobs %}
+
+      
+        <li class="list-group-item">
+          <div class="row">
+            <div class="col-sm-4 mb-2 mb-sm-0">
+           <a href="{% url 'detail_job' job.id %}">  <span class="h6">{{job.position|title}}</span></a> 
+            </div>
+            <!-- End Col -->
+  
+            <div class="col-sm-2 mb-2 mb-sm-0">
+              <span>{{job.publisher.companyprofile.city}}, {{job.publisher.companyprofile.state}}</span>
+            </div>
+            <!-- End Col -->
+  
+            <div class="col-sm-4 mb-2 mb-sm-0">
+              <span>{{job.job_category}}</span>
+            </div>
+            <!-- End Col -->
+  
+            <div class="col-sm-2 text-sm-end">
+              <a href="{% url 'detail_job' job.id %}">View <i class="bi-chevron-right small ms-1 small ms-1"></i></a>
+            </div>
+            <!-- End Col -->
+          </div>
+          <!-- End Row -->
+        </li>
+        
+        
+        {% endfor %}
+        
+
+      </ul>
+    {% else %}
+    <div class="alert alert-soft-warning" role="alert">
+      no jobs match your query
+    </div>
+    {% endif %}
+      {% else %}
+      <div class="alert alert-soft-warning" role="alert">
+        Make sure you search by
+      </div>
+    {% endif %}
+      <!-- End List Striped -->
+    </div>
+    <h2 class="text-center"> - Or - </h2>
+    <div class="w-lg-65 text-center mx-lg-auto mt-7">
+      <a class="btn btn-outline-primary" href="{% url 'alljobs' %}">Browse all jobs</a>
+    </div>
+  </div>
+  <!-- End Careers -->
+{% endblock content %}

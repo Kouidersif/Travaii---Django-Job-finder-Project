@@ -1,0 +1,207 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load bootstrap %}
+{% block content %}
+{% include 'parts/nav.html' %}
+
+<div class="container mt-9">
+{% include 'company/my/main_for_ja.html' %}
+<form action="" method="get">
+  <!-- List Directory -->
+  <div id="openRolesSection" class="container ">
+      <!-- Heading -->
+      <div class="w-md-75 w-lg-50 text-center mx-md-auto mb-3">
+          <h2>Manage your applicants</h2>
+
+         
+          </div>
+      <!-- End Heading -->
+    
+      <!-- Form -->
+  
+        <div class="row gx-2 gx-md-3 mb-7">
+  
+          <!-- End Col -->
+    
+          <div class="col-sm-6 col-md-4 mb-2 mb-sm-0">
+            <label class="form-label" for="locationsJobCareers">Status</label>
+    
+            <!-- Select -->
+            {{to_filter.form.request}}
+            <!-- End Select -->
+          </div>
+          <!-- End Col -->
+    
+          <div class="col-sm-6 col-md-4">
+            <label class="form-label" for="departmentsJobCareers">Experience</label>
+    
+            <!-- Select -->
+            {{to_filter.form.experience}}
+            <!-- End Select -->
+          </div>
+          <!-- End Col -->
+          
+  
+            <div class="col-sm-6 col-md-4">
+              <label class="form-label" for="departmentsJobCareers">filter by job</label>
+      
+              <!-- Select -->
+              {{to_filter.form.position}}
+              <!-- End Select -->
+            </div>
+            <div class="col-sm-6 col-md-4">
+              <label class="form-label" for="departmentsJobCareers">Applicant age</label>
+      
+              <!-- Select -->
+              {{to_filter.form.min_age}}
+              <!-- End Select -->
+            </div>
+            <div class="col-sm-6 col-md-4">
+              <label class="form-label" for="departmentsJobCareers">Applicant age</label>
+      
+              <!-- Select -->
+              {{to_filter.form.max_age}}
+              <!-- End Select -->
+            </div>
+
+        
+        </div>
+        <!-- End Row -->
+  
+      <!-- End Form -->
+    <div class="text-center mb-3">
+      <a href="{% url 'view_application' %}" class="btn btn-ghost-light text-primary" >Reset</a>
+      <button type="submit" class="btn btn-ghost-danger">
+          <i class="bi bi-funnel-fill"></i> Apply Filter
+      </button>
+  </div>
+    </div>
+    <!-- End List Directory -->
+  </form>
+      <!-- Card -->
+      <div class="card mb-10">
+        <div class="card-header" style="background-image: url(/static/assets/svg/components/card-1.svg)">
+          <h5 class="card-header-title">Who Applied</h5>
+        </div>
+      
+        <!-- Table -->
+        <div class="table-responsive">
+          <table class="table table-borderless table-thead-bordered table-nowrap table-align-middle card-table">
+            <thead class="thead-light">
+              <tr>
+                <th>Name</th>
+                <th>Status</th>
+                <th>Applied for</th>
+              
+                <th style="width: 5%;"></th>
+              </tr>
+            </thead>
+      
+            <tbody>
+                {% for application in applications %}
+                
+              <tr>
+                <td>
+                  <div class="d-flex align-items-center">
+                    <div class="flex-shrink-0">
+                      {% if application.sender.applicantprofile.profile_pic %}
+                      <img class="avatar avatar-md rounded-0" src="{{application.sender.applicantprofile.profile_pic.url}}" alt="Image Description">
+                      {% endif %}
+                    </div>
+      
+                    <div class="flex-grow-1 ms-3">
+                      <a class="d-inline-block link-dark" href="#">
+                        <h6 class="text-hover-primary mb-0">{{application.sender.full_name}} - {{application.sender.applicantprofile.calculate_age}} y.o<img class="avatar avatar-xss ms-1" src="{% static '/assets/svg/illustrations/top-vendor.svg' %}" alt="Image Description" data-bs-toggle="tooltip" data-bs-placement="top" title="Verified user"></h6>
+                      </a>
+                      <small class="d-block">{{application.sender.email}}</small>
+                    </div>
+                  </div>
+                </td>
+                {% if application.request == 'Pending' %}
+                <td><span class="badge bg-warning text-light">{{application.request}}</span></td>
+                {% elif application.request == 'No Luck' %}
+                <td><span class="badge bg-danger text-light">{{application.request}}</span></td>
+                {% elif application.request == 'Approved' %}
+                <td><span class="badge bg-success text-light">{{application.request}}</span></td>
+                {% elif application.request == 'Considered' %}
+                <td><span class="badge bg-info text-light">{{application.request}}</span></td>
+                {% endif %}
+                <td>
+                  <!-- Select -->
+                  <a href="#" class="link-primary">{{application.job.position}}  <i class="bi bi-file-earmark-text"></i></a>
+                  <!-- End Select -->
+                </td>
+                <td>
+                  <button onclick="abrir_modal_edicion('{% url 'status' application.id %}')" class="btn btn-primary btn-sm">View or take action</button>
+                </td>
+              </tr>
+              {% empty %}
+               <td>
+                <div class="alert alert-soft-primary position-relative text-center" role="alert" style="margin-left: 50%;margin-bottom:50px;">
+                  For now there are no Applicants yet!
+                </div>
+                <div class="m">
+                  <img src="{% static 'assets/svg/illustrations/oc-building-apps.svg' %}" class="img-fluid" alt="Error" style="margin-left:25%;">
+    
+                </div>
+                
+               
+                </td>
+              
+      
+              {% endfor %}
+      
+    
+            </tbody>
+          </table>
+        </div>
+        <!-- End Table -->
+      
+    
+    
+      <!-- End Card -->
+    
+    
+    
+      <!-- End Tab Content -->
+    </div>
+</div>
+
+<div class="modal fade" id="edicion" role="dialog">
+
+</div>
+
+  <!-- JS Implementing Plugins -->
+  <script src="{% static 'assets/vendor/tom-select/dist/js/tom-select.complete.min.js' %}"></script>
+  <script src="{% static 'assets/vendor/hs-show-animation/dist/hs-show-animation.min.js' %}"></script>
+  <script src="{% static 'assets/vendor/hs-toggle-password/dist/js/hs-toggle-password.js' %}"></script>
+  
+  <!-- JS Front -->
+  <script src="https://code.jquery.com/jquery-3.6.1.js" integrity="sha256-3zlB5s2uwoUzrXK3BT7AX3FyvojsraNFxCc2vC/7pNI=" crossorigin="anonymous"></script>
+  <!-- JS Plugins Init. -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.min.js" integrity="sha384-Atwg2Pkwv9vp0ygtn1JAojH0nYbwNJLPhwyoVbhoPwBhjQPR5VtM2+xf0Uwh9KtT" crossorigin="anonymous"></script>	
+
+  <script type="text/javascript">
+    var $ = jQuery.noConflict();
+    function abrir_modal_edicion(url){
+      $('#edicion').load(url, function(){
+        $(this).modal('show');
+      });
+    }
+  </script>
+        <!-- End Team -->
+<script>
+  document.getElementById("id_request").setAttribute("class", "form-select form-select-sm");
+  document.getElementById("id_experience").setAttribute("class", "form-select form-select-sm");
+  document.getElementById("id_position").setAttribute("class", "form-control form-control-sm");
+  document.getElementById("id_min_age").setAttribute("class", "form-control form-control-sm");
+  document.getElementById("id_max_age").setAttribute("class", "form-control form-control-sm");
+  document.getElementById("id_position").setAttribute("placeholder", "Job, title,keyword");
+  document.getElementById("id_min_age").setAttribute("placeholder", "example from: 1990");
+  document.getElementById("id_max_age").setAttribute("placeholder", "to: 2000");
+  
+
+
+
+</script>
+{% endblock content %}

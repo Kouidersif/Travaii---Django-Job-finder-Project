@@ -1,0 +1,125 @@
+{% extends 'base.html' %}
+{% load static %}
+    {% block content %}
+    {% include 'parts/nav.html' %}
+
+    <!-- Card Grid -->
+    <div class="container content-space-2">
+        <!-- Heading -->
+        <div class="w-md-75 w-lg-50 text-center mx-md-auto mb-5 mb-md-9">
+     
+        <h2 class="h1">Account & Privacy</h2>
+        </div>
+        <!-- End Heading -->
+    
+        <div class="row">
+        <div class="col-md-6 col-lg-4 mb-4 mb-md-5 mb-lg-0">
+            <!-- Card -->
+            <a class="card card-lg card-transition h-100 text-center" href="{% url 'my_applications' user.id %}">
+            <div class="card-body">
+                <div class="mb-4">
+                <img class="avatar" src="{% static '/assets/svg/categories/list-svgrepo-com.svg' %}" alt="Logo">
+                </div>
+                <h3 class="card-title">Applications</h3>
+                <p class="card-text text-body">Check status of jobs you applied for</p>
+            </div>
+            <div class="card-footer pt-0">
+                <span class="card-link">View <i class="bi-chevron-right small ms-1"></i></span>
+            </div>
+            </a>
+            <!-- End Card -->
+        </div>
+        <!-- End Col -->
+    
+        <div class="col-md-6 col-lg-4 mb-4 mb-md-5 mb-lg-0">
+            <!-- Card -->
+            <a class="card card-lg card-transition h-100 text-center" href="{% url 'applicant_settings' user.id %}">
+            <div class="card-body">
+                <div class="mb-4">
+                <img class="avatar" src="{% static '/assets/svg/categories/settings.svg' %}" alt="Logo">
+                </div>
+                <h3 class="card-title">Settings</h3>
+                <p class="card-text text-body">Change or Update your account Settings</p>
+            </div>
+            <div class="card-footer pt-0">
+                <span class="card-link">View <i class="bi-chevron-right small ms-1"></i></span>
+            </div>
+            </a>
+            <!-- End Card -->
+        </div>
+        <!-- End Col -->
+    
+        <div class="col-md-6 col-lg-4">
+            <!-- Card -->
+            <a class="card card-lg card-transition h-100 text-center" href="{% url 'apply_list' %}">
+            <div class="card-body">
+                <div class="mb-4">
+                <img class="avatar" src="{% static '/assets/svg/categories/jobs.svg' %}" alt="Logo">
+                </div>
+                <h3 class="card-title">Saved Jobs</h3>
+                <p class="card-text text-body">Check your saved jobs to apply for them</p>
+            </div>
+            <div class="card-footer pt-0">
+                <span class="card-link">View <i class="bi-chevron-right small ms-1"></i></span>
+            </div>
+            </a>
+            <!-- End Card -->
+        </div>
+        <!-- End Col -->
+        {% if request.user.applicantprofile %}
+        <div class="col-md-6 col-lg-4 mt-5">
+            <!-- Card -->
+            <a class="card card-lg card-transition h-100 text-center" href="{% url 'applicant_info' user.id %}">
+            <div class="card-body">
+                <div class="mb-4">
+                <img class="avatar" src="{% static '/assets/svg/categories/profile.svg' %}" alt="Logo">
+                </div>
+                <h3 class="card-title">Edit Profile</h3>
+                <p class="card-text text-body">View or edit your profile elements</p>
+            </div>
+            <div class="card-footer pt-0">
+                <span class="card-link">View <i class="bi-chevron-right small ms-1"></i></span>
+            </div>
+            </a>
+            <!-- End Card -->
+        </div>
+        {% else %}
+        <div class="col-md-6 col-lg-4 mt-5">
+            <!-- Card -->
+            <a class="card card-lg card-transition h-100 text-center" href="{% url 'profile_setup' %}">
+            <div class="card-body">
+                <div class="mb-4">
+                <img class="avatar" src="{% static '/assets/svg/categories/add.svg' %}" alt="Logo">
+                </div>
+                <h3 class="card-title">Set up Profile</h3>
+                <p class="card-text text-body">Increase your chances to get hired by setting up a profile</p>
+            </div>
+            <div class="card-footer pt-0">
+                <span class="card-link">Set up <i class="bi-chevron-right small ms-1"></i></span>
+            </div>
+            </a>
+            <!-- End Card -->
+        </div>
+        {% endif %}
+        <div class="col-md-6 col-lg-4 mt-5">
+            <!-- Card -->
+            <a class="card card-lg card-transition h-100 text-center" href="{% url 'contact' %}">
+            <div class="card-body">
+                <div class="mb-4">
+                <img class="avatar" src="{% static '/assets/svg/categories/help.svg' %}" alt="Logo">
+                </div>
+                <h3 class="card-title">Help</h3>
+                <p class="card-text text-body">Contact us for any assistance</p>
+            </div>
+            <div class="card-footer pt-0">
+                <span class="card-link">View <i class="bi-chevron-right small ms-1"></i></span>
+            </div>
+            </a>
+            <!-- End Card -->
+        </div>
+        </div>
+        <!-- End Row -->
+    </div>
+    <!-- End Card Grid -->
+
+    {% endblock content %}

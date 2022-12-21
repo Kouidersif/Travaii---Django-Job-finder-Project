@@ -1,0 +1,506 @@
+
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+{% include 'parts/nav.html' %}
+
+
+
+
+{% if not co_data %}
+<main id="content" role="main">
+  <!-- Content -->
+  <div class="container text-center">
+    <div class="mb-3">
+      <img class="img-fluid" src="{% static 'assets/svg/illustrations/21207.jpg' %}" alt="Image Description" style="width: 30rem;">
+    </div>
+
+    <div class="mb-4">
+      <p class="fs-4 mb-0">Oops! Looks like you there is no profile to show</p>
+      
+      <p class="fs-4"><a class="link" href="{% url 'company_setup' %}">Create your Company Profile now</a>.</p>
+      
+    </div>
+
+    <a class="btn btn-primary" href="{% url 'home' %}">Go back home</a>
+  </div>
+  <!-- End Content -->
+</main>
+
+{% else %}
+  <!-- ========== MAIN CONTENT ========== -->
+  <main id="content" role="main" class="pb-8">
+    <!-- Page Header -->
+    <div class="container pt-4">
+      <div class="page-header">
+        <!-- Profile Cover -->
+        <div class="profile-cover">
+            {% for data in co_data %}
+          <div class="profile-cover-img-wrapper">
+            {% if data.profile_bg %}
+            <img class="profile-cover-img" src="{{data.profile_bg.url}}" alt="Image Description">
+            {% else %}
+            <img class="profile-cover-img" src="{% static 'assets/img/1920x400/company.jpg' %}" alt="Image Description">
+
+            {% endif %}
+          </div>
+          {% endfor %}
+        </div>
+        <!-- End Profile Cover -->
+
+        <!-- Media -->
+        <div class="d-sm-flex align-items-lg-center pt-1 px-3 pb-3">
+            {% for data in co_data %}
+          <div class="flex-shrink-0 mb-2 mb-sm-0 me-4">
+            {% if data.company_logo %}
+            <img class="avatar avatar-xl profile-cover-avatar shadow-sm" src="{{data.company_logo.url}}" alt="Image Description">
+            {% else %}
+            <img class="avatar avatar-xl profile-cover-avatar shadow-sm" src="{% static 'assets/img/others/building.png' %}" alt="Image Description">
+            {% endif %}
+          </div>
+          
+          <div class="flex-grow-1">
+            <div class="row">
+              <div class="col-md mb-3 mb-md-0">
+                <h1 class="h2 mb-1">{{data.company_name}} 
+                  
+                 {% if data.owner.customer.selected_membership == 'Mid-market enterprises' or 'Large enterprise' %}
+                 <i class="bi bi-patch-check-fill text-primary" title="Premium Account"></i>              
+                  {% endif %}
+                </h1>
+
+               
+              </div>
+              <!-- End Col -->
+            {% endfor %}
+              <div class="col-md-auto align-self-md-end">
+                <div class="d-grid d-sm-flex gap-2">
+                  <a class="btn btn-primary" href="#"> +{{publisher.count}} Open jobs</a>
+                 
+                  {% for data in co_data %}
+                  {% if data.owner == request.user %}
+                  <a class="btn btn-outline-primary" href="{% url 'add_photos' %}">
+                    <i class="bi bi-camera"></i> Add photos
+                  </a>
+                  {% endif %}
+                  {% endfor %}
+                </div>
+              </div>
+              <!-- End Col -->
+            </div>
+            <!-- End Row -->
+          </div>
+        </div>
+        <!-- End Media -->
+
+        <!-- Nav Scroller -->
+        <div id="pageHeaderTabParent">
+          <div class="js-nav-scroller js-sticky-block hs-nav-scroller-horizontal bg-white zi-2"
+               data-hs-sticky-block-options='{
+               "parentSelector": "#pageHeaderTabParent",
+               "breakpoint": "lg",
+               "startPoint": "#pageHeaderTabParent",
+               "endPoint": "#pageHeaderTabEndPoint"
+             }'>
+            <span class="hs-nav-scroller-arrow-prev" style="display: none;">
+              <a class="hs-nav-scroller-arrow-link" href="javascript:;">
+                <i class="bi-chevron-left"></i>
+              </a>
+            </span>
+
+            <span class="hs-nav-scroller-arrow-next" style="display: none;">
+              <a class="hs-nav-scroller-arrow-link" href="javascript:;">
+                <i class="bi-chevron-right"></i>
+              </a>
+            </span>
+
+            <!-- Nav -->
+            <ul class="js-scroll-nav nav nav-tabs page-header-tabs bg-white" id="pageHeaderTab" role="tablist"
+                data-hs-scroll-nav-options='{
+                "customOffsetTop": 40
+              }'>
+              <li class="nav-item active">
+                <a class="nav-link" href="#about-section">About</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="#jobs-section">Jobs <span class="badge bg-info rounded-pill ms-1">+{{publisher.count}}</span></a>
+              </li>
+  
+            
+            </ul>
+            <!-- End Nav -->
+          </div>
+        </div>
+        <!-- End Nav Scroller -->
+      </div>
+    </div>
+    <!-- End Page Header -->
+
+    <!-- Content -->
+    <div id="about-section" class="container content-space-t-1">
+      <h3>About the company</h3>
+
+      <div class="row mb-5">
+        <div class="col-md-3 order-md-2 mb-3 mb-md-0">
+            {% for data in co_data %}
+          <div class="ps-md-4">
+            <!-- List -->
+            <ul class="list-unstyled list-py-2">
+              <li>
+                <h5>Founded</h5>
+                <p class="small mb-0">{{data.founded}}</p>
+              </li>
+              <li>
+                <h5>Company size</h5>
+                <p class="small mb-0"> {{data.co_size}} Employees</p>
+              </li>
+              <!--
+              <li>
+                <h5>Avg. Salary</h5>
+                <p class="small mb-0">$25 - $45</p>
+              </li>
+              -->
+              <li>
+                <h5>Industry</h5>
+                <p class="small mb-0">{{data.industry}}</p>
+              </li>
+              <li>
+                <h5>Links</h5>
+                  
+                <!-- Socials -->
+                <ul class="list-inline">
+                  {% if data.facebook %}
+                  <li class="list-inline-item">
+                    <a class="btn btn-soft-secondary btn-xs btn-icon rounded-circle" href="{{data.facebook}}" data-bs-toggle="tooltip" data-bs-placement="top" title="{{data.company_name}} sur Facebook">
+                      <i class="bi-facebook text-primary"></i>
+                    </a>
+                  </li>
+                  {% endif %}
+                  {% if data.twitter %}
+                  <li class="list-inline-item">
+                    <a class="btn btn-soft-secondary btn-xs btn-icon rounded-circle" href="{{data.twitter}}" data-bs-toggle="tooltip" data-bs-placement="top" title="{{data.company_name}} sur Twitter">
+                      <i class="bi-twitter"></i>
+                    </a>
+                  </li>
+                  {% endif %}
+                  {% if data.github %}
+                  <li class="list-inline-item">
+                    <a class="btn btn-soft-secondary btn-xs btn-icon rounded-circle" href="{{data.github}}" data-bs-toggle="tooltip" data-bs-placement="top" title="{{data.company_name}} sur Github">
+                      <i class="bi-github text-dark"></i>
+                    </a>
+                  </li>
+                  {% endif %}
+                  {% if data.instagram %}
+                  <li class="list-inline-item">
+                    <a class="btn btn-soft-secondary btn-xs btn-icon rounded-circle" href="{{data.instagram}}" data-bs-toggle="tooltip" data-bs-placement="top" title="{{data.company_name}} sur Github">
+                      <i class="bi bi-instagram text-danger"></i>
+                    </a>
+                  </li>
+                  {% endif %}
+                </ul>
+                <!-- End Socials -->
+              </li>
+            </ul>
+            <!-- End List -->
+          </div>
+          {% endfor %}
+        </div>
+        <!-- End Col -->
+        {% for data in co_data %}
+        <div class="col-md-9">
+          <div class="mb-5">
+            <p>{{data.about}}</p>
+            <div class="collapse" id="employerOverviewDescriptionCollapse">
+                <p> </p>           
+             </div>
+
+            <a class="link link-collapse" data-bs-toggle="collapse" href="#employerOverviewDescriptionCollapse" role="button" aria-expanded="false" aria-controls="employerOverviewDescriptionCollapse">
+              <span class="link-collapse-default">Read more</span>
+              <span class="link-collapse-active">Read less</span>
+            </a>
+          </div>
+
+          <div id="fancyboxGallery">
+            <div class="row gx-3">
+              {% for p in photos|slice:":3" %}
+              <div class="col-4 col-sm px-2 mb-3 mb-sm-0">
+                <!-- Media Viewer -->
+                <a class="media-viewer" href="{{ p.the_images.url }}" data-fslightbox="jobOverviewGallery">
+                  <img class="img-fluid rounded-2" src="{{ p.the_images.url }}" alt="Image Description">
+                   
+                  <span class="media-viewer-container">
+                    <span class="media-viewer-icon">
+                      <i class="bi-plus media-viewer-icon-inner"></i>
+                    </span>
+                  </span>
+                </a>
+                
+                <!-- End Media Viewer -->
+              </div>
+              {% endfor %}
+              {% if photos %}
+              {% for photo in photos %}
+              {% ifchanged %}
+              <a href="{% url 'view_company_photos' photo.photo_publisher.id %}" class="btn btn-primary text-light mt-5">View all</a>
+              {% endifchanged %}
+              {% endfor %}
+              {% endif %}
+            </div>
+          </div>
+        </div>
+        <!-- End Col -->
+        {% endfor %}
+      </div>
+      <!-- End Row -->
+    </div>
+    <!-- Content -->
+
+    <!-- Divider -->
+    <div class="container">
+      <hr class="my-10">
+    </div>
+    <!-- End Divider -->
+
+    <!-- Card Grid -->
+    <div id="jobs-section" class="container bg-light pb-5 pt-5">
+   
+      <div class="mb-4">
+        <h3>Jobs</h3>
+        <p>We were not able to detect your location. You can browse through all 105 jobs Capsule has to offer.</p>
+      </div>
+
+      {% if not publisher %}
+      {% for data in co_data %}
+      <div class="alert alert-soft-primary" role="alert">
+        {{data.company_name}} has no public jobs yet...!
+      </div>
+     
+      {% endfor %}
+      {% else %}
+      <!-- Swiper Slider -->
+      <div class="js-swiper-employer-jobs swiper swiper-equal-height">
+        <div class="swiper-wrapper">
+          <!-- Slide -->
+
+          {% for job in publisher %}
+
+          <div class="swiper-slide">
+            <!-- Card -->
+            <div class="card card-bordered shadow-none w-100">
+              <!-- Card Body -->
+              <div class="card-body">
+                <h3 class="card-title">
+                  <a class="text-dark" href="{% url 'detail_job' job.id %}">{{job.position}}</a>
+                </h3>
+
+                <span class="d-block small text-body mb-1">${{job.salary}} {{job.pay_per}}</span>
+
+                <span class="badge bg-soft-info text-info me-2">
+                  <span class="legend-indicator bg-info"></span>{{job.work_from}}
+                </span>
+              </div>
+              <!-- End Card Body -->
+
+              <!-- Card Footer -->
+              <div class="card-footer pt-0">
+                <ul class="list-inline list-separator small text-body">
+                  <li class="list-inline-item">Posted {{job.creation_date|timesince}} ago</li>
+                  <li class="list-inline-item">{{job.publisher.companyprofile.city}}</li>
+                  <li class="list-inline-item">{{job.job_type}}</li>
+                </ul>
+              </div>
+              <!-- End Card Footer -->
+              
+            
+            </div>
+            <!-- End Card -->
+          </div>
+         
+          {% endfor %}
+         {% endif %}
+
+          <!-- Slide -->
+
+        </div>
+        {% if publisher %}
+
+        <!-- Arrows -->
+        <div class="js-swiper-employer-jobs-button-next swiper-button-next"></div>
+        <div class="js-swiper-employer-jobs-button-prev swiper-button-prev"></div>
+        {% endif %}
+      </div>
+      <!-- End Swiper Slider -->
+    </div>
+    <!-- Card Grid -->
+
+    <!-- Card Grid 
+    <div class="container content-space-t-2">
+      <div class="mb-4">
+        <h3>Browse jobs by category</h3>
+      </div>
+
+      <div class="row row-cols-1 row-cols-sm-2 1 row-cols-md-3 row-cols-lg-4 mb-5">
+        {% for job in publisher %}
+        {% ifchanged %}
+        <div class="col mb-3 mb-sm-4">
+         
+          <a class="card card-sm card-bordered card-transition h-100" href="{% url 'detail_job' job.id %}">
+            <div class="card-body">
+              <div class="row align-items-center">
+                <div class="col">
+                  <h5 class="card-title text-inherit">{{job.job_category.name}}</h5>
+                  <p class="card-text text-body small"> {{job.job_category.myjobs.count}} job positions</p>
+                </div>
+              
+                
+                <div class="col-auto">
+                  <span class="text-muted">
+                    <i class="bi-chevron-right small"></i>
+                  </span>
+                </div>
+             
+              </div>
+             
+            </div>
+          </a>
+          
+         
+        </div>
+        {% endifchanged %}
+        {% endfor %}
+        
+
+      </div>
+  
+
+      <a class="btn btn-outline-primary" href="../demo-jobs/job-list.html">View all available jobs <i class="bi-chevron-right small ms-1"></i></a>
+    </div>
+ End Card Grid -->
+
+    <!-- Divider -->
+
+
+        <div id="pageHeaderTabEndPoint" class="col mb-3">
+
+        </div>
+
+  </main>
+  <!-- ========== END MAIN CONTENT ========== -->
+
+{% endif %}
+
+  <!-- ========== SECONDARY CONTENTS ========== -->
+  <!-- Go To -->
+  <a class="js-go-to go-to position-fixed" href="javascript:;" style="visibility: hidden;"
+     data-hs-go-to-options='{
+       "offsetTop": 700,
+       "position": {
+         "init": {
+           "right": "2rem"
+         },
+         "show": {
+           "bottom": "2rem"
+         },
+         "hide": {
+           "bottom": "-2rem"
+         }
+       }
+     }'>
+    <i class="bi-chevron-up"></i>
+  </a>
+  <!-- ========== END SECONDARY CONTENTS ========== -->
+
+  <!-- JS Global Compulsory  -->
+  <script src="{% static 'assets/vendor/bootstrap/dist/js/bootstrap.bundle.min.js' %}"></script>
+
+  <!-- JS Implementing Plugins -->
+  <script src="{% static 'assets/vendor/hs-mega-menu/dist/hs-mega-menu.min.js' %}"></script>
+  <script src="{% static 'assets/vendor/hs-show-animation/dist/hs-show-animation.min.js' %}"></script>
+  <script src="{% static 'assets/vendor/hs-go-to/dist/hs-go-to.min.js' %}"></script>
+  <script src="{% static 'assets/vendor/hs-nav-scroller/dist/hs-nav-scroller.min.js' %}"></script>
+  <script src="{% static 'assets/vendor/hs-sticky-block/dist/hs-sticky-block.min.js' %}"></script>
+  <script src="{% static 'assets/vendor/hs-scrollspy/dist/hs-scrollspy.min.js' %}"></script>
+  <script src="{% static 'assets/vendor/fslightbox/index.js' %}"></script>
+  <script src="{% static 'assets/vendor/swiper/swiper-bundle.min.js' %}"></script>
+
+  <!-- JS Front -->
+  <script src="{% static 'assets/js/theme.min.js' %}"></script>
+
+  <!-- JS Plugins Init. -->
+  <script>
+    (function() {
+      // INITIALIZATION OF MEGA MENU
+      // =======================================================
+      new HSMegaMenu('.js-mega-menu', {
+          desktop: {
+            position: 'left'
+          }
+        })
+
+
+      // INITIALIZATION OF SHOW ANIMATIONS
+      // =======================================================
+      new HSShowAnimation('.js-animation-link')
+
+
+      // INITIALIZATION OF BOOTSTRAP DROPDOWN
+      // =======================================================
+      HSBsDropdown.init()
+
+
+      // INITIALIZATION OF GO TO
+      // =======================================================
+      new HSGoTo('.js-go-to')
+
+
+      // INITIALIZATION OF NAV SCROLLER
+      // =======================================================
+      new HsNavScroller('.js-nav-scroller')
+
+
+      // INITIALIZATION OF STICKY BLOCKS
+      // =======================================================
+      new HSStickyBlock('.js-sticky-block', {
+        targetSelector: document.getElementById('header').classList.contains('navbar-fixed') ? '#header' : null
+      })
+
+
+      // INITIALIZATION OF SCROLLSPY
+      // =======================================================
+      new bootstrap.ScrollSpy(document.body, {
+        target: '#pageHeaderTab',
+        offset: 90
+      })
+
+      new HSScrollspy('#pageHeaderTab', {
+        scrollOffset: -20
+      })
+
+
+      // INITIALIZATION OF SWIPER
+      // =======================================================
+      var swiper = new Swiper('.js-swiper-employer-jobs',{
+        slidesPerView: 1,
+        navigation: {
+          nextEl: '.js-swiper-employer-jobs-button-next',
+          prevEl: '.js-swiper-employer-jobs-button-prev',
+        },
+        breakpoints: {
+          480: {
+            slidesPerView: 2,
+            spaceBetween: 15,
+          },
+          768: {
+            slidesPerView: 3,
+            spaceBetween: 15,
+          },
+        }
+      });
+    })()
+  </script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.min.js" integrity="sha384-Atwg2Pkwv9vp0ygtn1JAojH0nYbwNJLPhwyoVbhoPwBhjQPR5VtM2+xf0Uwh9KtT" crossorigin="anonymous"></script>	
+
+
+
+{% endblock content %}

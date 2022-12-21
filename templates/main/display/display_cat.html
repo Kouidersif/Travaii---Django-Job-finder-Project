@@ -1,0 +1,78 @@
+{% extends 'base.html' %}
+{% load static %}
+
+
+
+
+{% block title %} Categories {% endblock title %}
+
+{% block content %}
+{% include 'parts/nav.html' %}
+
+
+                <!-- Careers -->
+                <div class="container content-space-2 content-space-lg-3">
+                    <div class="w-lg-75 mx-lg-auto mb-5 mb-md-7">
+                      <!-- Heading -->
+                      <div class="w-lg-75 text-center mx-auto mb-5 mb-sm-9">
+                        {%  for job in cat_list %}
+                        {% ifchanged %}
+                        <h2 class="h1">Category:  {{job.job_category.name}}</h2>
+                        {% endifchanged %}
+                        {% endfor %}
+                      </div>
+                      <!-- End Heading -->
+                  
+                      <!-- List Striped -->
+                      <ul class="list-group list-group-lg">
+                        {% if cat_list %}
+                        {%  for job in cat_list %}
+                        <li class="list-group-item">
+                          <div class="row">
+                            <div class="col-sm-4 mb-2 mb-sm-0">
+                              <span class="h6">{{job.position}}</span>
+                            </div>
+                            <!-- End Col -->
+                  
+                            <div class="col-sm-2 mb-2 mb-sm-0">
+                              <span>{{job.publisher.companyprofile.city}}, {{job.publisher.companyprofile.state}}</span>
+                            </div>
+                            <!-- End Col -->
+                  
+                            <div class="col-sm-4 mb-2 mb-sm-0">
+                              <span>{{job.job_category.name}}</span>
+                            </div>
+                            <!-- End Col -->
+                  
+                            <div class="col-sm-2 text-sm-end">
+                              <a href="{% url 'detail_job' job.id %}">View<i class="bi-chevron-right small ms-1 small ms-1"></i></a>
+                            </div>
+                            <!-- End Col -->
+                          </div>
+                          <!-- End Row -->
+                        </li>
+                        {% endfor %}
+                        {% else %}
+                                        <div class="col-lg-12 col-md-12">
+                                        <div class="alert alert-primary" role="alert">
+                                            No Jobs match your category yet...
+                                          </div>
+                                         
+                                        </div>
+                        {% endif %}
+                
+                      </ul>
+                      <!-- End List Striped -->
+                    </div>
+                  
+                    <div class="w-lg-65 text-center mx-lg-auto mt-7">
+                      <p>Don't worry if you don't see any roles you want to apply for now. Register your interest to be notified of any roles that come along that meet your criteria.</p>
+                      <a class="btn btn-outline-primary" href="../page-contacts-agency.html">Register your interest</a>
+                    </div>
+                  </div>
+                  <!-- End Careers -->
+
+
+{% endblock content %}
+
+

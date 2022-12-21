@@ -1,0 +1,77 @@
+{% load static %}
+
+<div class="navbar-expand-lg navbar-light">
+    <div id="sidebarNav" class="collapse navbar-collapse navbar-vertical">
+      <!-- Card -->
+      <div class="card flex-grow-1 mb-5">
+        <div class="card-body">
+          <!-- Avatar -->
+          <div class="d-none d-lg-block text-center mb-5">
+            <div class="avatar avatar-xxl avatar-circle mb-3">
+                {% if request.user.applicantprofile.profile_pic %}
+              <img class="avatar-img" src="{{request.user.applicantprofile.profile_pic.url}}" alt="Image Description">
+              {% else %}
+              <img class="avatar-img" src="{% static 'assets/img/others/default.png' %}" alt="Image Description">
+              {% endif %}
+            </div>
+
+            <h4 class="card-title mb-0">{{request.user.full_name}}</h4>
+            <p class="card-text small">{{request.user.email}}</p>
+          </div>
+          <!-- End Avatar -->
+
+          <!-- Nav -->
+          <span class="text-cap">Account</span>
+
+          <!-- List -->
+          <ul class="nav nav-sm nav-tabs nav-vertical mb-4">
+            <li class="nav-item">
+              <a class="nav-link" href="{% url 'applicant_settings' request.user.id %}">
+                <i class="bi-shield-shaded nav-icon"></i>   Security
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link " href="{% url 'applicant_info' request.user.id %}">
+                <i class="bi-person-badge nav-icon"></i> Profile
+              </a>
+            </li>
+
+            <li class="nav-item">
+              <a class="nav-link " href="{% url 'show_education'%}">
+                <i class="fa-sharp fa-solid fa-building-columns nav-icon"></i>  Add/Edit Education
+              </a>
+              <li class="nav-item">
+                <a class="nav-link " href="{% url 'show_experience'%}">
+                  <i class="fa-sharp fa-solid fa-briefcase nav-icon"></i>  Add/Edit Experience
+                </a>
+              </li>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link " href="{% url 'skills'%}">
+                <i class="bi bi-check2-circle nav-icon"></i>  Add/Edit Skills   
+              </a>
+            </li>
+          </ul>
+          <!-- End List -->
+
+
+
+          <div class="d-lg-none">
+            <div class="dropdown-divider"></div>
+
+            <!-- List -->
+            <ul class="nav nav-sm nav-tabs nav-vertical">
+              <li class="nav-item">
+                <a class="nav-link" href="{% url 'log_out' %}">
+                  <i class="bi-box-arrow-right nav-icon"></i> Log out
+                </a>
+              </li>
+            </ul>
+            <!-- End List -->
+          </div>
+          <!-- End Nav -->
+        </div>
+      </div>
+      <!-- End Card -->
+    </div>
+  </div>

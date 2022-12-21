@@ -1,0 +1,172 @@
+  {% extends 'base.html' %}
+  {% load static %}
+  {% block title %}Introduction - Travaii{% endblock title %}
+
+  {% block content  %}
+  <style>
+    #header{
+      display: none;
+    }
+  </style>
+  {% include 'parts/nav.html' %}
+
+
+
+  <body class="bg-primary bg-img-start" style="background-image: url(/static/assets/svg/components/shape-7.svg);">
+  <!-- Contacts -->
+  <div class="position-relative">
+    <div>
+      <div class="container content-space-b-1 mt-3">
+        <!-- Heading -->
+        <div class="w-lg-50 text-center mx-lg-auto mb-7">
+
+          <span class="text-cap text-white-70">Introduction</span>
+          <h2 class="text-white lh-base">Start by introducing yourself.</h2>
+          <span class="text-warning">Takes 1 minute</span>
+        </div>
+        <!-- End Heading -->
+
+        <div class="mx-auto" id="myforma" style="max-width: 40rem;">
+          
+          <!-- Card -->
+          <div class="card zi-2 rounded-0">
+            <div class="card-body">
+              {% if messages %}
+              {% for message in messages %}
+              <div class="alert alert-{{message.tags}} rounded-0" role="alert">
+                {{message}}
+              </div>
+              {% endfor %}
+              {% endif %}
+              <!-- Form -->
+              <form method="post" enctype="multipart/form-data">
+                {% csrf_token %}
+                <div class="row">
+                  <div class="col-sm-6">
+                    <!-- Form -->
+                    <div class="mb-4">
+                      <label class="form-label" for="hireUsFormFirstNameEg1">Desired Industry<span class="form-label-secondary">(Required)</span></label>
+                      
+                          {{form.desired_industry}}
+                          {{form.desired_industry.errors}}
+                    </div>
+                    <!-- End Form -->
+                  </div>
+                  <!-- End Col -->
+
+                  <div class="col-sm-6">
+                    <!-- Form -->
+                    <div class="mb-4">
+                      <label class="form-label" for="hireUsFormLasttNameEg1">Desired Job<span class="form-label-secondary">(Required)</span></label>
+                      
+                      {{form.desired_job}}
+                      {{form.desired_job.errors}}
+                    </div>
+                    <!-- End Form -->
+                  </div>
+                  <!-- End Col -->
+                </div>
+                <div class="row">
+                  <div class="col-sm-6">
+                    <!-- Form -->
+                    <div class="mb-4">
+                      <label class="form-label" for="hireUsFormFirstNameEg1">City</label>
+                    
+                      {{form.city}}
+                      {{form.city.errors}}
+                    </div>
+                    <!-- End Form -->
+                  </div>
+                  <!-- End Col -->
+
+                  <div class="col-sm-6">
+                    <!-- Form -->
+                    <div class="mb-4">
+                      <label class="form-label" for="hireUsFormLasttNameEg1">State</label>
+                  
+                      {{form.state}}
+                      {{form.state.errors}}
+                    </div>
+                    <!-- End Form -->
+                  </div>
+                  <!-- End Col -->
+                </div>
+                <!-- Form -->
+                <div class="mb-4">
+                  <label class="form-label" for="hireUsFormCompanyNameEg2">Birthdate <span class="form-label-secondary">(Required)</span></label>
+                  
+                  {{form.birthday}}
+                  <br>
+                  {{form.birthday.errors}}
+                </div>
+                <!-- End Form -->
+                    <!-- Form -->
+                    <div class="mb-4">
+                      <label class="form-label" for="hireUsFormCompanyNameEg2">Resume <span class="form-label-secondary">(Required to apply)</span></label>
+                      
+                      {{form.applicant_cv}}
+                      <br>
+                      {{form.applicant_cv.errors}}
+                    </div>
+                    <!-- End Form -->
+                <!-- End Row -->
+              
+                  <!-- Form -->
+                  <div class="mb-4">
+                    <label class="form-label" for="hireUsFormLasttNameEg1">Who can see your profile?<i class="bi-question-circle text-body ms-1" data-bs-toggle="tooltip" data-bs-placement="top" title="If you set this to 'Anyone' : Companies will have access to your Resume to hire you"></i></label>
+                    {{form.is_public.errors}}
+                    {{form.is_public}}
+                  </div>
+                  <!-- End Form -->
+              
+
+                <!-- Form -->
+                <div class="mb-4">
+                  <label class="form-label d-block" for="hireUsFormDetailsEg1">Bio</label>
+                  <div class="desc">
+                    {{form.about.errors}}
+                  {{form.about}}
+                </div>
+                  </div>
+                <!-- End Form -->
+
+                <!-- Check -->
+                <div class="form-check mb-4">
+                  <label class="form-check-label small" for="signupFormPrivacyCheckEg1"> By submitting this form I have read and acknowledged the <a href=../page-privacy.html>Privacy Policy</a></label>
+                </div>
+                <!-- End Check -->
+
+                <div class="d-grid mb-2">
+                  <button type="submit" class="btn btn-primary btn-lg">Publish</button>
+                </div>
+              </form>
+              <!-- End Form -->
+            </div>
+          </div>
+          <!-- End Card -->
+        </div>
+      </div>
+    </div>
+
+    <!-- Shape -->
+    <div class="shape shape-bottom zi-1">
+      <svg width="3000" height="500" viewBox="0 0 3000 500" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M0 500H3000V0L0 500Z" fill="#fff"/>
+      </svg>
+    </div>
+    <!-- End Shape -->
+  </div>
+  <!-- End Contacts -->
+  <!-- ========== END SECONDARY CONTENTS ========== -->
+  {% load static %}
+  <script type="text/javascript" src='{% static "ckeditor/ckeditor-init.js" %}'></script>
+  <script type="text/javascript" src='{% static "ckeditor/ckeditor/ckeditor.js" %}'></script>
+  <!-- JS Global Compulsory  -->
+  <script src="{% static '/assets/vendor/bootstrap/dist/js/bootstrap.bundle.min.js' %}"></script>
+
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.min.js" integrity="sha384-Atwg2Pkwv9vp0ygtn1JAojH0nYbwNJLPhwyoVbhoPwBhjQPR5VtM2+xf0Uwh9KtT" crossorigin="anonymous"></script>	
+
+
+  </body>
+  {% endblock content %}

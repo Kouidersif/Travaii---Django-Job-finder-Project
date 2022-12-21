@@ -1,0 +1,60 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block content %}
+{% include 'parts/nav.html' %}
+<!-- Testimonials -->
+<div class="container content-space-2 content-space-lg-3">
+    <div class="text-center bg-img-start py-6" style="background: url(/static/assets/svg/components/shape-6.svg) center no-repeat;">
+    <div class="text-center mb-5">
+      <img class="avatar avatar-lg avatar-4x3" src="{% static '/assets/svg/illustrations/oc-person-3.svg' %}" alt="Illustration">
+    </div>
+  
+    <!-- Blockquote -->
+    <figure class="w-md-75 text-center mx-md-auto">
+      <blockquote class="blockquote">“ Hello, {{request.user.full_name}}, I just wanted to say that I'm very happy to see you sharing more posts with us and helping people get their dream job. Unfortunately this feature is available only for <b>Premium Companies</b>. ”</blockquote>
+      <br>
+      <h5>Don't worry, we got it, check our Plans that could work with the size of your company and needs</h5>
+        <br>
+      <!-- CTA -->
+<div class="container">
+    <div class="w-lg-75 mx-lg-auto">
+      <div class="card card-sm overflow-hidden">
+        <!-- Card -->
+        <div class="card-body">
+          <div class="row justify-content-md-start align-items-md-center text-center text-md-start">
+            <div class="col-md offset-md-3 mb-3 mb-md-0">
+              <h4 class="card-title">Join us to have access to all our features!</h4>
+            </div>
+  
+            <div class="col-md-auto">
+              <a class="btn btn-primary btn-transition" href="{% url 'subscription' %}">Get started</a>
+            </div>
+          </div>
+  
+          <!-- SVG Shape -->
+          <figure class="w-25 d-none d-md-block position-absolute top-0 start-0 mt-n2">
+            <svg viewBox="0 0 451 902" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path opacity="0.125" d="M0 82C203.8 82 369 247.2 369 451C369 654.8 203.8 820 0 820" stroke="url(#paint2_linear)" stroke-width="164" stroke-miterlimit="10"/>
+              <defs>
+                <linearGradient id="paint2_linear" x1="323.205" y1="785.242" x2="-97.6164" y2="56.3589" gradientUnits="userSpaceOnUse">
+                  <stop offset="0" stop-color="white" stop-opacity="0"/>
+                  <stop offset="1" stop-color="#377dff"/>
+                </linearGradient>
+              </defs>
+            </svg>
+          </figure>
+          <!-- End SVG Shape -->
+        </div>
+        <!-- End Card -->
+      </div>
+    </div>
+  </div>
+  <!-- End CTA -->
+    </figure>
+    <!-- End Blockquote -->
+    </div>
+  </div>
+  <!-- End Testimonials -->
+{% endblock %}

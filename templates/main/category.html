@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+{% load static %}
+
+
+{% block content %}
+{% include 'parts/nav.html' %}
+<div class="container mt-9">
+<div class="row row-cols-1 row-cols-sm-2 1 row-cols-md-3 row-cols-lg-4 mb-5">
+  {% for category in view_cat %}
+  <div class="col mb-3 mb-sm-4">
+    <!-- Card -->
+    <a class="card card-sm card-bordered card-transition h-100" href="{% url 'category_list' category.id %}">
+      <div class="card-body">
+        <div class="row align-items-center">
+          <div class="col">
+            <h5 class="card-title text-inherit">{{category.name}}</h5>
+            <p class="card-text text-body small">{{category.myjobs.count}} job positions</p>
+          </div>
+          <!-- End Col -->
+          
+          <div class="col-auto">
+            <span class="text-muted">
+              <i class="bi-chevron-right small"></i>
+            </span>
+          </div>
+          <!-- End Col -->
+        </div>
+        <!-- End Row -->
+      </div>
+    </a>
+    <!-- End Card -->
+  </div>
+  <!-- End Col -->
+
+
+  {% endfor %}
+
+
+
+</div>
+</div>
+{% endblock content %}
+{% include 'parts/footer.html' %}

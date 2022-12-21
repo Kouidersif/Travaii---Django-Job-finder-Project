@@ -1,0 +1,156 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<body>
+    
+
+{% include 'parts/nav.html' %}
+
+{% include 'users/topbar.html' %}
+
+    <!-- Content -->
+    <div class="container content-space-1 content-space-t-lg-0 content-space-b-lg-2 mt-lg-n10">
+        <div class="row">
+          <div class="col-lg-3">
+            <!-- Navbar -->
+            {% include 'users/side_bar.html' %}
+            <!-- End Navbar -->
+          </div>
+          <!-- End Col -->
+          
+          <div class="col-lg-9">
+            <div class="d-grid gap-3 gap-lg-5">
+              <!-- Card -->
+              <div class="card">
+                <div class="card-header border-bottom">
+                  <h2 class="card-header-title"> <i class="bi bi-check2-circle text-primary"></i> Skills</h2>
+                  
+                    <!-- Button trigger modal -->
+                    <div class="text-end">
+<button type="button" class="btn btn-soft-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+   Add Skills
+  </button>
+  <!-- End Button trigger modal -->
+</div>
+                </div>
+  
+                <!-- Body -->
+                
+                <div class="card-body">
+               <div class="w-100">                       
+      <ul class="list-group list-group-lg">
+        {% for myskill in skills %}
+        <li class="list-group-item">
+          <div class="row">
+            <div class="col-sm-4 mb-2 mb-sm-0">
+              <span class="h6">{{myskill.skill}}</span>
+            </div>
+            <!-- End Col -->
+  
+            <div class="col-sm-2 mb-2 mb-sm-0">
+              <span></span>
+            </div>
+            <!-- End Col -->
+  
+            <div class="col-sm-4 mb-2 mb-sm-0">
+              <span></span>
+            </div>
+            <!-- End Col -->
+  
+            <div class="col-sm-2 text-sm-end">
+                <button onclick="abrir_modal_edicion('{% url 'delete_skill' myskill.id %}')" class="btn btn-danger btn-sm"><i class="bi bi-trash"></i></button>
+
+              
+            </div>
+            <!-- End Col -->
+          </div>
+          <!-- End Row -->
+        </li>
+        {% endfor %}
+
+      </ul>
+      <!-- End List Striped -->
+    </div>  
+  
+    
+
+  <!-- End Careers -->
+
+  
+  
+
+  
+  
+      
+                </div>
+                <!-- End Body -->
+  
+
+              </div>
+              <!-- End Card -->
+            
+  
+            </div>
+          </div>
+          <!-- End Col -->
+         
+        </div>
+        <!-- End Row -->
+        <div class="modal fade" id="edicion" role="dialog">
+
+        </div>
+        <!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <form id="applyForJob" class="js-validate" method="post">
+          {% csrf_token %}
+        <div class="modal-body">
+          <!-- Form -->
+  
+    <div class="mb-5">
+      <h3>Add Skill</h3>
+    </div>
+  
+  
+    <!-- Form -->
+    <div class="row mb-3">
+      <label for="fullNameCareersForm" class="col-sm-4 col-form-label">Skill</label>
+      <div class="col-sm-8">
+        {{form.skill.errors}}
+        {{form.skill}}
+    </div>
+    </div>
+
+        </div>
+     
+      <!-- End Form -->
+        <div class="modal-footer">
+          <button type="button" class="btn btn-white" data-bs-dismiss="modal">Close</button>
+          <button type="submit" class="btn btn-primary">Save changes</button>
+        </div>
+    </form>
+      </div>
+    </div>
+  </div>
+  <!-- End Modal -->
+
+      </div>
+      <script src="https://code.jquery.com/jquery-3.6.1.js" integrity="sha256-3zlB5s2uwoUzrXK3BT7AX3FyvojsraNFxCc2vC/7pNI=" crossorigin="anonymous"></script>
+
+      <!-- End Content -->
+      <script type="text/javascript">
+        var $ = jQuery.noConflict();
+        function abrir_modal_edicion(url){
+          $('#edicion').load(url, function(){
+            $(this).modal('show');
+          });
+        }
+      </script>
+      </body>
+{% endblock content %}

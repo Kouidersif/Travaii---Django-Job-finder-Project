@@ -1,0 +1,176 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en" dir="" class="h-100">
+<head>
+  <!-- Required Meta Tags Always Come First -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+  <!-- Title -->
+  <title>Reset Password | Front - Multipurpose Responsive Template</title>
+
+  <!-- Favicon -->
+  <link rel="shortcut icon" href="{% static 'favicon.ico' %}">
+
+  <!-- Font -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
+
+  <!-- CSS Implementing Plugins -->
+  <link rel="stylesheet" href="{% static 'assets/vendor/bootstrap-icons/font/bootstrap-icons.css' %}">
+
+  <!-- CSS Front Template -->
+  <link rel="stylesheet" href="{% static 'assets/css/theme.min.css' %}">
+
+  <style>
+    input{
+        display: block;
+    width: 100%;
+    padding: 0.6125rem 1rem;
+    font-size: 1rem;
+    font-weight: 400;
+    line-height: 1.5;
+    color: #1e2022;
+    background-color: #fff;
+    background-clip: padding-box;
+    border: 0.0625rem solid rgba(33,50,91,.1);
+    appearance: none;
+    border-radius: 0.3125rem;
+    transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+    }
+    
+  </style>
+</head>
+
+<body class="d-flex align-items-center min-h-100">
+  <!-- ========== HEADER ========== -->
+  <header id="header" class="navbar navbar-expand navbar-light navbar-absolute-top">
+    <div class="container-fluid">
+      <nav class="navbar-nav-wrap">
+        <!-- White Logo -->
+        <a class="navbar-brand d-none d-lg-flex" href="./index.html" aria-label="Front">
+          <img class="navbar-brand-logo" src="{% static '/assets/svg/logos/logo-white.svg' %}" alt="Logo">
+        </a>
+        <!-- End White Logo -->
+
+        <!-- Default Logo -->
+        <a class="navbar-brand d-flex d-lg-none" href="{% url 'home' %}" aria-label="Front">
+          <img class="navbar-brand-logo" src="{% static '/assets/svg/logos/logo.svg' %}" alt="Logo">
+        </a>
+        <!-- End Default Logo -->
+
+        <div class="ms-auto">
+          <a class="link link-sm link-secondary" href="{% url 'log_in' %}">
+            <i class="bi-chevron-left small ms-1"></i> Go to back Login
+          </a>
+        </div>
+      </nav>
+    </div>
+  </header>
+  <!-- ========== END HEADER ========== -->
+
+  <!-- ========== MAIN CONTENT ========== -->
+  <main id="content" role="main" class="flex-grow-1">
+    <!-- Form -->
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-lg-5 col-xl-4 d-none d-lg-flex justify-content-center align-items-center min-vh-lg-100 position-relative bg-dark" style="background-image: url(/static/assets/svg/components/wave-pattern-light.svg);">
+          <div class="flex-grow-1 p-5">
+            <!-- Blockquote -->
+            <figure class="text-center">
+              <div class="mb-4">
+                <img class="avatar avatar-xl avatar-4x3" src="{% static '/assets/svg/brands/mailchimp-white.svg' %}" alt="Logo">
+              </div>
+
+              <blockquote class="blockquote blockquote-light">“ It has many landing page variations to choose from, which one is always a big advantage. ”</blockquote>
+
+              <figcaption class="blockquote-footer blockquote-light">
+                <div class="mb-3">
+                  <img class="avatar avatar-circle" src="{% static '/assets/img/160x160/img9.jpg' %}" alt="Image Description">
+                </div>
+
+                Lida Reidy
+                <span class="blockquote-footer-source">Project Manager | Mailchimp</span>
+              </figcaption>        
+            </figure>
+            <!-- End Blockquote -->
+
+            <!-- Clients -->
+            <div class="position-absolute start-0 end-0 bottom-0 text-center p-5">
+              <div class="row justify-content-center">
+                <div class="col text-center py-3">
+                  <img class="avatar avatar-lg avatar-4x3" src="{% static 'assets/svg/brands/fitbit-white.svg' %}" alt="Logo">
+                </div>
+                <!-- End Col -->
+
+                <div class="col text-center py-3">
+                  <img class="avatar avatar-lg avatar-4x3" src="{% static 'assets/svg/brands/business-insider-white.svg' %}" alt="Logo">
+                </div>
+                <!-- End Col -->
+
+                <div class="col text-center py-3">
+                  <img class="avatar avatar-lg avatar-4x3" src="{% static 'assets/svg/brands/capsule-white.svg' %}" alt="Logo">
+                </div>
+                <!-- End Col -->
+              </div>
+              <!-- End Row -->
+            </div>
+            <!-- End Clients -->
+          </div>
+        </div>
+        <!-- End Col -->
+
+        <div class="col-lg-7 col-xl-8 d-flex justify-content-center align-items-center min-vh-lg-100">
+          <div class="flex-grow-1 mx-auto" style="max-width: 28rem;">
+            <!-- Heading -->
+            <div class="text-center mb-5 mb-md-7">
+              <h1 class="h2">Forgot password?</h1>
+              <p>Enter your email address below and we'll get you back on track.</p>
+            </div>
+            <!-- End Heading -->
+
+            <!-- Form -->
+            <form class="js-validate needs-validation" novalidate method="post">
+                {% csrf_token %}
+              <!-- Form -->
+              <div class="mb-3">
+                <div class="d-flex justify-content-between align-items-center">
+                  <label class="form-label" for="signupModalFormResetPasswordEmail" tabindex="0">Your email</label>
+
+                  <a class="form-label-link" href="{% url 'log_in' %}">
+                    <i class="bi-chevron-left small ms-1"></i> Back to Log in
+                  </a>
+                </div>
+
+                {{form.email}}
+                <span class="invalid-feedback">Please enter a valid email address.</span>
+              </div>
+              <!-- End Form -->
+
+              <div class="d-grid mb-3">
+                <button type="submit" class="btn btn-primary btn-lg">Submit</button>
+              </div>
+            </form>
+            <!-- End Form -->
+          </div>
+        </div>
+        <!-- End Col -->
+      </div>
+      <!-- End Row -->
+    </div>
+    <!-- End Form -->
+  </main>
+  <!-- ========== END MAIN CONTENT ========== -->
+
+  <!-- JS Global Compulsory  -->
+  <script src="{% static 'assets/vendor/bootstrap/dist/js/bootstrap.bundle.min.js' %}"></script>
+
+  <!-- JS Implementing Plugins -->
+  <script src="{% static 'assets/vendor/hs-toggle-password/dist/js/hs-toggle-password.js' %}"></script>
+
+  <!-- JS Front -->
+  <script src="{% static 'assets/js/theme.min.js' %}"></script>
+
+  <!-- JS Plugins Init. -->
+
+</body>
+</html>

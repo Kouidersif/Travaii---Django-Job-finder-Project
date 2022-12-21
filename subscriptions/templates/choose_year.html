@@ -1,0 +1,19 @@
+
+{% extends 'base.html' %}
+
+{% load static %}
+
+
+{% block content %}
+<body class="bg-dark">
+  <form method="POST" action="{% url 's' %}">
+    {% csrf_token %}
+
+
+
+<h1 class="text-light">{{d.features.invoice_history}}</h1>
+<h1 class="text-light">{{f}}</h1>
+<button type="submit">Manage billing</button>
+</form>
+</body>
+  {% endblock content %}

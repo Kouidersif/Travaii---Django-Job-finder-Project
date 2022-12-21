@@ -1,0 +1,50 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+{% include 'parts/nav.html' %}
+
+
+
+<div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h2 class="modal-title"> Edicion de job</h2>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+                
+            </button>
+        </div>
+        
+       
+        <div class="modal-body">
+           
+   
+            <div class="container mt-9 bg-soft-primary pt-5 pb-5 rounded">
+                <div class="title text-center">
+                    <h1> {{object.title}}</h1>
+                    <p>at {{object.company|title}}</p>
+                    <p>{{object.co_location}}</p>
+                  
+                    <p> <b> {{object.extra_info}} </b></p>
+                
+                  
+                
+                </div>
+                </div>
+       
+       
+        <div class="modal-footer">
+            <button type="button" class="btn btn-white" data-bs-dismiss="modal">Close</button>
+            
+        </div>
+    </div>
+
+    </div>
+
+</div>
+ 
+
+
+{% endblock content %}
+
+

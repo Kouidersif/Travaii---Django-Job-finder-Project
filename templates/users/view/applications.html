@@ -1,0 +1,72 @@
+{% extends 'base.html' %}
+{% load static %}
+
+
+
+
+
+{% block content %}
+{% include 'parts/nav.html' %}
+<div class="container mt-9">
+<!-- Card -->
+<div class="card">
+  <div class="card-header bg-soft-dark">
+    <h4 class="card-header-title text-dark">Jobs Applied for</h4>
+  </div>
+
+  <!-- Table -->
+  <div class="table-responsive">
+    <table class="table table-nowrap table-align-middle">
+      <thead class="thead-light">
+        <tr>
+          <th>Position</th>
+          <th>Location</th>
+          <th>Submit Date</th>
+          <th>Status</th>
+        </tr>
+      </thead>
+
+      <tbody>
+        {% for application in applications %}
+        <tr>
+          <td>
+            <a class="d-flex" href="#">
+              <div class="flex-shrink-0">
+                <div class="avatar avatar-circle">
+                  <img class="avatar-img" src="{{application.job.publisher.companyprofile.company_logo.url}}" alt="Image Description">
+                </div>
+              </div>
+              <div class="flex-grow-1 ms-3">
+                <span class="d-block h5 text-inherit mb-0">{{application.job.position}}</span>
+                <span class="d-block font-size-sm text-body">{{application.job.publisher.companyprofile.company_name}}</span>
+              </div>
+            </a>
+          </td>
+          <td>
+            
+            <span class="d-block font-size-sm">{{application.job.publisher.companyprofile.city}}, {{application.job.publisher.companyprofile.state}}</span>
+          </td>
+          <td>{{application.sent_at}}</span></td>
+          {% if application.request == 'Pending' %}
+          <td><span class="badge bg-warning text-light">{{application.request}}</span></td>
+          {% elif application.request == 'No Luck' %}
+          <td><span class="badge bg-danger text-light">{{application.request}}</span></td>
+          {% elif application.request == 'Approved' %}
+          <td><span class="badge bg-success text-light">{{application.request}}</span></td>
+          {% elif application.request == 'Considered' %}
+          <td><span class="badge bg-info text-light">{{application.request}}</span></td>
+          {% endif %}
+        </tr>
+        {% endfor %}
+
+      </tbody>
+    </table>
+  </div>
+  <!-- End Table -->
+</div>
+<!-- End Card -->
+
+</div>
+
+
+{% endblock %}

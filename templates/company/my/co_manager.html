@@ -1,0 +1,115 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+
+{% include 'parts/nav.html' %}
+
+
+<body class="bg-light">
+  <main id="content" role="main" class="bg-light ">
+    
+
+    <!-- End Breadcrumb -->
+
+    <!-- Content -->
+    <div class="container content-space-1 content-space-t-lg-0 content-space-b-lg-2 mt-10">
+      <div class="row">
+ 
+        <!-- End Col -->
+
+        <div class="container">
+          <div class="d-grid gap-3 gap-lg-5">
+            <!-- Card -->
+            <div class="card">
+              <div class="card-header border-bottom">
+                Account Settings
+              </div>
+              <div class="card-body">
+                {% if messages %}
+                {% for message in messages %}
+                <div class="alert alert-success" role="alert">
+                  {{message}}
+                </div>
+                {% endfor %}
+                {% endif %}
+                {% if form1.errors %}
+             
+                <div class="alert alert-warning" role="alert">
+                  {{form1.errors}}
+                </div>
+                
+                {% endif %}
+              
+                <form method="post" enctype="multipart/form-data">
+                  {% csrf_token %}
+
+                  
+                  <div class="mb-3">
+                    <label for="inputGroupMergeFullName" class="form-label">Full name</label>
+                  
+                    <div class="input-group input-group-merge">
+                      <div class="input-group-prepend input-group-text" id="inputGroupMergeFullNameAddOn">
+                        <i class="bi-person"></i>
+                      </div>
+                      {{form1.full_name}}
+                    </div>
+                  </div>
+                  <!-- End Input Group -->
+                  <div class="mb-3">
+                    <label for="inputGroupMergeFullName" class="form-label">Username</label>
+                  
+                    <div class="input-group input-group-merge">
+                      <div class="input-group-prepend input-group-text" id="inputGroupMergeFullNameAddOn">
+                        <i class="bi-person"></i>
+                      </div>
+                      {{form1.username}}
+                    </div>
+                  </div>
+                  <!-- End Input Group -->
+                  <div class="mb-3">
+                    <label for="inputGroupMergeFullName" class="form-label">Email</label>
+                  
+                    <div class="input-group input-group-merge">
+                      <div class="input-group-prepend input-group-text" id="inputGroupMergeFullNameAddOn">
+                        <i class="bi-envelope-open"></i>
+                      </div>
+                         {{form1.email}}
+                    </div>
+                  </div>
+                  <!-- End Input Group -->
+                  <div class="mb-3">
+                    <label for="inputGroupMergeFullName" class="form-label">Password</label>
+                  
+                    <div class="text-center">
+                      <a href="{% url 'change_pwd' %}"><strong> Change Password</strong></a>
+                     
+                    </div>
+                  </div>
+
+
+                  <!-- End Input Group -->
+                  <button type="submit" class="btn btn-primary">Save</button>
+                </form>
+              </div>
+
+          </div>
+        </div>
+            </div>
+          </div>
+        </div>
+        <!-- End Col -->
+      </div>
+      <!-- End Row -->
+    </div>
+    <!-- End Content -->
+    
+  </main>
+  <!-- ========== END MAIN CONTENT ========== -->
+
+
+
+
+  </body>
+
+{% endblock content %}

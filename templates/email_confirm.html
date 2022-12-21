@@ -1,0 +1,72 @@
+    {% load static  %}
+    <!DOCTYPE html>
+    <html lang="en" dir="" class="h-100">
+    <head>
+    <!-- Required Meta Tags Always Come First -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Title -->
+    <title>Email Confirmation</title>
+
+    <!-- Favicon -->
+    <link rel="shortcut icon" href="{% static 'favicon.ico' %}">
+
+    <!-- Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
+
+    <!-- CSS Implementing Plugins -->
+    <link rel="stylesheet" href="{% static 'assets/vendor/bootstrap-icons/font/bootstrap-icons.css' %}">
+
+    <!-- CSS Front Template -->
+    <link rel="stylesheet" href="{% static 'assets/css/theme.min.css' %}">
+    </head>
+   
+    <body class="d-flex flex-column justify-content-center align-items-center h-75">
+        
+    <!-- ========== HEADER ========== -->
+    <!-- ========== END HEADER ========== -->
+        {% if request.user.is_email_confirmed == False %}
+    <!-- ========== MAIN CONTENT ========== -->
+    <main id="content" role="main">
+        <!-- Content -->
+        <div class="container text-center">
+        <div class="mb-3">
+            <img class="img-fluid" src="{% static 'assets/svg/illustrations/email_sent.svg' %}" alt="Image Description" style="width: 30rem;">
+        </div>
+
+        <div class="mb-4">
+            <p class="fs-4 mb-0">An Email confirmation was sent to <b class="text-dark">{{request.user.email}}</b></p>
+            <p class="fs-4">Please check your inbox to activate your account.</p>
+        </div>
+
+        </div>
+        <!-- End Content -->
+    </main>
+    <!-- ========== END MAIN CONTENT ========== -->
+    {% elif request.user.is_email_confirmed == True %}
+    <main id="content" role="main">
+        <!-- Content -->
+        <div class="container text-center">
+        <div class="mb-3">
+            <img class="img-fluid" src="{% static 'assets/svg/illustrations/tick.png' %}" alt="Image Description">
+        </div>
+
+        <div class="mb-4">
+            <p class="fs-4 mb-0">DONE! <b class="text-dark">{{request.user.full_name}}, </b>Your account has been succesfully activated </p>
+       
+        </div>
+        <p class="fs-4"><a href="{% url 'home' %}" class="btn btn-primary">Home</a></p>
+        </div>
+        <!-- End Content -->
+    </main>
+    {% endif %}
+
+
+    <!-- JS Global Compulsory  -->
+    <script src="{% static '/assets/vendor/bootstrap/dist/js/bootstrap.bundle.min.js' %}"></script>
+
+    <!-- JS Front -->
+    <script src="{% static '/assets/js/theme.min.js' %}"></script>
+    </body>
+    </html>

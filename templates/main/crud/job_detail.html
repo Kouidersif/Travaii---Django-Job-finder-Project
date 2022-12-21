@@ -1,0 +1,208 @@
+    {% extends 'base.html' %}
+    {% load static %}
+    
+
+
+    {% block content %}
+    <body>
+      
+ 
+    {% include 'parts/nav.html' %}
+
+
+    {% if messages %}
+<div class="container">
+    <div class="alert alert-primary" alert-{{ message.tags }}    role="alert">
+    {% for message in messages %}
+    {{message|safe}}
+    <a href="{% url 'apply_list' %}">View it here</a>
+
+    {% endfor %}
+    </div>
+
+  </div>
+
+
+    {% endif %}
+
+    <main id="content" role="main">
+        <!-- Page Header -->
+        {% for work in job %}
+        <div class="container content-space-t-2">
+          <div class="w-lg-75 mx-lg-auto">
+            <div class="page-header">
+              <!-- Media -->
+              <div class="d-sm-flex mb-3">
+                <div class="flex-shrink-0 mb-2 mb-sm-0">
+                  {% if work.publisher.companyprofile %}
+                  <a href="{% url 'company_Profile' work.publisher.companyprofile.id %}">
+                    {% if work.publisher.companyprofile.company_logo %}
+                    <img class="avatar avatar-lg mb-3" src="{{work.publisher.companyprofile.company_logo.url}}" alt="Image Description">
+                    {% endif %}
+                  </a>
+                  {% endif %}
+                </div>
+                
+                <div class="flex-grow-1 ms-sm-4">
+                  <div class="row">
+                    <div class="col">
+                      <h1 class="page-header-title h2">{{work.position}}</h1>
+                    </div>
+                    <!-- End Col -->
+    
+                    <div class="col-auto">
+                      <!-- Checkbbox Bookmark -->
+                      
+                      <div class="form-check form-check-bookmark">
+                        <input class="form-check-input" type="checkbox" value="" id="jobsPageHeaderBookmarkCheck">
+                        <label class="form-check-label" for="jobsPageHeaderBookmarkCheck">
+                          <span class="form-check-bookmark-default">
+                            {% if not added %}
+                          <a href="{% url 'save_job' work.id %}"><i class="bi-star me-1"></i> Save this job </a>
+                          {% else %}
+                          <a href="{% url 'save_job' work.id %}"> <i class="bi bi-star-fill text-warning"></i> Saved </a>
+                          {% endif %}
+                          </span>
+                          
+                        
+                          
+                        </label>
+                      </div>
+                      
+                      
+                      <!-- End Checkbbox Bookmark -->
+                    </div>
+                    <!-- End Col -->
+                  </div>
+                  <!-- End Row -->
+    
+                  <ul class="list-inline list-separator d-flex align-items-center mb-2">
+                    <li class="list-inline-item">
+                      <a class="link" href="{% url 'company_Profile' work.publisher.id  %}">{{work.publisher.companyprofile.company_name}}</a>
+                    </li>
+                  </ul>
+    
+                  <ul class="list-inline list-separator small text-body mb-2">
+                    <li class="list-inline-item"><i class="bi bi-calendar2-date text-primary"></i> Posted {{work.creation_date|timesince}} ago</li>
+                    <li class="list-inline-item"><i class="bi bi-geo-alt-fill text-primary"></i> {{work.publisher.companyprofile.city}}, {{work.publisher.companyprofile.state}}</li>
+                    {% if work.job_type %}
+                    <li class="list-inline-item">{{work.job_type}}</li>
+                    {% endif %}
+                    {% if work.work_from %}
+                    <span class="badge bg-soft-info text-info me-2">
+                        <span class="legend-indicator bg-info" sty></span>{{work.work_from}}
+                      </span>
+                      {% endif %}
+                    
+
+                  </ul>
+                  
+                  
+                </div>
+                
+                
+            </div>
+           
+                     
+     
+              <!-- End Media -->
+            </div>
+          </div>
+        </div>
+        <!-- End Page Header -->
+ 
+        <!-- Content -->
+        <div class="container content-space-2 content-space-b-lg-3">
+          <div class="w-lg-75 mx-lg-auto">
+            <div class="row mb-3">
+              <div class="col">
+                <h3>Description</h3>
+              </div>
+              <!-- End Col -->
+    
+              <div class="col-auto">
+                <!-- Dropdown -->
+                <div class="dropdown">
+                  <a class="link" href="#" id="jobOverviewShareDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false" data-bs-dropdown-animation>
+                    Share this job <i class="bi-share-fill small ms-1"></i>
+                  </a>
+    
+                  <div class="dropdown-menu dropdown-menu-end" aria-labelledby="jobOverviewShareDropdown">
+                    <a class="dropdown-item" href="#">
+                      <i class="bi-facebook dropdown-item-icon"></i> Facebook
+                    </a>
+                    <a class="dropdown-item" href="#">
+                      <i class="bi-twitter dropdown-item-icon"></i> Twitter
+                    </a>
+                    <a class="dropdown-item" href="#">
+                      <i class="bi-linkedin dropdown-item-icon"></i> LinkedIn
+                    </a>
+                  </div>
+                </div>
+                <!-- End Dropdown -->
+              </div>
+              <!-- End Col -->
+            </div>
+            <!-- End Row -->
+            <h5>Who we are:</h5>
+
+        <p>{{work.publisher.companyprofile.about}}</p>
+
+        
+        <h5>The role:</h5>
+           
+            <div>
+              {{work.description|safe}}
+            </div>
+            {% endfor %}
+            {% if request.user.is_applicant %}
+            <div class="d-grid mt-7">
+                
+                {% for work in job %}
+                {% if applying %}
+                <a class="btn btn-success btn-transition" href="{% url 'my_applications' request.user.id %}">you have already applied - Press to check status</a>
+                {% elif not request.user.applicantprofile.applicant_cv %}
+                <div class="alert alert-warning" role="alert">
+                  <div class="d-flex">
+                    <div class="flex-shrink-0">
+                      <i class="bi-exclamation-triangle-fill"></i>
+                    </div>
+                    <div class="flex-grow-1 ms-2">
+                      Information: Upload a resume first to start applying for jobs, <a href="{% url 'applicant_info' user.id %}" ><strong class="text-primary">Go to Profile</strong> </a>  
+                    </div>
+                  </div>
+                </div>
+               
+                {% else %}
+                {% if not request.user.applicantprofile.applicant_cv %}
+                <div class="alert alert-soft-danger" role="alert">
+                  <div class="d-flex">
+                    <div class="flex-shrink-0">
+                      <i class="bi-exclamation-triangle-fill"></i>
+                    </div>
+                    <div class="flex-grow-1 ms-2">
+                      Information: You have not uploaded your resume, your application may not be considered <a href="{% url 'applicant_info' request.user.id %}" ><strong class="text-primary">Upload Resume</strong> </a>  
+                    </div>
+                  </div>
+                </div>
+                {% endif %}
+              <a class="btn btn-primary btn-transition" href="{% url 'apply_for' work.id %}">Apply for this job</a>
+              {% endif %}
+              {% endfor %}
+              
+
+            </div>
+
+            
+            {% endif %}
+          </div>
+        </div>
+        <!-- Content -->
+      </main>
+
+
+    </body>
+
+
+    {% endblock content %}
+

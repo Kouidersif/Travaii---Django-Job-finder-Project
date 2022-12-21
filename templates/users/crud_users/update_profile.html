@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+
+<a href="{% url 'applicant_profile' user.id %}">Back to My Account</a>
+<br>
+<div class="container">
+    <form action="" method="post" enctype= "multipart/form-data">
+        {% csrf_token %}
+        {{form}}
+        
+        <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+    <div class="alert alert-danger" role="alert">
+        *Please Note that you might be signed out after editing your account for Security Reasons</div>
+    </div>
+    
+{% endblock content %}
+{% include 'parts/nav.html' %}

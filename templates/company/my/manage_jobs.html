@@ -1,0 +1,141 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<style>
+  #nav-one-eg2-tab{
+    color: black;
+
+  }
+  #nav-two-eg2-tab{
+    color: black;
+  }
+
+  
+</style>
+
+<body>
+  {% include 'parts/nav.html' %}
+
+  <div class="container mt-9">
+{% include 'company/my/main_for_ja.html' %}
+
+{% if messages %}
+{% for message in messages %}
+<div class="alert alert-{{message.tags}} rounded-0" role="alert">
+  {{message}}
+</div>
+{% endfor %}
+{% endif %}
+      <!-- Card -->
+<div class="card">
+    <div class="card-header border-bottom" style="background-image: url(/static/assets/svg/components/card-1.svg)">
+      <h5 class="card-header-title">Hello, {{request.user.full_name}}, All jobs you published</h5>
+    </div>
+  
+    <!-- Body -->
+    <div class="card-body">
+      <p class="card-text">View, Edit or Delete all posted jobs from one page</p>
+  
+      <!-- Form -->
+        <!-- List Group -->
+        <div class="list-group list-group-flush list-group-no-gutters">
+          <!-- Item -->
+          {% for job in myjobs %}
+          <div class="list-group-item">
+            <div class="d-flex">
+              
+  
+              <div class="flex-grow-1 ms-3">
+                <div class="row align-items-center">
+                  <div class="col">
+                    <h6 class="mb-1"> <a href="{% url 'detail_job' job.id %}"> {{job.position}}  <i class="bi bi-file-earmark-text"></i></a></h6>
+                    <span class="d-block small text-body">{{job.creation_date}}</span>
+                  </div>
+                  <!-- End Col -->
+                  <div class="col-auto">
+                    <!-- Form Switch -->
+                    <div class="form-check form-switch">
+                      {% if job.is_published == True  %}
+                      <span class="badge bg-success">Published  <i class="bi bi-unlock-fill"></i></span>
+                      {% else %}
+                      <span class="badge bg-warning">Only you  <i class="bi bi-lock" ></i></span>
+                      {% endif %}
+                      <label class="form-check-label" for="connectedAccounts1"></label>
+                    </div>
+                    <!-- End Form Switch -->
+                  </div>
+                  <div class="col-auto">
+                    <!-- Form Switch -->
+                    <div class="form-check form-switch">
+                      <a href="{% url 'detail_job' job.id %}" class="link-primary">View Job</a>
+                      <label class="form-check-label" for="connectedAccounts1"></label>
+                    </div>
+                    <!-- End Form Switch -->
+                  </div>
+  
+                  <div class="col-auto">
+                    <!-- Form Switch -->
+                    <div class="form-check form-switch">
+                      <a href="{% url 'update_job' job.id %}" class="link-primary">Edit Job</a>
+                      <label class="form-check-label" for="connectedAccounts1"></label>
+                    </div>
+                    <!-- End Form Switch -->
+                  </div>
+                  <div class="col-auto">
+                    <!-- Form Switch -->
+                    <div class="form-check form-switch">
+                      
+                      <button onclick="abrir_modal_edicion('{% url 'delete_job' job.id %}')" class="btn btn-outline-danger">Delete</button>
+                      <label class="form-check-label" for="connectedAccounts1"></label>
+                    </div>
+                    <!-- End Form Switch -->
+                  </div>
+                  <!-- End Col -->
+                </div>
+                <!-- End Row -->
+              </div>
+            </div>
+          </div>
+          {% endfor %}
+          <!-- End Item -->
+  
+
+  
+
+        </div>
+        <!-- End List Group -->
+    
+
+      <!-- End Form -->
+    </div>
+    <!-- End Body -->
+  </div>
+  <!-- End Card -->
+    </div>
+  
+
+
+<div class="modal fade" id="edicion" role="dialog">
+
+</div>
+  <!-- JS Implementing Plugins -->
+<script src="{% static 'assets/vendor/tom-select/dist/js/tom-select.complete.min.js' %}"></script>
+<script src="{% static 'assets/vendor/hs-show-animation/dist/hs-show-animation.min.js' %}"></script>
+<script src="{% static 'assets/vendor/hs-toggle-password/dist/js/hs-toggle-password.js' %}"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.min.js" integrity="sha384-Atwg2Pkwv9vp0ygtn1JAojH0nYbwNJLPhwyoVbhoPwBhjQPR5VtM2+xf0Uwh9KtT" crossorigin="anonymous"></script>	
+
+<!-- JS Front -->
+<script src="https://code.jquery.com/jquery-3.6.1.js" integrity="sha256-3zlB5s2uwoUzrXK3BT7AX3FyvojsraNFxCc2vC/7pNI=" crossorigin="anonymous"></script>
+<!-- JS Plugins Init. -->
+
+<script type="text/javascript">
+  var $ = jQuery.noConflict();
+  function abrir_modal_edicion(url){
+    $('#edicion').load(url, function(){
+      $(this).modal('show');
+    });
+  }
+</script>
+</body>
+{% endblock content %}

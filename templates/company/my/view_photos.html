@@ -1,0 +1,140 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block content %}
+<body>
+{% include 'parts/nav.html' %}
+
+
+  
+
+<div class="container">
+  {% if messages %}
+  {% for message in messages %}
+  <div class="alert alert-soft-{{message.tags}}" role="alert">
+    {{message}}
+  </div>
+  {% endfor %}
+  {% endif %}
+<div class="text-center mb-7">
+    <!-- Nav -->
+    <ul class="js-filter-options nav nav-segment nav-pills">
+      <li class="nav-item">
+        <a class="nav-link active" href="javascript:;" data-group="all">All</a>
+      </li>
+    </ul>
+    <!-- End Nav -->
+  </div>
+  
+  <div class="js-shuffle row row-cols-1 row-cols-sm-2 row-cols-md-3">
+    {% for photo in photos %}
+    {% if photo.photo_publisher == request.user and photo.is_public == False or photo.is_public  %}
+    <div class="js-shuffle-item col mb-5" data-groups='["product"]'>
+      <!-- Card -->
+      <a class="card card-flush card-transition" href="#">
+        <img class="card-img-top" src="{{photo.the_images.url}}" alt="Image Description">
+        <div class="card-body">
+          <span class="card-subtitle text-body">{{photo.published_on|timesince}} ago</span>
+          <h3 class="card-title">{{photo.tag}}</h3>
+        </div>
+      </a>
+      {% if photo.photo_publisher == request.user %}
+      <button onclick="abrir_modal_edicion('{% url 'delete_photos' photo.id %}')" class="btn btn-outline-danger">Delete</button>
+      <button onclick="abrir_modal_edicion('{% url 'change_photo_privacy' photo.id %}')" class="btn btn-primary">Edit Privacy</button>
+
+     {% endif %}
+     {% if photo.is_public == False %}
+     <i class="bi bi-lock"></i>Private
+     {% endif %}
+      <!-- End Card -->
+    </div>
+    <!-- End Col -->
+    {% endif %}
+    {% endfor %}
+    <div class="modal fade" id="edicion" role="dialog">
+
+    </div>
+  </div>
+  <!-- End Row -->
+</div> 
+<script src="https://code.jquery.com/jquery-3.6.1.js" integrity="sha256-3zlB5s2uwoUzrXK3BT7AX3FyvojsraNFxCc2vC/7pNI=" crossorigin="anonymous"></script>
+<script src="{% static '/assets/vendor/shufflejs/dist/shuffle.js' %}"></script>
+
+<script type="text/javascript">
+  var $ = jQuery.noConflict();
+  function abrir_modal_edicion(url){
+    $('#edicion').load(url, function(){
+      $(this).modal('show');
+    });
+  }
+</script>
+
+
+
+
+
+
+
+
+
+<script>
+    (function() {
+      // INITIALIZATION OF SHUFFLE
+      // =======================================================
+      class ShufflePorfolio {
+        constructor(element) {
+          this.element = element;
+          this.shuffle = new Shuffle(element, {
+            itemSelector: '.js-shuffle-item',
+            speed: 500
+          })
+  
+          this.addFilterButtons()
+        }
+  
+        addFilterButtons() {
+          const options = document.querySelector('.js-filter-options')
+          if (!options) {
+            return
+          }
+  
+          const filterButtons = Array.from(options.children)
+          const onClick = this._handleFilterClick.bind(this)
+          filterButtons.forEach((button) => {
+            button.addEventListener('click', onClick, false)
+          });
+        }
+  
+        _handleFilterClick(evt) {
+          const btn = evt.currentTarget.firstElementChild
+          const isActive = btn.classList.contains('active')
+          const btnGroup = btn.getAttribute('data-group')
+  
+          this._removeActiveClassFromChildren(btn.parentNode.parentNode)
+  
+          let filterGroup
+          if (isActive) {
+            btn.classList.remove('active')
+            filterGroup = Shuffle.ALL_ITEMS
+          } else {
+            btn.classList.add('active')
+            filterGroup = btnGroup
+          }
+  
+          this.shuffle.filter(filterGroup)
+        }
+  
+        _removeActiveClassFromChildren(parent) {
+          const { children } = parent
+          for (let i = children.length - 1; i >= 0; i--) {
+            children[i].firstElementChild.classList.remove('active')
+          }
+        }
+      }
+  
+      new ShufflePorfolio(document.querySelector('.js-shuffle'))
+    });
+  </script>
+</body>
+{% endblock content %}

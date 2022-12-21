@@ -1,0 +1,280 @@
+
+{% extends 'base.html' %}
+{% load static %}
+{% load bootstrap %}
+{% block title %} Jobs - Travaii{% endblock title %}
+{% block content %}
+<style>
+  .form-group{
+    margin-bottom: 20px;
+  }
+  .control-label  {
+    color: black;
+    margin-bottom: 10px;
+
+
+}
+
+
+</style>
+{% include 'parts/nav.html' %}
+<main id="content" role="main">
+    <!-- Hero -->
+    <div class="gradient-x-three-sm-dark bg-dark">
+      <div class="container content-space-2">
+        <form method="post" action="{% url 'search_for' %}">
+            {% csrf_token %}
+          <!-- Input Card -->
+          <h3 class="text-center mb-5 text-light">Search for a job</h3>
+          <div class="input-card input-card-sm mb-3">
+            
+            <div class="input-card-form">
+            
+              <label for="jobTitleForm" class="form-label visually-hidden">Job, title, skills, or company</label>
+              <div class="input-group input-group-merge">
+                <span class="input-group-prepend input-group-text">
+                  <i class="bi-search"></i>
+                </span>
+                <input type="search" class="form-control" id="jobTitleForm" name="searched" placeholder="Job, title, skills, or company" aria-label="Job, title, skills, or company" name="searched">
+           
+              </div>
+            </div>
+
+         
+            <button type="submit" class="btn btn-primary">Search</button>
+          </div>
+          <!-- End Input Card -->
+        </form>
+      </div>
+    </div>
+    <!-- End Hero -->
+
+    <!-- Card Grid -->
+    <div class="container content-space-t-1 content-space-t-md-2 content-space-b-2 content-space-b-lg-3">
+      <div class="row">
+        <div class="col-lg-3 order-lg-2">
+          <!-- Navbar -->
+          <div class="navbar-expand-lg mb-5">
+            <!-- Navbar Toggle -->
+            <div class="d-grid">
+              <button type="button" class="navbar-toggler btn btn-white mb-3" data-bs-toggle="collapse" data-bs-target="#navbarVerticalNavMenu" aria-label="Toggle navigation" aria-expanded="false" aria-controls="navbarVerticalNavMenu">
+                <span class="d-flex justify-content-between align-items-center">
+                  <span class="text-dark">Filter</span>
+
+                  <span class="navbar-toggler-default">
+                    <i class="bi-list"></i>
+                  </span>
+
+                  <span class="navbar-toggler-toggled">
+                    <i class="bi-x"></i>
+                  </span>
+                </span>
+              </button>
+            </div>
+            <!-- End Navbar Toggle -->
+            <div class="hoolderr">
+            <!-- Navbar Collapse -->
+            <div id="navbarVerticalNavMenu" class="sticky-top collapse navbar-collapse">
+              <div class="w-100">
+                <!-- Form -->
+                
+                <form method="get">
+
+                  <div class="mb-5">
+                    <h5 class="mb-3">Order By</h5>
+
+                    <!-- Select -->
+                    {{f.form.ordering}}
+                    <!-- End Select -->
+                  </div>
+
+                  <div class="mb-5">
+                    <h5 class="mb-3">Work From</h5>
+
+                    <!-- Select -->
+                    {{f.form.work_from}}
+                    <!-- End Select -->
+                  </div>
+                  <div class="mb-5">
+                    <h5 class="mb-3">Work salary</h5>
+
+                    <!-- Select -->
+                    {{f.form.min_price}}
+                    <!-- End Select -->
+                  </div>
+                  <div class="mb-5">
+                    <!-- Select -->
+                    {{f.form.max_price}}
+                    <!-- End Select -->
+                  </div>
+                  
+
+                  <div class="mb-5">
+                    <h5 class="mb-3">Category</h5>
+
+                    <!-- Select -->
+                    {{f.form.job_category}}
+                    <!-- End Select -->
+                  </div>
+
+                  <div class="mb-5">
+                    <h5 class="mb-3">Type</h5>
+
+                    <!-- Select -->
+                    {{f.form.job_type}}
+                    <!-- End Select -->
+                  </div>
+
+                  <div class="mb-5">
+                    <h5 class="mb-3">Shift</h5>
+
+                    <!-- Select -->
+                    {{f.form.job_shift}}
+                    <!-- End Select -->
+                  </div>
+
+                 
+
+                  <div class="mb-5">
+                    <h5 class="mb-3">Interview</h5>
+
+                    <!-- Select -->
+                    {{f.form.interview_type}}
+                    <!-- End Select -->
+                  </div>
+                  <div class="d-grid">
+                    <button type="submit" class="btn btn-primary btn-transition mb-1">Submit</button>
+                    <a href="{% url 'alljobs' %}" class="btn btn-light btn-transition text-dark">Reset</a>
+                  </div>
+                </form>
+                <!-- End Form -->
+              </div>
+            </div>
+          </div>
+            <!-- End Navbar Collapse -->
+          </div>
+          <!-- End Navbar -->
+        </div>
+        <!-- End Col -->
+
+        <div class="col-lg-9">
+          <div class="row align-items-center mb-5">
+            <div class="col-sm mb-3 mb-sm-0">
+              {% if f.qs %}
+              <h3 class="mb-0">{{f.qs.count}} published jobs</h3>
+            
+             
+              {% endif %}
+            </div>
+          </div>
+          <!-- End Row -->
+          <!-- Card List -->
+          <div class="d-grid gap-5 mb-10">
+            {% if f.qs %}
+            {% for obj in f.qs %}
+            
+            <!-- Card -->
+            <div class="card card-bordered">
+              <div class="card-body">
+                <!-- Media -->
+                <div class="d-sm-flex">
+                  <!-- Media -->
+                  <div class="d-flex align-items-center align-items-sm-start mb-3">
+                    <div class="flex-shrink-0">
+                      {% if obj.publisher.companyprofile.company_logo %}
+                      <img class="avatar avatar-sm avatar-4x3" src="{{obj.publisher.companyprofile.company_logo.url}}" alt="Image Description">
+                      {% endif %}
+                    </div>
+            
+                  </div>
+                  <!-- End Media -->
+                  
+                  <div class="flex-grow-1 ms-sm-3">
+                    <div class="row">
+                      <div class="col col-md-8">
+                        <h3 class="card-title">
+                          <a class="text-dark" href="{% url 'detail_job' obj.id %}">{{obj.position}}</a>
+                        </h3>
+                        <div class="d-none d-sm-inline-block">
+                          <h6 class="card-title">
+                            <a class="text-dark" href="{% url 'company_Profile' obj.publisher.id %}">{{obj.publisher.companyprofile.company_name}}</a>
+                            
+                            {% if obj.publisher.customer and obj.publisher.customer.selected_membership == 'Mid-market enterprises' %}
+                                  <i class="bi bi-patch-check-fill text-primary" title="Premium Account"></i> 
+                                  {% elif obj.publisher.customer and obj.publisher.customer.selected_membership == 'Large enterprise' %}     
+                                  <i class="bi bi-patch-check-fill text-primary" title="Premium Account"></i> 
+
+                          {% endif %}
+                       
+                            
+                    
+                          </h6>
+                        </div>
+                      </div>
+
+
+                      <div class="col-12 col-md mt-3 mt-md-0">
+                        <span class="d-block small text-body mb-1">DZD {{obj.salary}} {{obj.pay_per}}</span>
+
+                        <span class="badge bg-soft-info text-info me-2">
+                          <span class="legend-indicator bg-info"></span>{{obj.work_from}}
+                        </span>
+                      </div>
+                      <!-- End Col -->
+                    </div>
+                    <!-- End Row -->
+                  </div>
+                </div>
+                <!-- End Media -->
+              </div>
+
+              <div class="card-footer pt-0">
+                <ul class="list-inline list-separator small text-body">
+                  <li class="list-inline-item">Posted {{obj.creation_date|timesince}} ago</li>
+                  <li class="list-inline-item">{{obj.publisher.companyprofile.city}}</li>
+                  <li class="list-inline-item">{{obj.job_type}}</li>
+                </ul>
+              </div>
+            </div>
+            <!-- End Card -->
+            
+            
+            {% endfor %}
+            {% else %}
+            <div class="alert alert-light" role="alert">
+              There are no public jobs at the moment please try again later...
+            </div>
+            {% endif %}
+
+          </div>
+          <!-- End Card List -->
+
+
+        </div>
+        <!-- End Col -->
+      </div>
+      <!-- End Row -->
+    </div>
+    <!-- End Card Grid -->
+    
+  </main>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.2/jquery.min.js" integrity="sha512-tWHlutFnuG0C6nQRlpvrEhE4QpkG1nn2MOUMWmUeRePl4e3Aki0VB6W1v3oLjFtd0hVOtRQ9PHpSfN6u6/QXkQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+<script>
+  document.getElementById("id_min_price").setAttribute("class", "form-control");
+  document.getElementById("id_max_price").setAttribute("class", "form-control");
+  document.getElementById("id_min_price").setAttribute("placeholder", "min salary");
+  document.getElementById("id_max_price").setAttribute("placeholder", "max salary");
+  document.getElementById("id_job_category").setAttribute("class", "form-select form-select-sm");
+  document.getElementById("id_work_from").setAttribute("class", "form-select form-select-sm");
+  document.getElementById("id_job_type").setAttribute("class", "form-select form-select-sm");
+  document.getElementById("id_job_shift").setAttribute("class", "form-select form-select-sm");
+  document.getElementById("id_interview_type").setAttribute("class", "form-select form-select-sm");
+  document.getElementById("id_ordering").setAttribute("class", "form-select form-select-sm");
+  document.getElementById("id_creation_date__range").setAttribute("class", "form-select form-select-sm");
+  document.getElementById("id_desired_shift").setAttribute("class", "form-select form-select-sm");
+
+</script>
+
+
+{% endblock content %}

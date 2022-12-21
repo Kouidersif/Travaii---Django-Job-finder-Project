@@ -1,0 +1,121 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+
+{% include 'parts/nav.html' %}
+
+{% include 'users/topbar.html' %}
+    <!-- Content -->
+    <div class="container content-space-1 content-space-t-lg-0 content-space-b-lg-2 mt-lg-n10">
+      <div class="row">
+        <div class="col-lg-3">
+          <!-- Navbar -->
+          {% include 'users/side_bar.html' %}
+          <!-- End Navbar -->
+        </div>
+        <!-- End Col -->
+
+        <div class="col-lg-9">
+          <div class="d-grid gap-3 gap-lg-5">
+            <!-- Card -->
+            <div class="card">
+              <div class="card-header border-bottom">
+                <h4 class="card-header-title">User info</h4>
+              </div>
+              {% if messages %}
+              {% for message in messages %}
+              <div class="alert alert-{{message.tags}} text-center rounded-0" role="alert">
+                {{message}}
+              </div>
+              {% endfor %}
+              {% endif %}
+              <!-- Body -->
+              <div class="card-body">
+                <form method="post">
+                    {% csrf_token %}
+                  
+
+                  <!-- Form -->
+                  <div class="row mb-4">
+                    <label for="firstNameLabel" class="col-sm-3 col-form-label form-label">Full name <i class="bi-question-circle text-body ms-1" data-bs-toggle="tooltip" data-bs-placement="top" title="Displayed on public forums, such as Front."></i></label>
+
+                    <div class="col-sm-9">
+                      <div class="input-group">
+                        <p>{{form.full_name}}</p>
+                      
+                      </div>
+                    </div>
+                  </div>
+                  <!-- End Form -->
+                      <!-- Form -->
+                      <div class="row mb-4">
+                        <label for="firstNameLabel" class="col-sm-3 col-form-label form-label">Username <i class="bi-question-circle text-body ms-1" data-bs-toggle="tooltip" data-bs-placement="top" title="Displayed on public forums, such as Front."></i></label>
+
+                        <div class="col-sm-9">
+                          <div class="input-group">
+                            <p>{{form.username}}</p>
+                          
+                          </div>
+                        </div>
+                      </div>
+                      <!-- End Form -->
+                  <!-- Form -->
+                  <div class="row mb-4">
+                    <label for="emailLabel" class="col-sm-3 col-form-label form-label">Email</label>
+
+                    <div class="col-sm-9">
+                      {{form.email}}
+
+                      </div>
+                  </div>
+                  <!-- End Form -->
+                  <div class="row mb-4">
+                    <label for="emailLabel" class="col-sm-3 col-form-label form-label">Phone</label>
+
+                    <div class="col-sm-9">
+                      {{form.phone_number}}
+
+                      </div>
+                  </div>
+                  <!-- End Form -->
+
+
+                  <!-- Form -->
+                  <div class="row mb-4">
+                    <label class="col-sm-3 col-form-label form-label">Gender</label>
+
+                    <div class="col-sm-9">
+                      <div class="input-group input-group-md-down-break">
+                       {{form.gender}}
+                      </div>
+                    </div>
+                  </div>
+                  <!-- End Form -->
+
+   <!-- Footer -->
+   <div class="card-footer pt-0">
+    <div class="d-flex justify-content-end gap-3">
+      <button class="btn btn-primary" type="submit">Save Changes</button>
+    </div>
+  </div>
+  <!-- End Footer -->
+                </form>
+              </div>
+              <!-- End Body -->
+
+           
+            </div>
+            <!-- End Card -->
+
+
+          </div>
+        </div>
+        <!-- End Col -->
+      </div>
+      <!-- End Row -->
+    </div>
+    <!-- End Content -->
+
+
+{% endblock content %}

@@ -1,0 +1,381 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+{% include 'parts/nav.html' %}
+<body>
+
+    <!-- Team -->
+    <div class="shadow-xl container rounded-2">
+
+        <form action="" method="get">
+<!-- List Directory -->
+<div id="openRolesSection" class="container content-space-1">
+    <!-- Heading -->
+    <div class="w-md-75 w-lg-50 text-center mx-md-auto mb-5 mb-md-9">
+        <h2>Creative minds</h2>
+        <p>We are truly proud of our {{candidates.count}} creative minds around the world.</p>
+       
+        </div>
+    <!-- End Heading -->
+  
+    <!-- Form -->
+
+      <div class="row gx-2 gx-md-3 mb-7">
+
+        <!-- End Col -->
+  
+        <div class="col-sm-6 col-md-4 mb-2 mb-sm-0">
+          <label class="form-label" for="locationsJobCareers">Industry</label>
+  
+          <!-- Select -->
+          {{candid.form.desired_industry}}
+          <!-- End Select -->
+        </div>
+        <!-- End Col -->
+  
+        <div class="col-sm-6 col-md-4">
+          <label class="form-label" for="departmentsJobCareers">Languages</label>
+  
+          <!-- Select -->
+          {{candid.form.languages}}
+          <!-- End Select -->
+        </div>
+        <!-- End Col -->
+        
+
+          <div class="col-sm-6 col-md-4">
+            <label class="form-label" for="departmentsJobCareers">Select Job Type</label>
+    
+            <!-- Select -->
+            {{candid.form.desired_job_type}}
+            <!-- End Select -->
+          </div>
+          <div class="col-sm-6 col-md-4">
+            <label class="form-label" for="departmentsJobCareers">Select State</label>
+    
+            <!-- Select -->
+            {{candid.form.state}}
+            <!-- End Select -->
+          </div>
+          <div class="col-sm-6 col-md-4">
+            <label class="form-label" for="departmentsJobCareers">Job</label>
+    
+            <!-- Select -->
+            {{candid.form.desired_job}}
+            <!-- End Select -->
+          </div>
+          <div class="col-sm-6 col-md-4">
+            <label class="form-label" for="departmentsJobCareers">Select Shift</label>
+    
+            <!-- Select -->
+            {{candid.form.desired_shift}}
+            <!-- End Select -->
+          </div>
+          <div class="col-sm-6 col-md-4">
+            <label class="form-label" for="departmentsJobCareers">Year of Birth</label>
+    
+            <!-- Select -->
+            {{candid.form.year_joined__gt}}
+            <!-- End Select -->
+          </div>
+          <div class="col-sm-6 col-md-4">
+            <label class="form-label" for="departmentsJobCareers">to</label>
+    
+            <!-- Select -->
+            {{candid.form.year_joined__lt}}
+            <!-- End Select -->
+          </div>
+      
+      </div>
+      <!-- End Row -->
+
+    <!-- End Form -->
+  <div class="text-center">
+    <a href="{% url 'candidates' %}" class="btn btn-ghost-light text-primary" >Reset</a>
+    <button type="submit" class="btn btn-ghost-danger">
+        <i class="bi bi-funnel-fill"></i> Apply Filter
+    </button>
+</div>
+  </div>
+  <!-- End List Directory -->
+</form>
+  <br>
+ 
+        <div class="row gx-3 mb-5">
+         
+          {% if request.user.customer.selected_membership == 'Small business' %}
+          {% for candidate in candid.qs|slice:":10" %}
+          <div class="col-sm-6 col-lg-3 mb-3">
+            <!-- Card -->
+            <div class="card card-transition h-100">
+              
+              <div class="card-body">
+                <div class="avatar avatar-lg avatar-circle mb-4">
+                  {% if candidate.profile_pic %}
+                  <img class="avatar-img" src="{{candidate.profile_pic.url}}" alt="Image Description">
+                  {% else %}
+                  <img class="avatar-img" src="{% static 'assets/img/others/default.png' %}" alt="Image Description">
+                  {% endif %}
+                </div>
+                {% if candidate.desired_job  %}
+                <span class="card-subtitle"><strong>{{candidate.desired_job}}</strong> </span>
+                {% endif %}
+                <h4 class="card-title">{{candidate.owner.full_name}} - {{candidate.calculate_age}} y.o</h4>
+                  
+                <p class="card-text">{{candidate.about|truncatechars:'100'}}</p>
+              </div>
+  
+              <div class="card-footer pt-0">
+                <!-- Socials -->
+                <ul class="list-inline mb-0">
+                  <li class="list-inline-item">
+                    <a class="btn btn-outline-primary btn-xs btn-icon rounded" href="{{candidate.facebook}}">
+                      <i class="bi-facebook"></i>
+                    </a>
+                  </li>
+                  <li class="list-inline-item">
+                    <a class="btn btn-outline-primary btn-xs btn-icon rounded" href="{{candidate.instagram}}">
+                      <i class="bi-instagram text-danger"></i>
+                    </a>
+                  </li>
+                  <li class="list-inline-item">
+                    <a class="btn btn-outline-primary btn-xs btn-icon rounded" href="{{candidate.github}}">
+                      <i class="bi-github text-dark"></i>
+                    </a>
+                  </li>
+                </ul>
+                <!-- End Socials -->
+                
+              </div>
+              <div class="view text-center mb-4">
+                <a href="{% url 'profile' candidate.owner.username %}" target="_blank" rel="noopener noreferrer">View Profile</a> |
+                {% if candidate.applicant_cv  %}
+                <a href="{{candidate.applicant_cv.url}}" target="_blank" rel="noopener noreferrer">View Resume</a>
+                {% endif %}
+              </div>
+            </div>
+            <!-- End Card -->
+          </div>
+         
+          <!-- End Col -->
+          {% endfor %}
+          {% if candid.qs.count >= 10 %}
+          <div class="alert alert-soft-primary" role="alert">
+            Max resumes for <strong>'Small business Plan'</strong> is 10, if you would like more resumes upgrade to another Tier <a href="{% url 'subscription' %}" class="alert-link">View Tiers</a>.
+          </div>
+          {% endif %}
+          {% endif %}
+
+
+
+
+<!-- ################ Mid-market enterprises ###############-->
+
+
+
+
+
+          
+          {% if request.user.customer.selected_membership == 'Mid-market enterprises' %}
+          {% for candidate in candid.qs|slice:":25" %}
+          <div class="col-sm-6 col-lg-3 mb-3">
+            <!-- Card -->
+            <div class="card card-transition h-100">
+              <div class="card-body">
+                <div class="add_to_fav" style="display: inline-flex; width: 100%; justify-content: flex-end; height: 0%;">
+                  <div class="col-auto">
+                    <!-- Checkbbox Bookmark -->
+                    
+                    <div class="form-check form-check-bookmark" >
+                      <input class="form-check-input" type="checkbox" value="" id="jobsPageHeaderBookmarkCheck">
+                      <label class="form-check-label" for="jobsPageHeaderBookmarkCheck">
+                        <span class="form-check-bookmark-default">
+                          {% if not added %}
+                         <a href="{% url 'save_applicant_profile' candidate.id %}"><i class="bi-star me-1" style="font-size: 20px;"></i>Save</a>
+                         {% else %}
+                         <a href="{% url 'save_applicant_profile' candidate.id %}"> <i class="bi bi-star-fill text-warning" style="font-size: 20px;"></i>Saved</a>
+                         {% endif %}
+                        </span>
+                        
+                      
+                        
+                      </label>
+                    </div>
+                    
+                    
+                    <!-- End Checkbbox Bookmark -->
+                  </div>
+                </div>
+                <div class="avatar avatar-lg avatar-circle mb-4">
+                  {% if candidate.profile_pic %}
+                  <img class="avatar-img" src="{{candidate.profile_pic.url}}" alt="Image Description">
+                  {% endif %}
+                </div>
+  
+                <span class="card-subtitle"><strong>{{candidate.desired_job}}</strong> </span>
+                <h4 class="card-title">{{candidate.owner.full_name}} - {{candidate.calculate_age}} y.o</h4>
+                  
+                <p class="card-text">{{candidate.about|truncatechars:'100'}}</p>
+              </div>
+  
+              <div class="card-footer pt-0">
+                <!-- Socials -->
+                <ul class="list-inline mb-0">
+                  <li class="list-inline-item">
+                    <a class="btn btn-outline-primary btn-xs btn-icon rounded" href="{{candidate.facebook}}">
+                      <i class="bi-facebook"></i>
+                    </a>
+                  </li>
+                  <li class="list-inline-item">
+                    <a class="btn btn-outline-primary btn-xs btn-icon rounded" href="{{candidate.instagram}}">
+                      <i class="bi-instagram text-danger"></i>
+                    </a>
+                  </li>
+                  <li class="list-inline-item">
+                    <a class="btn btn-outline-primary btn-xs btn-icon rounded" href="{{candidate.github}}">
+                      <i class="bi-github text-dark"></i>
+                    </a>
+                  </li>
+                </ul>
+                <!-- End Socials -->
+
+              </div>
+              <div class="view text-center mb-4">
+                <a href="{% url 'profile' candidate.owner.username %}" target="_blank" rel="noopener noreferrer">View Profile</a> |
+                {% if candidate.applicant_cv  %}
+                <a href="{{candidate.applicant_cv.url}}" target="_blank" rel="noopener noreferrer">View Resume</a>
+                {% endif %}
+              </div>
+            </div>
+            <!-- End Card -->
+          </div>
+          {% endfor %}
+          {% if candidate.count >= 25 %}
+          <div class="alert alert-soft-primary" role="alert">
+            Max resumes for 'Mid-market enterprises Plan' is 25, if you would like more resumes upgrade to another Tier <a href="{% url 'subscription' %}" class="alert-link">View Tiers</a>.
+          </div>
+          {% endif %}
+          {% endif %}
+
+
+
+
+
+<!-- ################ Large enterprises ###############-->
+
+
+
+
+
+
+
+
+
+          {% if request.user.customer.selected_membership == 'Large enterprise' %}
+          {% for candidate in candid.qs|slice:":50" %}
+          <div class="col-sm-6 col-lg-3 mb-3">
+            <!-- Card -->
+            <div class="card card-transition h-100">
+              <div class="card-body">
+                <div class="add_to_fav" style="display: inline-flex; width: 100%; justify-content: flex-end; height: 0%;">
+                  <div class="col-auto">
+                    <!-- Checkbbox Bookmark -->
+                    
+                    <div class="form-check form-check-bookmark" >
+                      <input class="form-check-input" type="checkbox" value="" id="jobsPageHeaderBookmarkCheck">
+                      <label class="form-check-label" for="jobsPageHeaderBookmarkCheck">
+                        <span class="form-check-bookmark-default">
+                          {% if not added %}
+                         <a href="{% url 'save_applicant_profile' candidate.id %}"><i class="bi-star me-1" style="font-size: 20px;"></i>Save</a>
+                         {% else %}
+                         <a href="{% url 'save_applicant_profile' candidate.id %}"> <i class="bi bi-star-fill text-warning" style="font-size: 20px;"></i>Saved</a>
+                         {% endif %}
+                        </span>
+                        
+                      
+                        
+                      </label>
+                    </div>
+                    
+                    
+                    <!-- End Checkbbox Bookmark -->
+                  </div>
+                </div>
+                <div class="avatar avatar-lg avatar-circle mb-4">
+                  {% if candidate.profile_pic %}
+                  <img class="avatar-img" src="{{candidate.profile_pic.url}}" alt="Image Description">
+                  {% endif %}
+                </div>
+  
+                <span class="card-subtitle"><strong>{{candidate.desired_job}}</strong> </span>
+                <h4 class="card-title">{{candidate.owner.full_name}} - {{candidate.calculate_age}} y.o</h4>
+                  
+                <p class="card-text">{{candidate.about|truncatechars:'100'}}</p>
+              </div>
+  
+              <div class="card-footer pt-0">
+                <!-- Socials -->
+                <ul class="list-inline mb-0">
+                  <li class="list-inline-item">
+                    <a class="btn btn-outline-primary btn-xs btn-icon rounded" href="{{candidate.facebook}}">
+                      <i class="bi-facebook"></i>
+                    </a>
+                  </li>
+                  <li class="list-inline-item">
+                    <a class="btn btn-outline-primary btn-xs btn-icon rounded" href="{{candidate.instagram}}">
+                      <i class="bi-instagram text-danger"></i>
+                    </a>
+                  </li>
+                  <li class="list-inline-item">
+                    <a class="btn btn-outline-primary btn-xs btn-icon rounded" href="{{candidate.github}}">
+                      <i class="bi-github text-dark"></i>
+                    </a>
+                  </li>
+                </ul>
+                <!-- End Socials -->
+              </div>
+              <div class="view text-center mb-4">
+                <a href="{% url 'profile' candidate.owner.username %}" target="_blank" rel="noopener noreferrer">View Profile</a> |
+                {% if candidate.applicant_cv  %}
+                <a href="{{candidate.applicant_cv.url}}" target="_blank" rel="noopener noreferrer">View Resume</a>
+                {% endif %}
+              </div>
+            </div>
+            <!-- End Card -->
+          </div>
+         
+          {% endfor %}
+          {% if candidate.count >= 50 %}
+          <div class="alert alert-soft-primary" role="alert">
+            Max resumes for 'Large enterprise Plan' is 50, if you would like a special quote let us know  <a href="{% url 'contact' %}" class="alert-link">Contact Us</a>.
+          </div>
+          {% endif %}
+          {% endif %}
+
+      
+
+        </div>
+        <!-- End Row -->
+
+      </div>
+      <!-- End Team -->
+<script>
+    document.getElementById("id_desired_industry").setAttribute("class", "form-select form-select-md");
+    document.getElementById("id_desired_job_type").setAttribute("class", "js-select form-select form-select-md");
+    document.getElementById("id_desired_job_type").setAttribute("placeholder", "Type");
+  document.getElementById("id_languages").setAttribute("class", "js-select form-select form-select-md");
+  document.getElementById("id_languages").setAttribute("placeholder", "Filter By Language");
+  document.getElementById("id_desired_job").setAttribute("class", "js-select form-select form-select-md");
+  document.getElementById("id_state").setAttribute("class", "js-select form-select form-select-md");
+  document.getElementById("id_state").setAttribute("placeholder", "Filter By State");
+  document.getElementById("id_desired_shift").setAttribute("class", "form-select form-select-sm");
+  document.getElementById("id_year_joined__gt").setAttribute("class", "form-control");
+  document.getElementById("id_year_joined__lt").setAttribute("class", "form-control");
+  document.getElementById("id_year_joined__gt").setAttribute("placeholder", "1980");
+  document.getElementById("id_year_joined__lt").setAttribute("placeholder", "2000");
+
+  
+</script>
+</body>
+{% endblock content %}

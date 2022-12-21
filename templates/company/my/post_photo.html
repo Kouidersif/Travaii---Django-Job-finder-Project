@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block content %}
+{% include 'parts/nav.html' %}
+<div class="container">
+  {% if messages %}
+  {% for message in messages %}
+  <div class="alert alert-success" role="alert">
+    {{message}}
+  </div>
+ {% endfor %}
+{% endif %}
+</div>
+    <div class="position-relative container mt-10 rounded bg-soft-primary" style="padding:100px;">
+        <form enctype="multipart/form-data" method="post">
+            {% csrf_token %}
+            <div class="row mb-3">
+                <label class="col-sm-3 col-form-label"> <strong>Titre</strong></label>
+                <div class="col-sm-9">
+                  {{form.tag}}
+                </div>
+              </div>
+              
+              <div class="row">
+                <label class="col-sm-3 col-form-label"><strong>Importer une photo</strong></label>
+                <div class="col-sm-9">
+{{form.the_images}}           
+     </div>
+              </div>
+            
+            <button class="position-absolute bottom-0 end-0 btn btn-primary btn-lg mt-5" type="submit" style="margin-right: 20px;margin-bottom: 10px;">Publier</button>
+        </form>
+    </div>
+    
+
+{% endblock content %}

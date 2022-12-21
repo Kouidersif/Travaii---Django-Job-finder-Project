@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+
+<div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h5 class="modal-title"> Delete</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+                
+            </button>
+        </div>
+        
+        <form action="{% url 'delete_experience' object.id %}" method="post">
+        <div class="modal-body">
+           
+   
+        {% csrf_token %}
+       
+        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+            <i class="bi-exclamation-triangle-fill"></i>  <span class="fw-semibold">Making sure {{request.user.full_name}}!</span> Are you sure you want to delete?
+            
+          </div>
+       
+       
+       
+        <div class="modal-footer">
+            <button type="button" class="btn btn-white" data-bs-dismiss="modal">Cancel</button>
+            <button class="btn btn-primary" type="submit">
+                Delete
+            </button>
+        </div>
+    </div>
+    </form>
+    </div>
+
+</div>
+ 
+
+
+{% endblock content %}

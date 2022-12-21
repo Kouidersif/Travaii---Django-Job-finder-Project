@@ -1,0 +1,157 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %} View Applications {% endblock title %}
+{% block content %}
+<style>
+  .ck-content .table {
+    width: auto;
+}
+</style>
+
+<a href="{% url 'alljobs' %}">Back to offers</a>
+
+<br>
+
+<main id="content" role="main">
+  <!-- Page Header -->
+  <div class="container content-space-t-2">
+    
+    <div class="w-lg-75 mx-lg-auto">
+      {% if messages %}
+<div class="alert alert-{{ message.tags }}" role="alert">
+  {% for message in messages %}
+  {{message|safe}}
+  
+  {% endfor %}
+  </div>
+  {% endif %}
+      <div class="page-header">
+        <!-- Media -->
+        <div class="d-sm-flex mb-3">
+        
+          <div class="flex-shrink-0 mb-2 mb-sm-0">
+            <a href="{% url 'company_Profile' job.publisher.id %}">
+              {% if job.publisher.companyprofile.company_logo %}
+              <img class="avatar avatar-lg mb-3" src="{{job.publisher.companyprofile.company_logo.url}}" alt="Image Description">
+              {% endif %}
+            </a>
+          </div>
+          
+          <div class="flex-grow-1 ms-sm-4">
+            <div class="row">
+              <div class="col">
+                <h1 class="page-header-title h2">{{job.position}}</h1>
+              </div>
+              <!-- End Col -->
+
+              <div class="col-auto">
+                <!-- Checkbbox Bookmark -->
+                      
+                <div class="form-check form-check-bookmark">
+                  <input class="form-check-input" type="checkbox" value="" id="jobsPageHeaderBookmarkCheck">
+                  <label class="form-check-label" for="jobsPageHeaderBookmarkCheck">
+                    <span class="form-check-bookmark-default">
+                      {% if not added %}
+                     <a href="{% url 'save_job' job.id %}"><i class="bi-star me-1"></i> Save it and apply later </a>
+                     {% else %}
+                     <a href="{% url 'save_job' job.id %}"> <i class="bi bi-star-fill text-warning"></i> Saved </a>
+                     {% endif %}
+                    </span>
+                    
+                  
+                    
+                  </label>
+                </div>
+                
+                
+                <!-- End Checkbbox Bookmark -->
+              </div>
+              <!-- End Col -->
+            </div>
+            <!-- End Row -->
+
+            <ul class="list-inline list-separator d-flex align-items-center mb-2">
+              <li class="list-inline-item">
+                <a class="link" href="{% url 'company_Profile' job.publisher.id %}">{{job.publisher.companyprofile.company_name}}</a>
+              </li>
+              
+
+            </ul>
+
+            <ul class="list-inline list-separator small text-body mb-2">
+              <li class="list-inline-item">Posted {{job.creation_date|timesince}} ago</li>
+              <li class="list-inline-item">{{job.publisher.companyprofile.city}}</li>
+              <li class="list-inline-item">{{job.job_type}}</li>
+            </ul>
+          </div>
+        </div>
+        <!-- End Media -->
+      </div>
+    </div>
+  </div>
+  <!-- End Page Header -->
+
+  <!-- Content -->
+  <div class="container content-space-b-lg-3">
+    
+    <div class="w-lg-75 mx-lg-auto">
+      
+      <div class="alert alert-soft-primary" role="alert">
+        Please Note that all the following info will be visible by the employer:
+        <ul class="mt-2">
+          <li>Your Full name</li>
+          <li>You Resume</li>
+          <li>Your Profile Page including (Education, Skills...)</li>
+      
+          
+      
+          
+        </ul>
+      
+      </div>
+      <!-- Form -->
+      <form method="post">
+        {% csrf_token %}
+
+
+        <div class="mb-4">
+          <h3>Profile</h3>
+        </div>
+
+        <!-- Form -->
+        <div class="mb-4">
+          <label class="form-label" for="applyForJobSummary">Let your employer know how excited you are to start working</label>
+          {{form.about}}
+        </div>
+        <!-- End Form -->
+        <div class="mb-4">
+          <h3>Details</h3>
+        </div>
+
+        <!-- Form -->
+        <div class="mb-4">
+          <label class="form-label" for="applyForJobExpectedSalary">Expected salary </label>
+            {{form.expected_salary}}
+        </div>
+        <!-- End Form -->
+ <!-- Form -->
+ <div class="mb-4">
+  <label class="form-label" for="applyForJobExpectedSalary">Do you have Experience in the same industry? </label>
+    {{form.experience}}
+</div>
+<!-- End Form -->
+
+        <div class="d-grid mt-5">
+          <button type="submit" class="btn btn-primary btn-lg">Send application</button>
+          <a href="{% url 'detail_job' job.id %}" class="link-primary text-center border mt-1 p-2 bg-soft-light">Cancel</a>
+        </div>
+      </form>
+      <!-- End Form -->
+    </div>
+  </div>
+  <!-- Content -->
+</main>
+
+
+
+{% endblock content %}

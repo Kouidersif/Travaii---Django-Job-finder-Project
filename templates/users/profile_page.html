@@ -1,0 +1,447 @@
+
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}{{user.full_name}}'s Profile  {% endblock title %}
+
+
+{% block content %}
+{% include 'parts/nav.html' %}
+
+<!DOCTYPE html>
+<html lang="en" dir="">
+<head>
+  <!-- Required Meta Tags Always Come First -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+  <!-- Title -->
+  <title>Jobs: Employee (Applicant) | Front - Multipurpose Responsive Template</title>
+
+  <!-- Favicon -->
+  <link rel="shortcut icon" href="{% static '/favicon.ico' %}">
+
+  <!-- Font -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
+
+  <!-- CSS Implementing Plugins -->
+  <link rel="stylesheet" href="{% static 'assets/vendor/bootstrap-icons/font/bootstrap-icons.css' %}">
+  <link rel="stylesheet" href="{% static 'assets/vendor/hs-mega-menu/dist/hs-mega-menu.min.css' %}">
+
+  <!-- CSS Front Template -->
+  <link rel="stylesheet" href="{% static 'assets/css/theme.min.css' %}">
+</head>
+
+<body>
+
+
+  <!-- ========== MAIN CONTENT ========== -->
+  <main id="content" role="main">
+    <!-- Page Header -->
+    <div class="container content-space-t-2">
+      <div class="page-header">
+        <!-- Media -->
+        <div class="d-flex align-items-lg-center">
+          <div class="flex-shrink-0">
+            {% for applicant in applicants %}
+            {% if applicant.profile_pic %}
+            <img class="avatar avatar-xl avatar-circle" src="{{applicant.profile_pic.url}}" alt="Image Description">
+            {% else %}
+            <img class="avatar avatar-xl avatar-circle" src="{% static 'assets/img/others/default.png' %}" alt="Image Description">
+            {% endif %}
+            {% endfor %}
+          </div>
+          
+          <div class="flex-grow-1 ms-4">
+            <div class="row">
+              <div class="col-lg mb-3 mb-lg-0">
+                <h1 class="page-header-title h2">{{user.full_name}}</h1>
+{% for applicant in applicants %}
+                <ul class="list-inline list-separator">
+                  {% if applicant.city or applicant.state  %}
+                  <li class="list-inline-item">
+                    
+                    <i class="bi-geo-alt-fill text-primary me-1"></i> {{applicant.city}}, {{applicant.state}}
+                  </li>
+                  {% endif %}
+                  {% if applicant.owner == request.user %}
+                  <li class="list-inline-item"><i class="bi bi-inboxes-fill text-primary"></i> {{applicant.owner.email}}  (Only you can see this Email)</li>
+                  {% else %}
+                  <li class="list-inline-item"><i class="bi bi-inboxes-fill text-primary"></i> Hidden Email</li>
+                </ul>
+                {% endif %}
+                {% endfor %}
+              </div>
+              <!-- End Col
+             
+              <div class="col-lg-auto align-self-lg-end text-lg-right">
+                <div class="d-flex gap-2">
+                  <a class="btn btn-primary btn-sm" href="#">
+                    <i class="bi-envelope-fill me-1"></i> Contact me
+                  </a>
+
+                
+                  <div class="dropdown">
+                    <a class="btn btn-outline-primary btn-sm btn-icon" href="#" id="employeeProfileShareDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false" data-bs-dropdown-animation>
+                      <i class="bi-share-fill"></i>
+                    </a>
+
+                    <div class="dropdown-menu dropdown-menu-end" aria-labelledby="employeeProfileShareDropdown">
+                      <a class="dropdown-item" href="#">
+                        <i class="bi-facebook dropdown-item-icon"></i> Facebook
+                      </a>
+                      <a class="dropdown-item" href="#">
+                        <i class="bi-twitter dropdown-item-icon"></i> Twitter
+                      </a>
+                      <a class="dropdown-item" href="#">
+                        <i class="bi-linkedin dropdown-item-icon"></i> LinkedIn
+                      </a>
+                    </div>
+                  </div>
+               
+                </div>
+              </div>
+              End Col -->
+            </div>
+            <!-- End Row -->
+          </div>
+        </div>
+        <!-- End Media -->
+      </div>
+    </div>
+    <!-- End Page Header -->
+    {% for applicant in applicants %}
+    <!-- Content -->
+    
+    <div class="container content-space-2">
+      <div class="row">
+        <div class="col-lg-8">
+          <div class="mb-8">
+            <h3>Bio</h3>
+
+            <p>{{applicant.about|safe}}</p>
+            <!--
+            <ul class="mb-4">
+              <li>Authorized to work in the UK for any employer</li>
+              <li>Willing to relocate to anywhere</li>
+            </ul>
+          -->
+            <div class="row">
+              <div class="col-sm-6">
+                <div class="mb-4">
+                  <h5>Desired job title</h5>
+                  {% if applicant.desired_job %}
+                  <p>{{applicant.desired_job}}</p>
+                  {% else %}
+                  <div class="alert alert-soft-primary" role="alert">
+                    Applicant has not specified yet
+                  </div>
+                  {% endif %}
+                </div>
+                
+                <div class="mb-4">
+                  <h5>Desired job types</h5>
+                 
+                  {% if applicant.desired_job_type %}
+                  <p>{{applicant.desired_job_type}}</p>
+                  {% else %}
+                  <div class="alert alert-soft-primary" role="alert">
+                    Applicant has not specified yet
+                  </div>
+                  {% endif %}
+                </div>
+              </div>
+              <!-- End Col -->
+
+              <div class="col-sm-6">
+                <div class="mb-4">
+                  <h5>Desired work shift</h5>
+                  {% if applicant.desired_shift %}
+                  <p>{{applicant.desired_shift}}</p>
+                  {% else %}
+                  <div class="alert alert-soft-primary" role="alert">
+                    Applicant has not specified yet
+                  </div>
+                  {% endif %}
+                </div>
+              </div>
+              <!-- End Col -->
+            </div>
+            <!-- End Row -->
+          </div>
+
+          <div class="mb-8">
+            <div class="mb-4">
+              <h3>Work experience</h3>
+            </div>
+
+            <!-- Step -->
+            {% if experience %}
+            <ul class="step step-icon-sm">
+              
+              {% for work in experience %}
+              <li class="step-item">
+                <div class="step-content-wrapper">
+                  <div class="step-avatar step-avatar-sm">
+                    {% if work.company_pic_exp %}
+                    <img class="step-avatar-img" src="{{work.company_pic_exp.url}}" alt="Image Description">
+                    {% else %}
+                    <img class="step-avatar-img" src="{% static 'assets/svg/brands/business.png' %}" alt="Image Description">
+                    {% endif %}
+
+                  </div>
+                  <div class="step-content">
+                    <h5 class="step-title">{{work.title}} at {{work.company}}</h5>
+                    <span class="d-block text-dark">{{work.co_location}} <i class="bi bi-geo-fill text-danger"></i></span>
+                    {% if work.still_working == 'Yes' %}
+                    <p class="text-body mb-0">Current Employee</p>
+                    {% elif work.still_working == 'No' %}
+                    <p class="text-body mb-0">Stopped working</p>
+                    {% endif %}
+                    <p class="text-body mb-0">{{work.about_role}}</p>
+                  </div>
+                </div>
+              </li>
+              
+              {% endfor %}
+            </ul>
+            <!-- End Step -->
+            {% else %}
+            <div class="alert alert-soft-primary" role="alert">
+              Applicant has not specified yet
+            </div>
+            {% endif %}
+          </div>
+          {% if study %}
+          <div class="mb-8">
+            <div class="mb-3">
+              <h3>Education</h3>
+            </div>
+
+            <!-- Step -->
+            <ul class="step step-icon-sm">
+              {% for education in study %}
+              <li class="step-item">
+                <div class="step-content-wrapper">
+                  <div class="step-avatar step-avatar-sm">
+                    <img class="step-avatar-img" src="{% static 'assets/img/others/uni.png' %}" alt="Image Description">
+                  </div>
+                  <div class="step-content">
+                    <h5 class="step-title">{{education.degree}}</h5>
+                    <span class="d-block text-dark">{{education.University}}</span>
+                    <small class="d-block">{{education.duration}}</small>
+                  </div>
+                </div>
+              </li>
+
+              {% endfor %}
+            </ul>
+            <!-- End Step -->
+          </div>
+          {% else %}
+          {% for applicant in applicants %}
+          {% if applicant.owner == request.user %}
+          <div class="mb-8">
+            <div class="mb-3">
+              <h3>Education</h3>
+            </div>
+          
+            
+            <h4 class="text-primary"> <a href="{% url 'show_education' %}">Please Add Education</a> </h4>
+            
+          
+        
+          </div>
+          
+          {% endif %}
+          {% endfor %}
+          {% endif %}
+          {% if myskills %}
+          <div class="mb-8">
+            <div class="mb-3">
+              <h3>Skills</h3>
+            </div>
+          
+              {% for myskill in myskills %}
+            <span class="badge bg-soft-dark text-dark py-2 px-3 m-1">{{myskill.skill}}</span>
+            {% endfor %}
+          
+        
+          </div>
+          {% else %}
+          {% for applicant in applicants %}
+          {% if applicant.owner == request.user %}
+          <div class="mb-8">
+            <div class="mb-3">
+              <h3>Skills</h3>
+            </div>
+          
+            
+            <h4 class="text-primary"> <a href="{% url 'skills' %}">Please Add skills</a> </h4>
+            
+          
+        
+          </div>
+          
+          {% endif %}
+          {% endfor %}
+          {% endif %}
+          
+          <div class="mb-8">
+            <div class="mb-3">
+              <h3>Languages</h3>
+            </div>
+            {% for lengua in applicant.languages.all %}
+            <span class="badge bg-soft-primary text-dark py-2 px-3 m-1">{{lengua}}</span>
+            {% endfor %}
+          </div>
+
+
+          <div class="mb-3">
+            <h3>Links</h3>
+          </div>
+          {% if applicant.github %}
+        <h1><a href="{{applicant.github}}" target="_blank"><i class="fa-brands fa-github text-dark"></i></a> 
+          {% endif %}
+
+          {% if applicant.facebook %}
+          <a href="{{applicant.facebook}}" target="_blank"><i class="fa-brands fa-facebook text-primary"></i></a>
+          {% endif %}
+
+          {% if applicant.instagram %}
+          <a href="{{applicant.instagram}}" target="_blank"><i class="fa-brands fa-instagram text-danger"></i></a>
+          {% endif %}
+
+          {% if applicant.p_website %}
+          <a href="{{applicant.p_website}}" target="_blank"><i class="fa-sharp fa-solid fa-blog"></i></a></li>
+          {% endif %}
+
+          {% if applicant.linkedin %}
+          <a href="{{applicant.linkedin}}" target="_blank"><i class="fa-brands fa-linkedin text-primary"></i></a></h1> 
+          {% endif %}
+          <!-- Sticky Block End Point -->
+          <div id="stickyBlockEndPoint"></div>
+        </div>
+        <!-- End Col -->
+        {% if request.user.is_company %}
+        <div class="col-lg-4">
+          <div class="ps-lg-4">
+            <!-- Sticky Block -->
+            <div id="stickyBlockStartPoint">
+              <div class="js-sticky-block"
+                   data-hs-sticky-block-options='{
+                     "parentSelector": "#stickyBlockStartPoint",
+                     "breakpoint": "lg",
+                     "startPoint": "#stickyBlockStartPoint",
+                     "endPoint": "#stickyBlockEndPoint",
+                     "stickyOffsetTop": 20,
+                     "stickyOffsetBottom": 20
+                   }'>
+                <!-- Card -->
+                <div class="card card-bordered">
+                  <div class="card-body">
+                    <div class="mb-5">
+                      <h3>Search millions of resumes across your industry and location.</h3>
+                    </div>
+
+                    <div class="d-grid mb-5">
+                      <a class="btn btn-primary" href="{% url 'subscription' %}">Select a subscription</a>
+                    </div>
+                      
+                    <div class="w-65 mx-auto">
+                      <img class="card-img-bottom" src="{% static '/assets/svg/illustrations/oc-chatting.svg' %}" alt="Image Description">
+                    </div>
+                  </div>
+                </div>
+                <!-- End Card -->
+              </div>
+            </div>
+            <!-- End Sticky Block -->
+          </div>
+        </div>
+        {% endif %}
+        <!-- End Col -->
+      </div>
+      <!-- End Row -->
+    </div>
+    <!-- Content -->
+    {% endfor %}
+  </main>
+  <!-- ========== END MAIN CONTENT ========== -->
+
+  <!-- ========== FOOTER ========== -->
+ 
+
+  <!-- ========== END FOOTER ========== -->
+
+  <!-- ========== SECONDARY CONTENTS ========== -->
+  <!-- Go To -->
+  <a class="js-go-to go-to position-fixed" href="javascript:;" style="visibility: hidden;"
+     data-hs-go-to-options='{
+       "offsetTop": 700,
+       "position": {
+         "init": {
+           "right": "2rem"
+         },
+         "show": {
+           "bottom": "2rem"
+         },
+         "hide": {
+           "bottom": "-2rem"
+         }
+       }
+     }'>
+    <i class="bi-chevron-up"></i>
+  </a>
+  <!-- ========== END SECONDARY CONTENTS ========== -->
+  <!-- JS Global Compulsory  -->
+  <script src="../assets/vendor/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+
+  <!-- JS Implementing Plugins -->
+  <script src="../assets/vendor/hs-mega-menu/dist/hs-mega-menu.min.js"></script>
+  <script src="../assets/vendor/hs-show-animation/dist/hs-show-animation.min.js"></script>
+  <script src="../assets/vendor/hs-go-to/dist/hs-go-to.min.js"></script>
+  <script src="../assets/vendor/hs-sticky-block/dist/hs-sticky-block.min.js"></script>
+
+  <!-- JS Front -->
+  <script src="../assets/js/theme.min.js"></script>
+  <!-- JS Plugins Init. -->
+  <script>
+    (function() {
+      // INITIALIZATION OF MEGA MENU
+      // =======================================================
+      new HSMegaMenu('.js-mega-menu', {
+          desktop: {
+            position: 'left'
+          }
+        })
+
+
+      // INITIALIZATION OF SHOW ANIMATIONS
+      // =======================================================
+      new HSShowAnimation('.js-animation-link')
+
+
+      // INITIALIZATION OF BOOTSTRAP DROPDOWN
+      // =======================================================
+      HSBsDropdown.init()
+
+
+      // INITIALIZATION OF GO TO
+      // =======================================================
+      new HSGoTo('.js-go-to')
+
+
+      // INITIALIZATION OF STICKY BLOCKS
+      // =======================================================
+      new HSStickyBlock('.js-sticky-block', {
+        targetSelector: document.getElementById('header').classList.contains('navbar-fixed') ? '#header' : null
+      })
+    })()
+  </script>
+</body>
+</html>
+
+
+
+{% endblock content %}

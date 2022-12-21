@@ -1,0 +1,222 @@
+
+{% load static %}
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Lobster&display=swap');
+
+  @media (min-width:992px){
+  .barhold{
+    display: flex;
+    width: 100%;
+    justify-content: flex-start;
+    margin-top: 20px;
+  }
+}
+@media (max-width:423px){
+  .barhold{
+    display: flex;
+    width: 100%;
+    justify-content: flex-start;
+    gap: 10px;
+   
+  }
+}
+
+@media (max-width:991px){
+  .barhold{
+    display: flex;
+    width: 100%;
+    justify-content:space-between;
+  }
+  .loggedinas{
+    display: flex;
+    width: 100%;
+    justify-content:center;
+  }
+}
+.logotext h1{
+  display: inline-block;
+  padding: 0;
+  margin-top: 0;
+
+}
+.logotext{
+  font-family: 'Lobster', cursive;
+  color: black;
+  font-size: 30px;
+
+}
+.spat{
+  display: inline-block;
+  padding: 0;
+  color: #377dff;
+  font-size: 60px;
+}
+</style>
+
+<header id="header" class="navbar navbar-expand-lg navbar-end navbar-light">
+    <!-- Topbar -->
+ 
+    <!-- End Topbar -->
+
+    <div class="container">
+      <nav class="js-mega-menu navbar-nav-wrap">
+        <!-- Default Logo -->
+      
+        <a class="navbar-brand" href="{% url 'home' %}" aria-label="Front">
+          <h1 class="logotext"><span class="spat">T</span>ravaii</h1>
+        </a>
+
+        <!-- End Default Logo -->
+
+        <!-- Toggler -->
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-default">
+            <i class="bi-list"></i>
+          </span>
+          <span class="navbar-toggler-toggled">
+            <i class="bi-x"></i>
+          </span>
+        </button>
+        <!-- End Toggler -->
+      
+        <!-- Collapse -->
+        <div class="collapse navbar-collapse" id="navbarNavDropdown">
+          <ul class="navbar-nav">
+            {% if not request.user.is_authenticated  %}
+            <li class="nav-item">
+              <a class="nav-link active" href="{% url 'home' %}">Home</a>
+            </li>
+
+            <!-- Dropdown -->
+            <li class="nav-item">
+              <a class="nav-link " href="{% url 'alljobs' %}"> Jobs</a>
+            </li>
+            <!-- End Dropdown -->
+
+            <!-- Dropdown -->
+            <li class="nav-item">
+              <a class="nav-link " href="#"> Blog</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link " href="{% url 'contact' %}"> Contact us</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link " href="{% url 'log_in' %}"> Log in</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link " href="{% url 'sign_up' %}">Job Seeker</a>
+            </li>
+            <li class="nav-item">
+              
+              <a class="btn btn-primary btn-transition" href="{% url 'sign_up_company' %}">Post a job</a>
+            </li>
+            
+            <!-- End Dropdown -->
+            {% elif request.user.is_authenticated and request.user.is_applicant %}
+            <div class="barhold">
+            <li class="nav-item">
+              <a class="nav-link active" href="{% url 'home' %}">Home</a>
+            </li>
+
+            <!-- Dropdown -->
+            <li class="nav-item">
+              <a class="nav-link " href="{% url 'alljobs' %}"> Jobs</a>
+            </li>
+            <!-- End Dropdown -->
+
+            <!-- Dropdown -->
+            <li class="nav-item">
+              <a class="nav-link " href="#"> Blog</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link " href="{% url 'contact' %}"> Contact us</a>
+            </li>
+          </div>
+          <div class="loggedinas">
+              <!-- Dropdown -->
+              <li class="nav-item" style="border-bottom: 2px solid blue;">
+                <div class="btn-group">
+                  <button class="btn btn-ghost-primary dropdown-toggle" type="button" id="dropdownMenuButtonGhostPrimary" data-bs-toggle="dropdown" aria-expanded="false" style="font-weight: 800;">
+                    <i class="bi bi-person"></i> {{request.user.username|title}}
+                  </button>
+                  <div class="dropdown-menu dropdown-menu-left" aria-labelledby="dropdownMenuButton">
+                    <a class="dropdown-item" href="{% url 'profile' request.user.username %}">
+                      <i class="bi bi-person-square dropdown-item-icon"></i> My Profile
+                    </a>
+                    <a class="dropdown-item" href="{% url 'account_settings' %}"> 
+                      <i class="bi bi-gear-wide-connected dropdown-item-icon"></i>Settings
+                    </a>
+                    <a class="dropdown-item" href="{% url 'log_out' %}">
+                      <i class="bi bi-box-arrow-in-left dropdown-item-icon"></i>Log Out
+                    </a>
+                  </div>
+                </div>
+              </li>
+          <!-- End Dropdown -->
+        </div>
+               <!-- Mega Menu -->
+               
+               
+              
+              
+   
+
+            
+            
+            {% elif request.user.is_company %}
+            <div class="barhold">
+              
+            <li class="nav-item">
+              <a class="nav-link active" href="{% url 'home' %}">Home</a>
+            </li>
+
+            <!-- Dropdown -->
+            <li class="nav-item">
+              <a class="nav-link " href="{% url 'alljobs' %}"> Jobs</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link " href="{% url 'candidates' %}"> Resumes</a>
+            </li>
+            <!-- End Dropdown -->
+
+            <li class="nav-item">
+              <a class="nav-link" href="{% url 'subscription' %}"> Pricing</a>
+            </li>
+            <li class="nav-item">
+              <a class="btn btn-primary btn-transition" href="{% url 'create_job' %}">Post a job</a>
+            </li>
+            </div>
+           <!-- Dropdown -->
+           <li class="nav-item" style="border-bottom: 2px solid blue;">
+            <div class="btn-group">
+              
+              <button class="btn btn-ghost-primary dropdown-toggle" type="button" id="dropdownMenuButtonGhostPrimary" data-bs-toggle="dropdown" aria-expanded="false" style="font-weight: 800;">
+              <i class="bi bi-person" style="margin-right: 5px;"></i>   {{request.user.username|title}}
+              </button>
+              <div class="dropdown-menu dropdown-menu-left" aria-labelledby="dropdownMenuButton">
+                <a class="dropdown-item" href="{% url 'company_Profile' user.id %}">
+                  <i class="bi bi-building dropdown-item-icon"></i> Company Profile
+                </a>
+                <a class="dropdown-item" href="{% url 'account_categories' %}"> 
+                  <i class="bi bi-gear-wide-connected dropdown-item-icon"></i>Settings
+                </a>
+                <hr>
+           
+                <a class="dropdown-item" href="{% url 'contact' %}">
+                  <i class="bi bi-question-circle dropdown-item-icon"></i>Help
+                </a>
+                <a class="dropdown-item" href="{% url 'log_out' %}">
+                  <i class="bi bi-box-arrow-in-left dropdown-item-icon"></i>Log Out
+                </a>
+              </div>
+            </div>
+          </li>
+          <!-- End Dropdown -->
+          </ul>
+         
+          {% endif %}
+        </div>
+        <!-- End Collapse -->
+      </nav>
+    </div>
+  </header>

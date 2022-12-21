@@ -1,0 +1,443 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load mathfilters %}
+{% block content %}
+{% include 'parts/nav.html' %}
+
+
+
+
+  <!-- ========== MAIN CONTENT ========== -->
+    <!-- Page Header -->
+
+<body class="bg-light">
+    
+
+<!-- End Page Header -->
+  <main id="content" role="main" class="bg-light ">
+    
+
+    <!-- End Breadcrumb -->
+
+    <!-- Content -->
+    <div class="container content-space-1 content-space-t-lg-0 content-space-b-lg-2 mt-10 ">
+      <div class="row">
+  
+        <!-- End Col -->
+
+        <div class="container">
+          <div class="d-grid gap-3 gap-lg-5">
+            
+            <!-- Card -->
+            <div class="card">
+              <div class="card-header border-bottom">
+                {% if messages %}
+            {% for message in messages %}
+            <div class="alert alert-{{message.tags}}" role="alert">
+              {{message}}
+            </div>
+        
+            {% endfor %}
+            {% endif %}
+
+              </div>
+              
+              <div class="card-body">
+                <div class="d-grid gap-3 gap-lg-5">
+                    <!-- Card -->
+                    <div class="card mb-3 mb-lg-5">
+                      <!-- Header -->
+                      <div class="card-header d-sm-flex justify-content-sm-between align-items-sm-center border-bottom">
+                        <h5 class="card-header-title">Overview</h5>
+                        <div class="balance">
+                          <h5>
+                            Balance : 
+                            {% if customer_data.currency == 'eur' %}
+                            €{{user_balance|div:100}} Euro
+                            {% else %}
+                            $ {{user_balance|div:100}}
+                            {% endif %}
+                          </h5>
+                        </div>
+                     
+                      </div>
+                      <!-- End Header -->
+                      {% if subscription %}
+                      {% if subscription.status == "active" %}
+                      
+                      <!-- Body -->
+                      <div class="card-body">
+                        <div class="row">
+                          <div class="col-md mb-4 mb-md-0">
+                            <div class="mb-4">
+                              <span class="card-subtitle">Your plan:</span>
+                              <p class="text-dark">{{ product.name }} Plan</p>
+                             
+                            </div>
+                            <div>
+                                <span class="card-subtitle">Status</span>
+                                {% if subscription.status == 'active' and subscription.cancel_at_period_end %}
+                                <p class="text-dark">Annulation prévue {{end_date|date:"d-m-Y"}} </p>
+                                <a class="btn btn-primary btn-sm btn-transition" href="{% url 'reactivate_or_cancel' subscription.id %}">Reactivate my plan</a>
+                                {% elif subscription.status == 'active' and subscription.cancel_at_period_end == False  %}
+                                <h5 class="text-dark">{{subscription.status|title}}</h5>
+                                {% endif %}
+                              </div>
+                              {% if subscription.status == 'active' and subscription.cancel_at_period_end == False %}
+                            <div>
+                              
+                              <span class="card-subtitle">Next Bill</span>
+                              <p class="text-dark">{{end_date|date:"d-m-Y"}}</p>
+                            </div>
+                            <div>
+                              
+                              <span class="card-subtitle">Jobs to publish</span>
+                              {% if product.name == 'Small business' %}
+                              <p class="text-dark"> max jobs 2</p>
+                              {% endif %}
+                            </div>
+                            {% endif %}
+                          </div>
+                          <!-- End Col -->
+                  
+                          <div class="col-md-auto">
+                            <div class="d-grid d-md-flex gap-3">
+                              
+                              
+                              
+                              {% if subscription.cancel_at_period_end == False %}
+                                <!-- Button trigger modal -->
+                                <a href="{% url 'reactivate_or_cancel' subscription.id %}"><button type="button" class="btn btn-white btn-sm">
+                                  Cancel Subscription
+                                </button></a>
+                                
+                                <a class="btn btn-primary btn-sm btn-transition" href="{% url 'subscription' %}">Change plan</a>
+                                <!-- End Button trigger modal -->
+                                {% endif %}
+                             
+                            </div>
+                          </div>
+                          <!-- End Col -->
+                        </div>
+                        <!-- End Row -->
+                      </div>
+                      <!-- End Body -->
+                
+                      {% else %}
+                      {% if subscription.status == 'canceled' %}
+                                     <!-- Body -->
+                                     <div class="card-body">
+                                        <div class="row">
+                                          <div class="col-md mb-4 mb-md-0">
+                                            <div class="mb-4">
+                                              <span class="card-subtitle">Your plan (billed yearly):</span>
+                                              
+                                              <h5>{{ product.name }} - {{subscription.status|title}}</h5>
+                                            </div>
+                                            <div>
+                                                <span class="card-subtitle"></span>
+                                                <h3 class="text-danger"></h3>
+                                              </div>
+                                  
+                                            <div>
+                                              <span class="card-subtitle"></span>
+                                              <h3 class="text-primary"></h3>
+                                            </div>
+                                          </div>
+                                          <!-- End Col -->
+                                  
+                                          <div class="col-md-auto">
+                                            <div class="d-grid d-md-flex gap-3">
+                                              <a class="btn btn-white btn-sm" href="#">Cancel subscription</a>
+                                              <a class="btn btn-primary btn-sm btn-transition" href="{% url 'subscription' %}">Subscribe again</a>
+                                            </div>
+                                          </div>
+                                          <!-- End Col -->
+                                        </div>
+                                        <!-- End Row -->
+                                      </div>
+                                      <!-- End Body -->
+                     
+                      {% endif %}
+                      {% endif %}
+                      {% else %}
+                      <div class="card-body">
+                        <div class="row">
+                          <div class="col-md mb-4 mb-md-0">
+                            <div class="mb-4">
+                              
+                              <p class="text-dark">No subscriptions at the moment </p>
+                             
+                            </div>
+                          
+                          </div>
+                          <!-- End Col -->
+                        </div>
+                        <!-- End Row -->
+                      </div>
+                  {% endif %}
+<hr>
+                  <!-- Card -->
+                  {% if subscription %}
+                  <div class="add_card">
+                   
+
+
+                      <!-- Card -->
+                      <div class="card mb-3 mb-lg-5">
+                        <div class="card-header border-bottom">
+                          <h5 class="card-header-title">Payment method</h5>
+                        </div>
+                    
+                        <!-- Body -->
+                        <div class="card-body">
+                          <div class="mb-4">
+                            <p>Cards will be charged either at the end of the month or whenever your balance exceeds the usage threshold. All major credit / debit cards accepted.</p>
+                          </div>
+                    
+                          <!-- List Group -->
+                          <ul class="list-group mb-5">
+                            {% for card in last4digits %}
+                            <!-- Item -->
+                            <li class="list-group-item">
+                              <div class="mb-2">
+                                <h5>{{request.user.full_name}} 
+                                  {% if customer_data.invoice_settings.default_payment_method == card.id %}
+                                  <span class="badge bg-soft-dark text-dark ms-1">Default</span>
+                                  {% endif %}
+                                </h5>
+                              </div>
+                    
+                              <!-- Media -->
+                              <div class="d-flex">
+                                <div class="flex-shrink-0">
+                                  {% if card.card.brand == 'visa' %}
+                                  <i class="fa-brands fa-cc-visa text-primary" style="font-size: 45px;"></i>
+                                  {% elif card.card.brand == 'mastercard' %}
+                                  <img class="avatar avatar-sm" src="{% static '/assets/svg/brands/mastercard.svg' %}" alt="Image Description">
+                                  {% else %}
+                                  <img class="avatar avatar-sm" src="{% static '/assets/svg/brands/any.svg' %}" alt="Image Description">
+                                  {% endif %}
+                                </div>
+                                <div class="flex-grow-1 ms-3">
+                                  <div class="row">
+                                    <div class="col-sm mb-3 mb-sm-0">
+                                      <span class="d-block text-dark">{{card.card.brand}} •••• {{card.card.last4}}</span>
+                                      <small class="d-block text-muted">{{card.card.funding}} - Expires {{card.card.exp_month}}/{{card.card.exp_year}} - added {{date_add|date:"d-m-Y"}}</small>
+                                    </div>
+                                    <!-- End Col -->
+                    
+                                    <div class="col-sm-auto">
+                                      <div class="d-flex gap-3">
+                                        
+                                        {% if customer_data.invoice_settings.default_payment_method == card.id %}
+                                        
+                                          <button type="button" class="btn btn-white btn-xs border-0" data-bs-toggle="tooltip" data-bs-placement="top" title="You can not delete your default payment method when u have active subscription">
+                                            <i class="bi bi-x-lg"></i>
+                                          </button>
+                                        
+                                        {% else %}
+                                        <a href="{% url 'card_default' card.id %}">
+                                          <button type="button" class="btn btn-primary btn-xs">
+                                            <i class="bi bi-pencil-square"></i> Make Default
+                                          </button>
+                                        </a>
+
+                                        <a href="{% url 'payment_method_delete' card.id %}">
+                                        <button type="button" class="btn btn-white btn-xs">
+                                          <i class="bi-trash me-1"></i> Delete
+                                        </button>
+                                      </a>
+                                      {% endif %}
+                                      
+                                      </div>
+                                    </div>
+                                    <!-- End Col -->
+                                  </div>
+                                  <!-- End Row -->
+                                </div>
+                               
+                              </div>
+                              <!-- End Media -->
+                            </li>
+                            {% endfor %}
+                            <!-- End Item -->
+                          </ul>
+                          <!-- End List Group -->
+                    
+                          <!-- Card -->
+                          <a class="card card-dashed card-centered" href="javascript:;" data-bs-toggle="modal" data-bs-target="#accountAddCardModal">
+                            <div class="card-body card-dashed-body py-8">
+                              <img class="avatar avatar-lg avatar-4x3 mb-2" src="{% static '/assets/svg/illustrations/oc-add-card.svg' %}" alt="Image Description">
+                              <span class="d-block"><i class="bi-plus"></i> Add a new card</span>
+                            </div>
+                          </a>
+                          <!-- End Card -->
+                        </div>
+                        <!-- End Body -->
+                      
+                      <!-- End Card -->
+                    
+                    
+                   
+                    <!-- Add Card Modal -->
+                    <div class="modal fade" id="accountAddCardModal" tabindex="-1" aria-labelledby="accountAddCardModalLabel" role="dialog" aria-hidden="true">
+                      <div class="modal-dialog modal-dialog-centered" role="document">
+                        <div class="modal-content">
+                          <!-- Header -->
+                          <div class="modal-header">
+                            <h4 class="modal-title" id="accountAddCardModalLabel">Add card</h4>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                          </div>
+                          <!-- End Header -->
+                    
+                          <!-- Body -->
+                          <div class="modal-body">
+                            <form id="payment-form" data-secret="{{ client_secret }}" method="post">
+                              {% csrf_token %}
+                              <h5 id="error-message" class="text-danger"></h5>
+                              <div id="payment-element">
+                                <!-- Elements will create form elements here -->
+                              </div>
+                              
+                              <div class="d-flex justify-content-end gap-3">
+                                <button id="submit" class="btn btn-primary">Add</button>
+                              </div>
+                             
+                            </form>
+                          </div>
+                          <!-- End Body -->
+                        </div>
+                      </div>
+                    </div>
+                    </div>
+                 {% endif %}
+                  
+                    
+                    
+                    
+
+                  </div>
+  <div class="card">
+    <!-- Header -->
+    <div class="card-header">
+      <h5 class="card-header-title">Order history</h5>
+    </div>
+    <!-- End Header -->
+
+    <!-- Table -->
+    <div class="table-responsive">
+      <table class="table table-borderless table-thead-bordered table-nowrap table-align-middle">
+        <thead class="thead-light">
+          <tr>
+            <th>Invoice ID</th>
+            <th>Status</th>
+            <th>Amount</th>
+         
+            <th>Invoice</th>
+            <th></th>
+          </tr>
+        </thead>
+
+        <tbody>
+          {% if all_invoices %}
+          {% for invoice in all_invoices %}
+          <tr>
+            {% if invoice.number %}
+            <td><a href="#">#{{invoice.number}}</a></td>
+            {% else %}
+            <td><a href="#">#</a></td>
+            {% endif %}
+            {% if invoice.status == 'paid' %}
+            <td><span class="badge bg-success text-light">{{invoice.status}}</span></td>
+            {% elif invoice.status == 'draft' %}
+            <td><span class="badge bg-warning text-light">{{invoice.status}}</span></td>
+            {% else %}
+            <td><span class="badge bg-soft-primary text-light">{{invoice.status}}</span></td>
+            {% endif %}
+            <td>${{invoice.total|div:100}}</td>
+           
+            <td><a class="btn btn-white btn-xs" href="{{invoice.invoice_pdf}}"><i class="bi-file-earmark-arrow-down-fill me-1 text-danger"></i> PDF</a></td>
+          </tr>
+          {% endfor %}
+          {% endif %}
+        </tbody>
+      </table>
+    </div>
+    <!-- End Table -->
+  </div>
+  <!-- End Card -->
+</div>
+
+                    </div>
+                    <!-- End Card -->
+                  
+
+                  
+                  </div>
+                  
+
+              </div>
+
+          </div>
+        </div>
+            </div>
+          
+    <!-- End Content -->
+    
+
+  </main>
+  <!-- ========== END MAIN CONTENT ========== -->
+
+
+  <script>
+    // Set your publishable key: remember to change this to your live publishable key in production
+// See your keys here: https://dashboard.stripe.com/apikeys
+const stripe = Stripe('pk_test_51Lz03SKORmC2RvgXRhtthq6yKQVLC1xLCCSq7PWqJ8HqFClSjSOtvQBDN7ImsLdRilbvCTbe1XBQE7ppeKP3D5tL007zG2iI6B');
+
+
+const options = {
+  clientSecret: '{{client_secret}}',
+  // Fully customizable with appearance API.
+  appearance: {/*...*/},
+};
+
+// Set up Stripe.js and Elements to use in checkout form, passing the client secret obtained in step 3
+const elements = stripe.elements(options);
+
+// Create and mount the Payment Element
+const paymentElement = elements.create('payment');
+paymentElement.mount('#payment-element');
+
+// 
+const form = document.getElementById('payment-form');
+
+form.addEventListener('submit', async (event) => {
+event.preventDefault();
+
+const {error} = await stripe.confirmSetup({
+  //`Elements` instance that was used to create the Payment Element
+  elements,
+  confirmParams: {
+    return_url: 'http://127.0.0.1:8000/company/manage/subscription/',
+  }
+});
+
+if (error) {
+  // This point will only be reached if there is an immediate error when
+  // confirming the payment. Show error to your customer (for example, payment
+  // details incomplete)
+  const messageContainer = document.querySelector('#error-message');
+  messageContainer.textContent = error.message;
+} else {
+  // Your customer will be redirected to your `return_url`. For some payment
+  // methods like iDEAL, your customer will be redirected to an intermediate
+  // site first to authorize the payment, then redirected to the `return_url`.
+}
+});
+
+
+  </script>
+
+  </body>
+{% endblock content %}

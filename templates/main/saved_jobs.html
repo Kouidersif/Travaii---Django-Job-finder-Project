@@ -1,0 +1,80 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}Apply list{% endblock title %}
+{% block content %}
+{% include 'parts/nav.html' %}
+{% if myApply_list %}
+<!-- Careers -->
+<div class="container content-space-2 content-space-lg-3 bg-soft-dark rounded mt-9">
+    <div class="w-lg-75 mx-lg-auto mb-5 mb-md-7">
+      <ul class="list-group list-group-lg" style="padding-right: 10px;">
+
+
+
+        {% for job in myApply_list %}
+
+      
+        <li class="list-group-item">
+          <div class="row">
+            <div class="col-sm-4 mb-2 mb-sm-0">
+           <a href="{% url 'detail_job' job.id %}">  <span class="h6">{{job.position|title}}</span></a> 
+            </div>
+            <!-- End Col -->
+  
+            <div class="col-sm-2 mb-2 mb-sm-0">
+              <span>{{job.publisher.companyprofile.city}}, {{job.publisher.companyprofile.state}}</span>
+            </div>
+            <!-- End Col -->
+  
+            <div class="col-sm-4 mb-2 mb-sm-0">
+              <span>{{job.publisher.companyprofile.company_name}}</span>
+            </div>
+            <!-- End Col -->
+  
+            <div class="col-sm-2 text-sm-end">
+              <a href="{% url 'detail_job' job.id %}">View <i class="bi bi-eye-fill"></i></a>
+              <a href="{% url 'save_job' job.id %}" class="text-danger">Delete <i class="bi bi-trash3-fill"></i></a>
+              
+            </div>
+            <!-- End Col -->
+          </div>
+          <!-- End Row -->
+        </li>
+        
+        
+        {% endfor %}
+        
+
+
+
+        
+
+      </ul>
+    
+
+
+      <!-- End List Striped -->
+    </div>
+
+  </div>
+  {% else %}
+  <!-- Testimonials -->
+<div class="container content-space-2 content-space-lg-3">
+  <div class="text-center mb-5">
+    <img class="avatar avatar-lg avatar-4x3" src="{% static '/assets/svg/illustrations/oc-person-3.svg' %}" alt="Illustration">
+  </div>
+
+  <!-- Blockquote -->
+  <figure class="w-md-75 text-center mx-md-auto">
+    <blockquote class="blockquote">“ Hello, {{request.user.full_name}}, it seems you have no saved jobs yet...”</blockquote>
+    <br>
+    <h5>Don't worry, we got it, check job offers that could work with you and apply or save them for later, See You!</h5>
+      <br>
+    <a href="{% url 'alljobs' %}" class="btn btn-primary">View Jobs</a>
+  </figure>
+  <!-- End Blockquote -->
+</div>
+<!-- End Testimonials -->
+{% endif %}
+  <!-- End Careers -->
+{% endblock content %}

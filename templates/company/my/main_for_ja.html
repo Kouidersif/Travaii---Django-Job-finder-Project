@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block content %}
+
+    <!-- Nav -->
+    <ul class="nav justify-content-center mb-7">
+        <li class="nav-item border">
+          <a class="nav-link" href="{% url 'manage_jobs' %}">
+            <div class="d-flex align-items-center">
+              <i class="bi-house"></i> Published Jobs
+            </div>
+          </a>
+        </li>
+        <li class="nav-item border" style="margin-left: 10px;">
+            <a class="nav-link" href="{% url 'view_application' %}">
+            <div class="d-flex align-items-center">
+              <i class="bi-person"></i> Applications
+            </div>
+          </a>
+        </li>
+      </ul>
+      <!-- End Nav -->
+
+{% endblock content %}

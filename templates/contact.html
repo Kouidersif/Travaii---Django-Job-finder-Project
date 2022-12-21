@@ -1,0 +1,52 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %} Contact us {% endblock title %}
+{% block content %}
+{% include 'parts/nav.html' %}
+
+
+  <!-- ========== MAIN CONTENT ========== -->
+  <main id="content" role="main">
+    <!-- Hero -->
+    <div class="bg-img-start" style="background-image: url(/static/assets/svg/components/card-11.svg);">
+      <div class="container content-space-t-3  content-space-b-2">
+        <div class="w-md-75 w-lg-50 text-center mx-md-auto">
+          <h1>You have something to tell us?</h1>
+          <p>We are ready to help you, we are open for corporations as well </p>
+        </div>
+      </div>
+    </div>
+    <!-- End Hero -->
+
+    <!-- Form -->
+      <!-- Form -->
+      <div class="mx-auto mt-3 mb-5" style="max-width: 35rem;">
+        <h1 class="text-center">Contact us </h1>
+        {% for message in messages %}
+        <div class="alert alert-success" role="alert">
+         {{message}}
+        </div>
+        {% endfor %}
+        <!-- Form -->
+        <form method="post">
+            {% csrf_token %}
+          <div class="row">
+            {{form.errors}}
+            {{form.as_p}}
+
+          <div class="d-grid mb-2">
+            <button type="submit" class="btn btn-primary btn-lg">Send inquiry</button>
+          </div>
+
+          <div class="text-center">
+            <span class="form-text">We'll get back to you in 1-2 business days.</span>
+          </div>
+        </form>
+        <!-- End Form -->
+      </div>
+      <!-- End Form -->
+    <!-- End Form -->
+  </main>
+  <!-- ========== END MAIN CONTENT ========== -->
+{% endblock content %}
+{% include 'parts/nav.html' %}

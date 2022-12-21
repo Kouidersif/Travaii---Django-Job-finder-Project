@@ -1,0 +1,221 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %} Register my company {% endblock title %}
+
+
+
+{% block content %}
+<style>
+    .alert{
+        border-radius: 0;
+    }
+    .errorlist{
+        
+        text-transform: capitalize;
+    }
+    #divbut{
+        position: relative;
+        margin-bottom: 35px;
+        
+    }
+    #toconfirm{
+        display: inline-block;
+        background: black;
+        color: white;
+        padding: 8px;
+        left: 15%;
+        width: 70%;
+        border: none;
+        
+        
+        
+        
+    }
+
+    #mycon{
+        height: 80vh;
+        border: 1px solid black;
+        background: white;
+        
+    }
+    i{
+        color: black;
+    }
+    form{
+        position: absolute;
+        display: inline-block;
+        width: 50%;
+        
+       left: 5px;
+       padding: 15px;
+    }
+    form input{
+        width: 50%;
+      
+    }
+  
+    label{
+        font-weight: 800;
+    }
+    @media screen and (max-width: 780px) {
+    #mycon{
+        margin-top: 0;
+
+        height: 100%;
+        padding: 50px;
+        
+    }
+  .myimage{
+    display: none;
+  }
+  form{
+    position: relative;
+    margin-top: 0;
+   
+    width: 100%;
+
+  }
+}
+@media (min-width: 781px) and (max-width: 992px){
+    
+    #mycon{
+        margin-top: 0;
+
+        height: 100%;
+        padding: 50px;
+        
+    }
+    form{
+    position: relative;
+    margin-top: 0;
+   
+    width: 50%;
+
+  }
+
+}
+@media (min-width: 781px) and (max-width: 3500px) {
+    #mycon{
+        margin-top: 0;
+
+        height: 100%;
+        padding: 50px;
+        
+    }
+    form{
+    position: relative;
+    margin-top: 0;
+   
+    width: 50%;
+
+  }
+  form button{
+    left: 50px;
+  }
+    
+}
+</style>
+{% include 'parts/nav.html' %}
+<body >
+    
+
+<div id="mycon" class="position-relative container mt-9 p-5">
+
+        <form action="" method="post">
+            {% csrf_token %}
+            <h2 class="text-center">Employeer</h2>
+    <!-- Input Group -->
+<div class="mb-3 ">
+    <label for="inputGroupMergeFullName" class="form-label">Full name</label>
+  
+    <div class="input-group input-group-merge">
+      <div class="input-group-prepend input-group-text" id="inputGroupMergeFullNameAddOn">
+        <i class="bi-person"></i>
+      </div>
+
+      {{form.full_name}}
+    </div>
+  </div>
+  <!-- End Input Group -->
+    <!-- Input Group -->
+    <div class="mb-3">
+        <label for="inputGroupMergeEmail" class="form-label">Username</label>
+      
+        <div class="input-group input-group-merge">
+          <div class="input-group-prepend input-group-text" id="inputGroupMergeEmailAddOn">
+            <i class="bi bi-person-circle"></i>
+          </div>
+          
+          {{form.username}}
+        
+        </div>
+      </div>
+      <!-- End Input Group -->
+  
+  <!-- Input Group -->
+  <div class="mb-3">
+    <label for="inputGroupMergeEmail" class="form-label">Email</label>
+  
+    <div class="input-group input-group-merge">
+      <div class="input-group-prepend input-group-text" id="inputGroupMergeEmailAddOn">
+        <i class="bi-envelope-open"></i>
+      </div>
+   
+      {{form.email}}
+    </div>
+  </div>
+  <!-- End Input Group -->
+     <!-- Input Group -->
+     <div class="mb-3">
+        <label for="inputGroupMergeEmail" class="form-label">Phone Number</label>
+      
+        <div class="input-group input-group-merge">
+          <div class="input-group-prepend input-group-text" id="inputGroupMergeEmailAddOn">
+            <i class="bi bi-telephone-fill"></i>
+          </div>
+  
+          {{form.phone_number}}
+        </div>
+      </div>
+      <!-- End Input Group -->
+    <!-- Input Group -->
+    <div class="mb-3">
+        <label for="inputGroupMergeEmail" class="form-label">Password</label>
+      
+        <div class="input-group input-group-merge">
+          <div class="input-group-prepend input-group-text" id="inputGroupMergeEmailAddOn">
+            <i class="bi bi-fingerprint"></i>
+          </div>
+     
+          {{form.password1}}
+        </div>
+      </div>
+      <!-- End Input Group -->
+         <!-- Input Group -->
+    <div class="mb-3">
+        <label for="inputGroupMergeEmail" class="form-label">Confirm Password</label>
+      
+        <div class="input-group input-group-merge">
+          <div class="input-group-prepend input-group-text" id="inputGroupMergeEmailAddOn">
+            <i class="bi bi-fingerprint"></i>
+          </div>
+          {{form.password2}}
+        </div>
+      </div>
+      <p class="privacy">By pressing Create Account you agree with our <a href="{% url 'privacyandpolicy' %}">Privacy & Policy</a></p>
+      {% if form.errors %}
+      <div class="alert alert-soft-danger" role="alert">
+        {{form.errors}}
+      </div>
+      {% endif %}
+      <!-- End Input Group -->
+      <div id="divbut" class="input-group-prepend">
+      <button id="toconfirm" type="submit" class="position-absolute">Create an Account</button>
+    </div>
+</form>
+    <img src="{% static 'assets/svg/brands/co.jpg' %}" class="myimage position-absolute h-100 top-0 end-0 w-50 display-inline-block " alt="" >
+
+</div>
+</body>
+{% endblock %}

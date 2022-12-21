@@ -1,0 +1,84 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+{% include 'parts/nav.html' %}
+<div class="container mt-9">
+<div class="card mb-10 rounded-0">
+    <div class="card-header rounded-0" style="background-image: radial-gradient( circle farthest-corner at 10% 20%,  rgba(37,145,251,0.98) 0.1%, rgba(0,7,128,1) 99.8% );">
+      <h5 class="card-header-title text-light">Applicants</h5>
+    </div>
+  
+    <!-- Table -->
+    <div class="table-responsive">
+      <table class="table table-borderless table-thead-bordered table-nowrap table-align-middle card-table">
+        <thead class="thead-light">
+          <tr>
+            <th>Name</th>
+            <th>Applicant Position</th>
+            <th>View</th>
+          
+            <th style="width: 5%;"></th>
+          </tr>
+        </thead>
+  
+        <tbody>
+            {% for applicant in applicants_list %}
+            
+          <tr>
+            <td>
+              <div class="d-flex align-items-center">
+                <div class="flex-shrink-0">
+                  {% if applicant.profile_pic %}
+                  <img class="avatar avatar-md rounded-5" src="{{applicant.profile_pic.url}}" alt="Image Description">
+                  {% endif %}
+                </div>
+  
+                <div class="flex-grow-1 ms-3">
+                  <a class="d-inline-block link-dark" href="#">
+                    <h6 class="text-hover-primary mb-0">{{applicant.owner.full_name}} - {{applicant.calculate_age}} y.o</h6>
+                  </a>
+         
+                </div>
+              </div>
+            </td>
+            <td>
+                <h5>{{applicant.desired_job}}</h5>
+            </td>
+            <td>
+                <a href="{% url 'profile' applicant.owner.username %}" target="_blank" rel="noopener noreferrer">View Profile</a> |
+                <a href="{{applicant.applicant_cv.url}}" target="_blank" rel="noopener noreferrer">View Resume</a>
+            </td>
+          </tr>
+          {% empty %}
+           <td>
+            <div class="alert alert-soft-primary position-relative text-center" role="alert" style="margin-left: 50%;margin-bottom:50px;">
+              For now there are no Applicants yet!
+            </div>
+            <div class="m">
+              <img src="{% static 'assets/svg/illustrations/oc-building-apps.svg' %}" class="img-fluid" alt="Error" style="margin-left:25%;">
+
+            </div>
+            
+           
+            </td>
+          
+  
+          {% endfor %}
+  
+
+        </tbody>
+      </table>
+    </div>
+    <!-- End Table -->
+    
+
+
+  <!-- End Card -->
+
+
+
+  <!-- End Tab Content -->
+</div>
+</div>
+{% endblock content %}
