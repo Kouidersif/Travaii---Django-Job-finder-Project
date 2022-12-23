@@ -84,12 +84,27 @@ WSGI_APPLICATION = 'JobPortal.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases
 
-DATABASES = {
+
+if DEBUG:
+
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.sqlite3',
+            'NAME': BASE_DIR / 'db.sqlite3',
+        }
+    }
+else:
+    DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': 'travaiidb',
+        'USER': 'dbtravaii_user',
+        'PASSWORD': 'IgF4!cum0%FP',
+        'HOST': 'localhost',
+        'PORT': '',
     }
 }
+
 
 
 # Password validation
@@ -129,8 +144,9 @@ USE_TZ = True
 STATIC_URL = 'static/'
 MEDIA_URL= '/images/'
 STATICFILES_DIRS= [ os.path.join(BASE_DIR, 'static') ]
-MEDIA_ROOT= os.path.join(BASE_DIR, 'static/images')
 STATIC_ROOT= os.path.join(BASE_DIR, 'staticfiles')
+MEDIA_ROOT= os.path.join(BASE_DIR, 'static/images')
+
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field
