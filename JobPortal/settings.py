@@ -85,24 +85,16 @@ WSGI_APPLICATION = 'JobPortal.wsgi.application'
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases
 
 
-if DEBUG:
 
-    DATABASES = {
-        'default': {
-            'ENGINE': 'django.db.backends.sqlite3',
-            'NAME': BASE_DIR / 'db.sqlite3',
-        }
-    }
-else:
-    DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'travaiidb',
-        'USER': 'dbtravaii_user',
-        'PASSWORD': 'IgF4!cum0%FP',
-        'HOST': 'localhost',
-        'PORT': '',
-    }
+DATABASES = {
+'default': {
+    'ENGINE': 'django.db.backends.postgresql_psycopg2',
+    'NAME': 'travaiidb',
+    'USER': 'dbtravaii_user',
+    'PASSWORD': 'IgF4!cum0%FP',
+    'HOST': 'localhost',
+    'PORT': '',
+}
 }
 
 
