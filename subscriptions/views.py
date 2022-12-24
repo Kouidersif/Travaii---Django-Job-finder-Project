@@ -386,8 +386,8 @@ def checkout(request):
         }],
         mode='subscription',
         allow_promotion_codes=True,
-        success_url='http://127.0.0.1:8000/subscription/success?session_id={CHECKOUT_SESSION_ID}',
-        cancel_url='http://127.0.0.1:8000/subscription/cancel',
+        success_url='https://travaii.com/subscription/success?session_id={CHECKOUT_SESSION_ID}',
+        cancel_url='https://travaii.com/subscription/cancel',
     )
     #print(session)
     print('session completed')
@@ -418,7 +418,7 @@ def customer_portal(request):
     # Authenticate your user.
     session = stripe.billing_portal.Session.create(
     customer=stripe_customer.stripeid,
-    return_url='http://127.0.0.1:8000/',
+    return_url='https://travaii.com/',
     )
     return redirect(session.url)
 
