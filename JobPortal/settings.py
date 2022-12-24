@@ -28,7 +28,10 @@ SECRET_KEY = config('NOT_SECRET')
 DEBUG = False
 
 ALLOWED_HOSTS = ['https//travaii.com', 'https//travaii.com', '192.169.177.207', 'http://192.169.177.207', 'travaii.com', 'www.travaii.com']
+CSRF_TRUSTED_ORIGINS = ['https://*.travaii.com','https://*.127.0.0.1']
 
+#static root 
+STATIC_ROOT =  os.path.join(BASE_DIR, 'static/')
 
 # Application definition
 
@@ -139,7 +142,7 @@ STATIC_URL = '/static/'
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'mystaticfiles/static'),
 ]
-STATIC_ROOT =  os.path.join(BASE_DIR, 'static')
+
 MEDIA_URL= '/images/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'mystaticfiles/images/')
 
