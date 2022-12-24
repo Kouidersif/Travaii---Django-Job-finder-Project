@@ -513,19 +513,17 @@ def stripe_webhook(request):
         )
         
         
-        mail_subject = 'Welcome to Travaii Premium'
-        templ = render_to_string('success_subscription.html', {
-            'name':user.full_name,
+        subject = 'Welcome to Travaii Premium'
+        html_message = render_to_string('success_subscription.html', {
+         'name':user.full_name,
             'plan':product.name,
             'today':date_today,
             'order_id':order_id_user_id
-        })
-        success_email = EmailMessage(
-                    mail_subject, templ, 
-                    to=[user.email],
-                )
-        success_email.send()
-        print(user.username + ' just subscribed.')
+                })
+        
+        from_email= 'travaii@sifdev.xyz'
+        to_email = user.email
+        send_mail(subject, '', from_email, [to_email], html_message=html_message)
         list_payment_meth= stripe.Customer.list_payment_methods(
                         stripe_customer_id,
                         type="card",

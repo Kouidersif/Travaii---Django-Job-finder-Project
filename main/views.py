@@ -233,18 +233,9 @@ def Search_for(request):
 
 
 def Test(request):
-    sif = 1
-    mail_subject = 'ya test'
-    my_context= {
-        'name':' khawal',
-        
-    }
-    email_message = 'te.html'
-    html_message = render_to_string(email_message, { 'my_context': my_context, })
-    
-    message = EmailMessage(mail_subject, html_message,to=['islamkouider61@gmail.com'])
-    message.content_subtype = 'html' # this is required because there is no plain text email version
-    message.send()
+    #message = EmailMessage(mail_subject, html_message,to=['islamkouider61@gmail.com'])
+    #message.content_subtype = 'html' # this is required because there is no plain text email version
+    #message.send()
     
     return render(request, 'test.html')
     

@@ -1,15 +1,65 @@
-Dear Mr/Ms {{name}},
+<html>
+  <head>
+      <style>
+          @import url('https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap');
+          body{
+              font-family: 'Inter', sans-serif;
+              background-image: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+              padding: 15px;
+          }
+          .ii a[href] {
+  color: #fff;
+}
+      /* Add some style to the email */
+      h1 {
+          font-size: 24px;
+          color: #333;
+      }
+      p {
+          font-size: 16px;
+          color: rgba(0, 0, 0, 0.763);
+      }
+      .button {
+          display: inline-block;
+          background-color: #0084ff;
+          color: #ffffff;
+          padding: 12px 24px;
+          border-radius: 4px;
+          text-decoration: none;
+      }
+      </style>
+  </head>
+  <body>
+      <div class="container">
+      <h1>Thank you for your purchase!</h1>
 
-You recently became a Travaii Premium member by purchasing {{plan}} Plan. Now you can hire x2 faster than any time, Find Resumes,Share more Jobs, and additional benefits.
+  <p>Dear {{name}},</p>
+  <p>
+  You recently became a Travaii Premium member by purchasing {{plan}} Plan. Now you can hire x2 faster than any time, Find Resumes,Share more Jobs, and additional benefits.
+  </p>
+  <p>
+  We aim to continuously provide a fast and efficient service, should you not be satisfied with something, please do not hesitate to contact our support quoting your order number in full and one of our representatives will do their best to assist you.
+  </p>
+  <p>
+      <strong>
+  Date : {{today}}
+</p>
+<p>
+  subscription id : {{order_id}}
 
-We aim to continuously provide a fast and efficient service, should you not be satisfied with something, please do not hesitate to contact our support quoting your order number in full and one of our representatives will do their best to assist you.
+  </strong>
+  </p>
+  <p>
+  Please be sure to keep this letter and information safe for all future communications with us.
+  </p>
+  <p>
+  Kind regards,
+</p>
+<p>
+  Travaii Team.
+  </p>
 
-Date : {{today}}
-subscription id : {{order_id}}
-
-Please be sure to keep this letter and information safe for all future communications with us.
-
-
-Kind regards
-
-Travaii Team.
+  <a href="https://travaii.com/company/manage/subscription/" class="button">Manage Account</a>
+</div>
+  </body>
+  </html>
