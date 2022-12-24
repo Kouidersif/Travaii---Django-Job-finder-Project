@@ -1,8 +1,9 @@
     {% extends 'base.html' %}
     {% load static %}
     
-
-
+    <title>{% block title %}
+    Position Details - Travaii
+      {% endblock title %} </title>
     {% block content %}
     <body>
       
@@ -10,20 +11,6 @@
     {% include 'parts/nav.html' %}
 
 
-    {% if messages %}
-<div class="container">
-    <div class="alert alert-primary" alert-{{ message.tags }}    role="alert">
-    {% for message in messages %}
-    {{message|safe}}
-    <a href="{% url 'apply_list' %}">View it here</a>
-
-    {% endfor %}
-    </div>
-
-  </div>
-
-
-    {% endif %}
 
     <main id="content" role="main">
         <!-- Page Header -->
