@@ -37,7 +37,7 @@ class UserLoginForm(AuthenticationForm):
 class JobForm(ModelForm):
     class Meta:
         model = Jobs
-        fields= ['position', 'job_category','job_type', 'num_people', 'job_shift', 'work_from', 'description','salary','interview_type', 'is_published']
+        fields= ['position', 'job_category','job_type', 'num_people', 'job_shift', 'work_from', 'description','salary','salary_currency','interview_type', 'is_published']
         widgets= {
         'position': forms.TextInput(attrs={'placeholder':'Customer support representative'}),
         'num_people': forms.TextInput(attrs={'type':'number'}),
@@ -58,6 +58,7 @@ class JobForm(ModelForm):
         self.fields['salary'].widget.attrs['type'] = 'number'
         self.fields['salary'].widget.attrs['class']= 'form-control'
         self.fields['salary'].widget.attrs['placeholder']= 'Get more applications by speifying the pay'
+        self.fields['salary_currency'].widget.attrs['class']= 'form-select'
         #self.fields['pay_per'].widget.attrs['class']= 'form-select'
         self.fields['interview_type'].widget.attrs['class']= 'form-select'
         self.fields['description'].widget.attrs['class']= 'form-control'

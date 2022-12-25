@@ -214,11 +214,24 @@
 
 
                       <div class="col-12 col-md mt-3 mt-md-0">
-                        <span class="d-block small text-body mb-1">DZD {{obj.salary}} {{obj.pay_per}}</span>
-
+                        <span class="d-block small text-body mb-1">
+                          {% if obj.salary_currency %}
+                          {{obj.salary_currency}} 
+                          {% endif %}
+                          {% if obj.salary  %}
+                          {{obj.salary}}
+                          {% endif %}
+                          {% if obj.pay_per  %}
+                           {{obj.pay_per}}
+                           {% endif %}
+                          </span>
+                          {% if obj.work_from %}
                         <span class="badge bg-soft-info text-info me-2">
+                          
                           <span class="legend-indicator bg-info"></span>{{obj.work_from}}
+                         
                         </span>
+                        {% endif %}
                       </div>
                       <!-- End Col -->
                     </div>

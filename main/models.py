@@ -58,6 +58,13 @@ class Shifts(models.Model):
     def __str__(self):
         return self.shift
 
+salary_cur=[
+    ('€ Euro', '€ Euro '),
+    ('$ USD', '$ USD'),
+    ('£ EGP', '£ EGP'),
+
+]
+
 class Jobs(models.Model):
     publisher= models.ForeignKey(User, related_name='work' ,on_delete=models.CASCADE, null=True) 
     job_category= models.ForeignKey('Category', related_name='myjobs' ,on_delete=models.SET_NULL, null=True)
@@ -71,11 +78,13 @@ class Jobs(models.Model):
     is_urgent= models.BooleanField(default=False)
     job_shift=models.ForeignKey(Shifts,on_delete=models.SET_NULL, related_name='shifts', null=True, blank=True)
     salary = models.CharField(max_length=15, null=True, blank=True)
+    salary_currency = models.CharField(max_length=15,choices=salary_cur, null=True)
     pay_per= models.CharField(max_length=150, null=True, blank=True, choices=salary_range)
     benifits= models.TextField(max_length=500, null=True, blank=True)
     creation_date = models.DateTimeField(auto_now_add=now)
     is_published= models.BooleanField(default=True)
     interview_type= models.CharField(max_length=50, choices=interview)
+
     def __str__(self):
         return self.position
 

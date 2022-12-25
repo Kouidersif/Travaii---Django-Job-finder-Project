@@ -75,6 +75,11 @@
                     {% if work.job_type %}
                     <li class="list-inline-item">{{work.job_type}}</li>
                     {% endif %}
+                    {% if work.salary %}
+                    <li class="list-inline-item">
+                      <strong>
+                      <i class="bi bi-coin text-primary" title="This sign refers ONLY to payment or salary in General and NOT to currency of the prposed salary"></i> {{work.salary}} {{work.salary_currency}}</strong></li>
+                      {% endif %}
                     {% if work.work_from %}
                     <span class="badge bg-soft-info text-info me-2">
                         <span class="legend-indicator bg-info" sty></span>{{work.work_from}}
