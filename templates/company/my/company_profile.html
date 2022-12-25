@@ -65,7 +65,7 @@
               <div class="col-md mb-3 mb-md-0">
                 <h1 class="h2 mb-1">{{data.company_name}} 
                   
-                 {% if data.owner.customer.selected_membership == 'Mid-market enterprises' or 'Large enterprise' %}
+                  {% if data.owner.customer and data.owner.customer.selected_membership == 'Mid-market enterprises' %}
                  <i class="bi bi-patch-check-fill text-primary" title="Premium Account"></i>              
                   {% endif %}
                 </h1>
@@ -294,11 +294,12 @@
                   <a class="text-dark" href="{% url 'detail_job' job.id %}">{{job.position}}</a>
                 </h3>
 
-                <span class="d-block small text-body mb-1">${{job.salary}} {{job.pay_per}}</span>
-
+                <span class="d-block small text-body mb-1">{{job.salary_currency}} {{job.salary}}</span>
+                {% if job.work_from %}
                 <span class="badge bg-soft-info text-info me-2">
                   <span class="legend-indicator bg-info"></span>{{job.work_from}}
                 </span>
+                {% endif %}
               </div>
               <!-- End Card Body -->
 
