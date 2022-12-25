@@ -267,7 +267,12 @@
    
       <div class="mb-4">
         <h3>Jobs</h3>
-        <p>We were not able to detect your location. You can browse through all 105 jobs Capsule has to offer.</p>
+        <p>We were not able to detect your location. You can browse through all {{publisher.count}} jobs 
+          {% for data in co_data %}
+          <b>{{data.company_name}}</b>
+          
+          {% endfor %}
+           has to offer.</p>
       </div>
 
       {% if not publisher %}
@@ -283,7 +288,7 @@
         <div class="swiper-wrapper">
           <!-- Slide -->
 
-          {% for job in publisher %}
+          {% for job in publisher|slice:"10" %}
 
           <div class="swiper-slide">
             <!-- Card -->
