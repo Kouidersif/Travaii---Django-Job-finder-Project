@@ -366,9 +366,15 @@ def DeletePhotos(request, pk):
 
 @notLogged
 def view_application(request):
-    to_filter= ApplicantsFilter(request.GET, queryset=Applying.objects.filter(job__publisher=request.user))
-    applications = to_filter.qs
-    return render(request, 'company/view_application.html', {'applications':applications, 'to_filter':to_filter})
+    if request.user.is_authenticated and request.user.is_company:
+        to_filter= ApplicantsFilter(request.GET, queryset=Applying.objects.filter(job__publisher=request.user))
+        applications = to_filter.qs
+        paginator = Paginator(applications, 7)
+        page_number = request.GET.get('page', 1)
+        page_objects = paginator.page(page_number)
+    else:
+        return redirect('error_page')
+    return render(request, 'company/view_application.html', {'applications':applications, 'to_filter':to_filter,'paginator':paginator,  'page_number':page_number, 'page_objects':page_objects, })
 
 
 
@@ -376,11 +382,14 @@ def view_application(request):
 @notLogged
 @check_sub
 def Apps_jobs(request):
-    myjobs=Jobs.objects.filter(publisher=request.user)
-    paginator = Paginator(myjobs, 10)
-    page_number = request.GET.get('page', 1)
-    page_objects = paginator.page(page_number)
-    context= {'myjobs':myjobs,'page_objects': page_objects, 'paginator': paginator}
+    if request.user.is_authenticated and request.user.is_company:
+        myjobs=Jobs.objects.filter(publisher=request.user).order_by('-creation_date')
+        paginator = Paginator(myjobs, 10)
+        page_number = request.GET.get('page', 1)
+        page_objects = paginator.page(page_number)
+        context= {'myjobs':myjobs,'page_objects': page_objects, 'paginator': paginator}
+    else:
+        return redirect('error_page')
     return render(request, 'company/my/manage_jobs.html', context)
 
 
