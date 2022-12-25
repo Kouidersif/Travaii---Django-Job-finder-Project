@@ -1,27 +1,27 @@
-Cairo
-Giza
 Alexandria
-Dakahlia
-Red Sea
-Beheira
-Fayoum
-Gharbiya
-Ismailia
-Menofia
-Minya
-Qaliubiya
-New Valley
-Suez
 Aswan
-Assiut
+Asyut
+Beheira
 Beni Suef
-Port Said
+Cairo
+Dakahlia
 Damietta
-Sharkia
-South Sinai
-Kafr Al sheikh
-Matrouh
+Faiyum
+Gharbia
+Giza
+Ismailia
+Kafr El Sheikh
 Luxor
-Qena
+Matrouh
+Minya
+Monufia
+New Valley
 North Sinai
+Port Said
+Qaliubiya
+Qena
+Red Sea
+Sharqia
 Sohag
+South Sinai
+Suhag

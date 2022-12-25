@@ -18,9 +18,6 @@ class Cities(models.Model):
     def __str__(self):
         return self.city_name
 
-def clean_input(user_input):
-    charinput= user_input.replace(',()', '')
-    return charinput
 
 class Wilaya(models.Model):
     city_name=models.CharField(max_length=300)
