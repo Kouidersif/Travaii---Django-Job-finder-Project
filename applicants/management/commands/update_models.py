@@ -17,7 +17,7 @@ class Command(BaseCommand):
         file_name = kwargs['file_name']
         with open(f'{file_name}.txt') as file:
             for row in file:
-                Wilaya.objects.create(
+                Cities.objects.create(
                     city_name = row
                 )
 
