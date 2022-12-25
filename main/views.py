@@ -233,9 +233,12 @@ def Search_for(request):
 
 
 def Test(request):
-    #message = EmailMessage(mail_subject, html_message,to=['islamkouider61@gmail.com'])
-    #message.content_subtype = 'html' # this is required because there is no plain text email version
-    #message.send()
+    mail_subject = 'hello'
+    html_message= 'hello testing'
+    from_email='no-reply@travaii.com'
+    message = EmailMessage(mail_subject, html_message,from_email, to=['islamkouider61@gmail.com'])
+    message.content_subtype = 'html' # this is required because there is no plain text email version
+    message.send()
     
     return render(request, 'test.html')
     
