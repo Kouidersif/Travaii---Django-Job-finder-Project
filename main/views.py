@@ -26,7 +26,7 @@ from django.core.mail import EmailMessage
 from django.template.loader import render_to_string, get_template
 from django.core.mail import EmailMultiAlternatives
 from django.template import Context
-
+from django.core.paginator import Paginator
 import random
 
 
@@ -270,11 +270,16 @@ def Contact(request):
 def DisplayJobs(request):
     jobs= Jobs.objects.filter(is_published=True).order_by('-creation_date')
     f = SnippetFilter(request.GET, queryset=Jobs.objects.filter(is_published=True))
+    filtered = f.qs
+    paginator = Paginator(filtered, 10)
+    page_number = request.GET.get('page', 1)
+    page_objects = paginator.page(page_number)
     total_jobs= Jobs.objects.filter(is_published=True).count()
     category= Category.objects.all()
     j_type= Job_type.objects.all()
     w_from= Work_from.objects.all()
-    context= {'jobs':jobs, 'total_jobs':total_jobs, 'category':category,'j_type':j_type, 'w_from':w_from, 'f':f}
+    context={'jobs':jobs,'total_jobs':total_jobs, 'category':category,'j_type':j_type, 'w_from':w_from, 'f':f
+    ,'page_objects': page_objects, 'paginator': paginator}
     return render(request, 'main/display/display_jobs.html', context)
 
 

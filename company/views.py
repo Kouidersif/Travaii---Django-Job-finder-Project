@@ -25,6 +25,7 @@ from applicants.models import ApplicantProfile
 from applicants.views import Confirm_message
 import random
 from main.models import Get_industry
+from django.core.paginator import Paginator
 #Your password can’t be too similar to your other personal information.
 #Your password must contain at least 8 characters.
 #Your password can’t be a commonly used password.
@@ -376,7 +377,10 @@ def view_application(request):
 @check_sub
 def Apps_jobs(request):
     myjobs=Jobs.objects.filter(publisher=request.user)
-    context= {'myjobs':myjobs}
+    paginator = Paginator(myjobs, 10)
+    page_number = request.GET.get('page', 1)
+    page_objects = paginator.page(page_number)
+    context= {'myjobs':myjobs,'page_objects': page_objects, 'paginator': paginator}
     return render(request, 'company/my/manage_jobs.html', context)
 
 
