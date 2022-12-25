@@ -104,6 +104,7 @@
 
     <!-- Card Grid -->
     <div class="container content-space-2 content-space-t-lg-4 content-space-b-lg-3">
+      {% if request.user.is_company or not request.user.is_authenticated %}
       <!-- Features -->
 <div class="container">
   <div class="row justify-content-lg-between align-items-lg-center">
@@ -201,6 +202,7 @@
   <!-- End Row -->
 </div>
 <!-- End Features -->
+{% endif %}
 <hr>
       <div class="row row-cols-1 row-cols-sm-2 row-cols-lg-3 mb-5">
         {% for job in jobs|slice:":6" %}

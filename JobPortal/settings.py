@@ -237,11 +237,10 @@ EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 #EMAIL_HOST = 'server163.web-hosting.com'
 EMAIL_HOST = 'smtpout.secureserver.net'
 EMAIL_HOST_PASSWORD =config('EMLPDW')
-#EMAIL_HOST_PASSWORD = 'Kouider@07'
 EMAIL_HOST_USER = 'support@travaii.com'
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
-#DEFAULT_FROM_EMAIL = 'support@travaii.com'
+DEFAULT_FROM_EMAIL = 'no-reply@travaii.com'
 PASSWORD_RESET_TIMEOUT= 14400
 
 
