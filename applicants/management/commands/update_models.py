@@ -1,7 +1,8 @@
 from django.core.management.base import BaseCommand
 import pandas as pd
 from applicants.models import Cities,Wilaya, desired_Position
-from main.models import Category
+from main.models import Category, Languages
+
 
 
 
@@ -17,8 +18,8 @@ class Command(BaseCommand):
         file_name = kwargs['file_name']
         with open(f'{file_name}.txt') as file:
             for row in file:
-                Cities.objects.create(
-                    city_name = row
+                Languages.objects.create(
+                    language = row
                 )
 
 
