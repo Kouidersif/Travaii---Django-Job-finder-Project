@@ -80,7 +80,7 @@ class Jobs(models.Model):
         return self.position
 
 class Category(models.Model):
-    name= models.CharField(max_length=35, null=True, blank=True)
+    name= models.CharField(max_length=200, null=True, blank=True)
     image= models.ImageField(upload_to='category/bg/', null=True, blank=True)
     description= models.TextField(max_length=250, null=True, blank= True)
     def __str__(self):
