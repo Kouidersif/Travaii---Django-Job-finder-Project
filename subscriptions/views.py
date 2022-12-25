@@ -521,7 +521,7 @@ def stripe_webhook(request):
             'order_id':order_id_user_id
                 })
         
-        from_email= 'travaii@sifdev.xyz'
+        from_email='no-reply@travaii.com'
         to_email = user.email
         send_mail(subject, '', from_email, [to_email], html_message=html_message)
         list_payment_meth= stripe.Customer.list_payment_methods(

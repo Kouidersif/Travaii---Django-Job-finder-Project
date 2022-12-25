@@ -51,6 +51,7 @@ def activate(request, uidb64, token):
 def Confirm_message(request, user, to_email):
     try:
         mail_subject = 'Please activate your Account'
+        from_email='no-reply@travaii.com'
         templ = render_to_string('users/welcome_email.html', {
             'name':request.user.full_name,
             'domain':get_current_site(request).domain,
@@ -60,7 +61,7 @@ def Confirm_message(request, user, to_email):
         })
         ## sending html styled mail
         success_email = EmailMessage(
-                    mail_subject, templ, 
+                    mail_subject, templ, from_email,
                     to=[to_email],
                 )
         success_email.content_subtype = 'html'
@@ -482,6 +483,7 @@ def Apply_for(request, pk):
                     #send email to publisheer
                     if people_applied.count() <= 1:
                         mail_subject = f"It’s here! The first application for {job.position}"
+                        from_email='no-reply@travaii.com'
                         
                         email_message = 'apply_email/applied_for_your_job.html'
                         html_message = render_to_string(email_message, {
@@ -492,7 +494,7 @@ def Apply_for(request, pk):
                                     'time':today_date,
 
                                 })
-                        message = EmailMessage(mail_subject, html_message,to=[job.publisher.email])
+                        message = EmailMessage(mail_subject, html_message,from_email, to=[job.publisher.email])
                         message.content_subtype = 'html' # this is required because there is no plain text email version
                         message.send()
                         
