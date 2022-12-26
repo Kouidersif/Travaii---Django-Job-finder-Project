@@ -16,10 +16,11 @@ def check_sub(view_func):
                 stripe.api_key = settings.STRIPE_SECRET_KEY
                 subscription = stripe.Subscription.retrieve(stripe_customer.stripe_subscription_id)
                 product = stripe.Product.retrieve(subscription.plan.product)
-                if subscription.status == 'active' or subscription.status == 'trialing':
-                    return view_func(request, *args, **kwargs)
-                else:
+                if subscription.status == 'canceled' or subscription.status == 'ended':
                     subscriber.delete()
+                #if subscription.status == 'active' or subscription.status == 'trialing' or subscription.status == 'Failed':
+                else:
+                    return view_func(request, *args, **kwargs)
                     
                     return view_func(request, *args, **kwargs)
             except Customer.DoesNotExist:
