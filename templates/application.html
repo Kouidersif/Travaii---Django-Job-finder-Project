@@ -79,9 +79,26 @@
             </ul>
 
             <ul class="list-inline list-separator small text-body mb-2">
-              <li class="list-inline-item">Posted {{job.creation_date|timesince}} ago</li>
-              <li class="list-inline-item">{{job.publisher.companyprofile.city}}</li>
+              <li class="list-inline-item"><i class="bi bi-calendar2-date text-primary"></i> Posted {{job.creation_date|timesince}} ago</li>
+                {% if job.publisher.companyprofile.city or job.publisher.companyprofile.state %}
+              <li class="list-inline-item"><i class="bi bi-geo-alt-fill text-primary"></i> {{job.publisher.companyprofile.city}}, {{job.publisher.companyprofile.state}}</li>
+              {% endif %}
+
+              {% if job.job_type %}
               <li class="list-inline-item">{{job.job_type}}</li>
+              {% endif %}
+              {% if job.salary_from or job.salary_to %}
+              <li class="list-inline-item">
+                <strong>
+                <i class="bi bi-coin text-primary" title="This sign refers ONLY to payment or salary in General and NOT to currency of the prposed salary"></i> {{job.salary_from}}-{{job.salary_to}} {{job.salary_currency}}</strong></li>
+                {% endif %}
+              {% if job.work_from %}
+              <span class="badge bg-soft-info text-info me-2">
+                  <span class="legend-indicator bg-info" sty></span>{{job.work_from}}
+                </span>
+                {% endif %}
+              
+
             </ul>
           </div>
         </div>
