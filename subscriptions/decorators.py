@@ -16,7 +16,7 @@ def check_sub(view_func):
                 stripe.api_key = settings.STRIPE_SECRET_KEY
                 subscription = stripe.Subscription.retrieve(stripe_customer.stripe_subscription_id)
                 product = stripe.Product.retrieve(subscription.plan.product)
-                if subscription.status == 'active':
+                if subscription.status == 'active' or subscription.status == 'trialing':
                     return view_func(request, *args, **kwargs)
                 else:
                     subscriber.delete()

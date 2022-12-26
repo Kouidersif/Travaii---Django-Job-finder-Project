@@ -32,6 +32,46 @@ import random
 
 
 
+#Create Trial 
+
+def CreateTrial(request):
+    if request.user.is_authenticated and request.user.is_superuser:
+        if request.method == 'POST':
+            the_user = request.POST.get('user')
+            myuser= User.objects.get(id=the_user)
+            customer_id= request.POST.get('customerID')
+            item_id = request.POST.get('item')
+            end_date = request.POST.get('trial_end')
+            membership_user = request.POST.get('selected')
+            track = request.POST.get('track')
+            subscription = stripe.Subscription.create(
+            customer=customer_id,
+            items=[{"price": item_id}],
+            trial_end=end_date,
+            )
+            Customer.objects.create(
+                user = myuser,
+                stripeid = customer_id,
+                stripe_subscription_id = subscription.id,
+                membership = True,
+                selected_membership = membership_user,
+                track_id = f"{the_user}{track}"
+            )
+            messages.success(request, 'Succesfully Created')
+    else:
+        return redirect('error_page')
+    return render(request, 'trial_month.html')
+
+
+
+
+
+
+
+
+
+
+
 def PrivacyPolicy(request):
     return render(request, 'privacy_policy.html')
 

@@ -1,0 +1,81 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+<!-- Post a Comment -->
+<div class="container content-space-2">
+    <!-- Heading -->
+    <div class="w-md-75 w-lg-50 text-center mx-md-auto mb-5 mb-md-9">
+    <h2>Create Trial Month</h2>
+    </div>
+    <!-- End Heading -->
+  
+    <div class="row justify-content-lg-center">
+    <div class="col-lg-8">
+        
+        <!-- Card -->
+        <div class="card card-lg border shadow-none">
+        <div class="card-body">
+            {% if messages %}
+            {% for message in messages %}
+            <div class="alert alert-{{message.tags}} rounded-0" role="alert">
+                This is a success alert—check it out!
+              </div>
+              {% endfor %}
+              {% endif %}
+            <form method="post">
+                {% csrf_token %}
+            <div class="d-grid gap-4">
+                <!-- Form -->
+                <div class="row">
+                <div class="col-sm-6 mb-4 mb-sm-0">
+                    <label class="form-label" for="blogContactsFormFirstName">User ID</label>
+                    <input type="text" class="form-control form-control-lg" name="user" id="blogContactsFormFirstName" placeholder="User ID - Only digits" aria-label="First name" required>
+                </div>
+
+                <div class="col-sm-6">
+                    <label class="form-label" for="blogContactsFormLasttName">Customer ID</label>
+                    <input type="text" class="form-control form-control-lg" name="customerID" id="blogContactsFormLasttName" placeholder="cus_N3NJtmcprK3nfE" aria-label="Last name" required>
+                </div>
+                </div>
+                <!-- End Form -->
+                <!-- Form -->
+                <div class="row">
+                    <div class="col-sm-6 mb-4 mb-sm-0">
+                        <label class="form-label" for="blogContactsFormFirstName">Item ID</label>
+                        <input type="text" class="form-control form-control-lg" name="item" id="blogContactsFormFirstName" placeholder="price_1M2IF6KORmC2RvgXMZWFL7uI" aria-label="First name" required>
+                    </div>
+    
+                    <div class="col-sm-6">
+                        <label class="form-label" for="blogContactsFormLasttName">Selected Membership <span style="color: red;">No Spaces at the end</span></label>
+                        <input type="text" class="form-control form-control-lg" name="selected" id="blogContactsFormLasttName" placeholder="Mid-Market Business" aria-label="Last name" required>
+                    </div>
+                    </div>
+                    <!-- End Form -->
+                    <!-- Form -->
+                <span class="d-block">
+                    <label class="form-label" for="blogContactsFormEmail">Trial Ends</label>
+                    <input type="text" class="form-control form-control-lg" name="trial_end" id="blogContactsFormEmail" placeholder="Unix epoch time ONLY" aria-label="email@site.com" required>
+                    </span>
+                    <!-- End Form -->
+                <!-- Form -->
+                <span class="d-block">
+                <label class="form-label" for="blogContactsFormEmail">Track ID</label>
+                <input type="text" class="form-control form-control-lg" name="track" id="blogContactsFormEmail" placeholder="329023590823" aria-label="email@site.com" required>
+                </span>
+                <!-- End Form -->
+
+                <div class="d-grid">
+                <button type="submit" class="btn btn-primary btn-lg">Submit</button>
+                </div>
+            </div>
+            </form>
+        </div>
+        </div>
+        <!-- End Card -->
+    </div>
+    <!-- End Col -->
+    </div>
+    <!-- End Row -->
+</div>
+<!-- End Post a Comment -->
+{% endblock content %}

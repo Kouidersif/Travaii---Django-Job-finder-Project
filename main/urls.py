@@ -45,5 +45,6 @@ urlpatterns= [
     path('contact/', views.Contact, name='contact'),
     path('search/', views.Search_for, name='search_for'),
     path('test/', views.Test, name='test_app'),
+    path('trial/', views.CreateTrial, name='create_trial'),
 
 ]
