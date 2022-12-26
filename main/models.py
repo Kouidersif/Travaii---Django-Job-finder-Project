@@ -133,7 +133,7 @@ class Education(models.Model):
     extra_info= models.TextField(null=True, blank=True)
     added = models.BooleanField(default=False)
     started= models.DateField()
-    end= models.DateField(blank=True)
+    end= models.DateField(blank=True, null=True)
     submition_date= models.DateTimeField(auto_now_add=now)
 
     def __str__(self):
@@ -152,7 +152,7 @@ class Experience(models.Model):
     company_pic_exp= models.ImageField(upload_to='experience/company/logo/', blank=True, null=True)
     co_location= models.CharField(max_length=40)
     started= models.DateField()
-    end= models.DateField(blank=True)
+    end= models.DateField(blank=True, null=True)
     still_working= models.CharField(max_length=40,choices=stil)
     industry= models.CharField(max_length=100)
     about_role = models.TextField()

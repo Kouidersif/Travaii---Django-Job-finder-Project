@@ -125,12 +125,17 @@ class ExperienceForm(ModelForm):
     def __init__(self, *args, **kwargs):
         super(ExperienceForm, self).__init__(*args, **kwargs)
         self.fields['title'].widget.attrs['class']='form-control'
+        self.fields['title'].widget.attrs['placeholder']='Senior IOS Developper'
         self.fields['co_location'].widget.attrs['class']='form-control'
+        self.fields['co_location'].widget.attrs['placeholder']='City or State'
         self.fields['company_pic_exp'].widget.attrs['class']='form-control'
         self.fields['company'].widget.attrs['class']='form-control'
+        self.fields['company'].widget.attrs['placeholder']='Company name'
         self.fields['industry'].widget.attrs['class']='form-control'
+        self.fields['industry'].widget.attrs['placeholder']='Technology'
         self.fields['still_working'].widget.attrs['class']='form-select'
         self.fields['about_role'].widget.attrs['class']='form-control'
+        self.fields['about_role'].widget.attrs['placeholder']='Tell everyone about the impact you made in previous companies'
         self.fields['started'].widget.attrs['class']= 'form-control'
         self.fields['end'].widget.attrs['class']= 'form-control'
 
