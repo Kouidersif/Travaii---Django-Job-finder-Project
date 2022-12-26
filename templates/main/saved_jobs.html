@@ -22,7 +22,10 @@
             <!-- End Col -->
   
             <div class="col-sm-2 mb-2 mb-sm-0">
+              {% if job.publisher.companyprofile.city or job.publisher.companyprofile.state %}
               <span>{{job.publisher.companyprofile.city}}, {{job.publisher.companyprofile.state}}</span>
+              
+              {% endif %}
             </div>
             <!-- End Col -->
   

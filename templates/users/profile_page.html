@@ -2,7 +2,7 @@
 {% extends 'base.html' %}
 {% load static %}
 
-{% block title %}{{user.full_name}}'s Profile  {% endblock title %}
+{% block title %}Applicant's Profile  {% endblock title %}
 
 
 {% block content %}
@@ -16,7 +16,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
   <!-- Title -->
-  <title>Jobs: Employee (Applicant) | Front - Multipurpose Responsive Template</title>
+ 
 
   <!-- Favicon -->
   <link rel="shortcut icon" href="{% static '/favicon.ico' %}">
@@ -227,9 +227,17 @@
                     <img class="step-avatar-img" src="{% static 'assets/img/others/uni.png' %}" alt="Image Description">
                   </div>
                   <div class="step-content">
-                    <h5 class="step-title">{{education.degree}}</h5>
+                    <h5 class="step-title">{{education.degree}} in {{education.speciality}}</h5>
                     <span class="d-block text-dark">{{education.University}}</span>
-                    <small class="d-block">{{education.duration}}</small>
+                    <small class="d-block">Duration: {{education.started}} - 
+                    {% if education.end %}
+                  {{education.started}}
+                {% else %}
+                Now
+              </small>
+                    
+                    {% endif %}
+
                   </div>
                 </div>
               </li>
