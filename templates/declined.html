@@ -1,0 +1,49 @@
+
+    {% extends 'base.html' %}
+    {% load static %}
+    {% block title %} Card Declined {% endblock title %}
+    {% block content %}
+    <!DOCTYPE html>
+    <html>
+    <head>
+        
+    <style>
+        /* Add some styles for the page */
+        body {
+        font-family: Arial, sans-serif;
+        background-color: #f4f4f4;
+        text-align: center;
+        }
+
+        h1 {
+        color: #cc0000;
+        }
+
+        p {
+        margin: 20px 0;
+        font-size: 16px;
+        }
+
+        .container {
+        max-width: 600px;
+        margin: 0 auto;
+        padding: 20px;
+        background-color: #fff;
+        border-radius: 5px;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        margin-top: 200px;
+        }
+    </style>
+    </head>
+    <body>
+        
+    <div class="container">
+        <h1><i class="fa-solid fa-triangle-exclamation"></i> Card Declined</h1>
+        <p>Sorry, but your card was declined. Please try again or use a different payment method.</p>
+        <p>If you continue to have problems, please contact customer support for assistance <b>support@travaii.com</b> .</p>
+
+        <a href="{% url 'home' %}">Go Back</a>
+    </div>
+    </body>
+    </html>
+{% endblock content %}

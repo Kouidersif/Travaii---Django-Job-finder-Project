@@ -158,17 +158,9 @@ def manage_subscription(request):
             user_balance = abs(customer_data.balance)
             end_date = datetime.datetime.fromtimestamp(subscription.current_period_end)
             start_date= datetime.datetime.fromtimestamp(subscription.current_period_start)
-            numbers = '0987654321124801424129801240984120981432324241250832509523095230974209814'
-            user_unique_id = str(request.user.id)
-            length= 15
-            order_id = "".join(random.sample(numbers, length))
-            order_id_user_id= user_unique_id + order_id
-            print(order_id_user_id)
             all_invoices = stripe.Invoice.list(limit=10,
             customer = stripe_customer.stripeid,
             )
-            for n in all_invoices:
-                paid_at=datetime.datetime.fromtimestamp(n.status_transitions.paid_at)
                 
             
             payment_method = stripe.Customer.list_payment_methods(
@@ -179,15 +171,11 @@ def manage_subscription(request):
                 customer=stripe_customer.stripeid,
                 payment_method_types=["card"],
                 )
-            last4digits = payment_method['data']
-            date_add= ''
-            for creation in last4digits:
-                date_add = datetime.datetime.fromtimestamp(creation.created)
             
                 
-            context={'date_add':date_add,'customer_data':customer_data,'user_balance':user_balance,
+            context={'customer_data':customer_data,'user_balance':user_balance,
                 'subscription':subscription, 'product':product, 'end_date':end_date,  'co_data':co_data,
-                'start_date':start_date, 'stripe_customer':stripe_customer,'all_invoices':all_invoices, 'paid_at':paid_at, 'last4digits':last4digits
+                'start_date':start_date, 'stripe_customer':stripe_customer,'all_invoices':all_invoices
             , 'client_secret':intent.client_secret}
             return render(request, 'company/manage_sub.html', context)
     except Customer.DoesNotExist:
@@ -197,6 +185,28 @@ def manage_subscription(request):
                 'co_data':co_data
             }
     return render(request, 'company/manage_sub.html', context)
+
+
+
+def retry_payment(request):
+    try:
+        stripe_customer = Customer.objects.get(user=request.user)
+        stripe.api_key = settings.STRIPE_SECRET_KEY
+        subscription = stripe.Subscription.retrieve(stripe_customer.stripe_subscription_id)
+        product = stripe.Product.retrieve(subscription.plan.product)
+        invoice = stripe.Invoice.retrieve(subscription.latest_invoice)
+        invoice.pay()
+        messages.success(request, 'Thanks!Your subscription has been re-activated now!')
+        return redirect(request.META['HTTP_REFERER'])
+    except stripe.error.CardError as e:
+        messages.warning(request, 'Your card was declined')
+        return redirect(request.META['HTTP_REFERER'])
+
+
+
+
+
+
 
 
 

@@ -28,5 +28,6 @@ urlpatterns= [
     ## save PRofiles
     path('save_profile/<int:id>/', views.SaveApplicant, name='save_applicant_profile'),
     path('saved_profiles/', views.Saved_Profiles, name='saved_profiles'),
+    path('trylast', views.retry_payment, name='retry'),
 
 ]

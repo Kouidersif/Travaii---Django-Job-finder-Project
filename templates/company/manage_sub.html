@@ -122,43 +122,47 @@
                         <!-- End Row -->
                       </div>
                       <!-- End Body -->
-                
                       {% else %}
-                      {% if subscription.status == 'canceled' %}
-                                     <!-- Body -->
-                                     <div class="card-body">
-                                        <div class="row">
-                                          <div class="col-md mb-4 mb-md-0">
-                                            <div class="mb-4">
-                                              <span class="card-subtitle">Your plan (billed yearly):</span>
-                                              
-                                              <h5>{{ product.name }} - {{subscription.status|title}}</h5>
-                                            </div>
-                                            <div>
-                                                <span class="card-subtitle"></span>
-                                                <h3 class="text-danger"></h3>
-                                              </div>
-                                  
-                                            <div>
-                                              <span class="card-subtitle"></span>
-                                              <h3 class="text-primary"></h3>
-                                            </div>
-                                          </div>
-                                          <!-- End Col -->
-                                  
-                                          <div class="col-md-auto">
-                                            <div class="d-grid d-md-flex gap-3">
-                                              <a class="btn btn-white btn-sm" href="#">Cancel subscription</a>
-                                              <a class="btn btn-primary btn-sm btn-transition" href="{% url 'subscription' %}">Subscribe again</a>
-                                            </div>
-                                          </div>
-                                          <!-- End Col -->
-                                        </div>
-                                        <!-- End Row -->
-                                      </div>
-                                      <!-- End Body -->
-                     
+                      <!-- Body -->
+                      {% if subscription.status == "past_due" %}
+                      <div class="card-body">
+                        <div class="row">
+                          <div class="col-md mb-4 mb-md-0">
+                            
+                            <div>
+                               
+                               
+                                <h5 class="text-dark"><i class="fa-solid fa-triangle-exclamation text-danger"></i> Card Declined</h5>
+                                <p>Sorry, but your card was declined. Please try again or use a different payment method.</p>
+                        <p>If you continue to have problems, please contact customer support for assistance <b>support@travaii.com</b> .</p>
+                        <p>If you have updated your payment method <a href="{% url 'retry' %}">Try again</a></p>
+                                {% else %}
+                                <div class="mb-4">
+                                  <span class="card-subtitle">Your plan:</span>
+                                  <p class="text-dark">{{ product.name }} Plan</p>
+                                 
+                                </div>
+                                <span class="card-subtitle">Status</span>
+                                <h5 class="text-dark">{{subscription.status|title}}</h5>
+                                
+                               
+                                
+                              
+                              </div>
+
+                           
+                          </div>
+                          <!-- End Col -->
+                  
+                        
+                          <!-- End Col -->
+                        </div>
+                        <!-- End Row -->
+                      </div>
+                      <!-- End Body -->
                       {% endif %}
+
+
                       {% endif %}
                       {% else %}
                       <div class="card-body">
@@ -191,9 +195,6 @@
                     
                         <!-- Body -->
                         <div class="card-body">
-                          <div class="mb-4">
-                            <p>Cards will be charged either at the end of the month or whenever your balance exceeds the usage threshold. All major credit / debit cards accepted.</p>
-                          </div>
                     
                           <!-- List Group -->
                           <ul class="list-group mb-5">
@@ -393,7 +394,7 @@
   <script>
     // Set your publishable key: remember to change this to your live publishable key in production
 // See your keys here: https://dashboard.stripe.com/apikeys
-const stripe = Stripe('pk_test_51Lz03SKORmC2RvgXRhtthq6yKQVLC1xLCCSq7PWqJ8HqFClSjSOtvQBDN7ImsLdRilbvCTbe1XBQE7ppeKP3D5tL007zG2iI6B');
+const stripe = Stripe('pk_live_51Lz03SKORmC2RvgXf0IAm5tseSPsDozduvh8jFgRwCdn4fxeMKZAAPL6JC7btx654sLBbJBhvvhKo6o7Xc0NYWHB00Xm3uEJE0');
 
 
 const options = {
