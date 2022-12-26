@@ -182,6 +182,7 @@ class Applying(models.Model):
     sent_at= models.DateTimeField(auto_now_add=now)
     sender= models.ForeignKey(User, on_delete=models.CASCADE)
     expected_salary= models.CharField(max_length=10, null= True, blank=True)
+    expected_salary_currency= models.CharField(max_length=15,choices=salary_cur, null=True, blank=True)
     experience= models.CharField(max_length=5, null=True, blank=True, choices=exper)
     request= models.CharField(max_length=10, choices=status, default='Pending' , null=True)
     submited= models.BooleanField(default=False)

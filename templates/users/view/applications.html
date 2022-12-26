@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 {% load static %}
 
-
+{% block title %}View Application - Travaii{% endblock title %}
 
 
 
@@ -43,8 +43,9 @@
             </a>
           </td>
           <td>
-            
+              {% if application.job.publisher.companyprofile.city or application.job.publisher.companyprofile.state %}
             <span class="d-block font-size-sm">{{application.job.publisher.companyprofile.city}}, {{application.job.publisher.companyprofile.state}}</span>
+            {% endif %}
           </td>
           <td>{{application.sent_at}}</span></td>
           {% if application.request == 'Pending' %}

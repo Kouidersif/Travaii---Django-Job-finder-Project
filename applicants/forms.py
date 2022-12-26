@@ -205,7 +205,7 @@ class ApplicantSignUpForm(UserCreationForm):
 class ApplyforForm(ModelForm):
     class Meta:
         model= Applying
-        fields= ['about', 'experience', 'expected_salary']
+        fields= ['about', 'experience', 'expected_salary', 'expected_salary_currency']
 
     def __init__(self, *args, **kwargs):
         super(ApplyforForm, self).__init__(*args, **kwargs)
@@ -213,6 +213,7 @@ class ApplyforForm(ModelForm):
         self.fields['about'].widget.attrs['placeholder'] = 'Let the employeer know how excited you are for this role and what advatages you can offer the company'
         self.fields['experience'].widget.attrs['class'] = 'form-select'
         self.fields['expected_salary'].widget.attrs['class'] = 'form-control'
+        self.fields['expected_salary_currency'].widget.attrs['class'] = 'form-control'
         self.fields['expected_salary'].widget.attrs['placeholder'] = 'Optional - set your salary expectations for this role'
 
 

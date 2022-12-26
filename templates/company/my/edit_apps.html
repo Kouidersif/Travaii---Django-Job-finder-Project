@@ -38,12 +38,19 @@
       {% endif %}
        </div>
        <hr>
+       {% if object.expected_salary %}
+       <div class="text-center">
+        <h6>{{object.sender.full_name}}'s Expected salary </h6>
+    <p class="text-dark">{{object.expected_salary}} {{object.expected_salary_currency}} </p>
+</div>
+{% endif %}
+       <hr>
                 {% csrf_token %}
                 
                 <h6>Make decision</h6>
                          {{form.request}}
 <hr>
-                <p>If you are apporoving this applicannt, please consider that he gets a notification and will be immediately able to see the decision</p>
+                <p>If you are approving {{object.sender.full_name}}, please consider that he gets a notification and will be immediately able to see the decision</p>
        
        
         <div class="modal-footer">
