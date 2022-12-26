@@ -77,7 +77,8 @@ class Jobs(models.Model):
     num_people= models.CharField(max_length=5, null=True, blank=True )
     is_urgent= models.BooleanField(default=False)
     job_shift=models.ForeignKey(Shifts,on_delete=models.SET_NULL, related_name='shifts', null=True, blank=True)
-    salary = models.CharField(max_length=15, null=True, blank=True)
+    salary_from = models.IntegerField(null=True, blank=True)
+    salary_to = models.IntegerField(null=True, blank=True)
     salary_currency = models.CharField(max_length=15,choices=salary_cur, null=True)
     pay_per= models.CharField(max_length=150, null=True, blank=True, choices=salary_range)
     benifits= models.TextField(max_length=500, null=True, blank=True)
@@ -99,37 +100,37 @@ class Category(models.Model):
     
 
 class Work_from(models.Model):
-    work_from= models.CharField(max_length=30, null=True, blank=True)
+    work_from= models.CharField(max_length=100, null=True, blank=True)
     def __str__(self):
         return self.work_from
 
 class Job_type(models.Model):
-    job_type= models.CharField(max_length=35, null=True, blank=True)
+    job_type= models.CharField(max_length=100, null=True, blank=True)
     def __str__(self):
         return self.job_type
 
 class Languages(models.Model):
-    language= models.CharField(max_length=20, null=True, blank=True)
+    language= models.CharField(max_length=100, null=True, blank=True)
     def __str__(self):
         return self.language
 
 class Skills(models.Model):
     owner= models.ForeignKey(User, on_delete=models.PROTECT)
-    skill = models.CharField(max_length=50, null=True, blank=True)
+    skill = models.CharField(max_length=200, null=True, blank=True)
     added = models.BooleanField(default=False)
     def __str__(self):
         return self.skill
 
 class Where_socialMedia(models.Model):
-    name=models.CharField(max_length=15, null=True, blank=True)
+    name=models.CharField(max_length=50, null=True, blank=True)
     def __str__(self):
         return self.name
 
 class Education(models.Model):
     student= models.ForeignKey(User, on_delete=models.PROTECT)
-    degree=models.CharField(max_length=15, null=True, blank=True)
-    University= models.CharField(max_length=150, null=True, blank=True)
-    speciality= models.CharField(max_length=40, null=True, blank=True)
+    degree=models.CharField(max_length=200, null=True, blank=True)
+    University= models.CharField(max_length=200, null=True, blank=True)
+    speciality= models.CharField(max_length=200, null=True, blank=True)
     extra_info= models.TextField(null=True, blank=True)
     added = models.BooleanField(default=False)
     started= models.DateField()
@@ -147,10 +148,10 @@ stil = [
 
 class Experience(models.Model):
     owner= models.ForeignKey(User, on_delete=models.PROTECT)
-    title= models.CharField(max_length=100)
-    company= models.CharField(max_length=80)
+    title= models.CharField(max_length=200)
+    company= models.CharField(max_length=150)
     company_pic_exp= models.ImageField(upload_to='experience/company/logo/', blank=True, null=True)
-    co_location= models.CharField(max_length=40)
+    co_location= models.CharField(max_length=300)
     started= models.DateField()
     end= models.DateField(blank=True, null=True)
     still_working= models.CharField(max_length=40,choices=stil)
@@ -177,7 +178,7 @@ class Applying(models.Model):
         ('No','No'),
     ]
     job= models.ForeignKey(Jobs, on_delete=models.CASCADE)
-    about= models.TextField(null=True, blank=True) # optional, to play with the system as a beginner
+    about= models.TextField(null=True, blank=True)
     sent_at= models.DateTimeField(auto_now_add=now)
     sender= models.ForeignKey(User, on_delete=models.CASCADE)
     expected_salary= models.CharField(max_length=10, null= True, blank=True)
@@ -192,9 +193,9 @@ class Applying(models.Model):
 
 
 class ContactUs(models.Model):
-    full_name= models.CharField(max_length=50)
+    full_name= models.CharField(max_length=100)
     email= models.EmailField()
-    title=models.CharField(max_length=100)
+    title=models.CharField(max_length=300)
     message= models.TextField(max_length=5000)
     sent_at= models.DateTimeField(auto_now_add=now)
 

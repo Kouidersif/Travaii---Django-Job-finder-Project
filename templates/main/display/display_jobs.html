@@ -218,8 +218,11 @@
                           {% if obj.salary_currency %}
                           {{obj.salary_currency}} 
                           {% endif %}
-                          {% if obj.salary  %}
-                          {{obj.salary}}
+                          {% if obj.salary_from or obj.salary_to  %}
+                          <b>
+                          {{obj.salary_from}} -
+                          {{obj.salary_to}}
+                        </b>
                           {% endif %}
                           {% if obj.pay_per  %}
                            {{obj.pay_per}}
@@ -244,7 +247,9 @@
               <div class="card-footer pt-0">
                 <ul class="list-inline list-separator small text-body">
                   <li class="list-inline-item">Posted {{obj.creation_date|timesince}} ago</li>
+                  {% if obj.publisher.companyprofile.city %}
                   <li class="list-inline-item">{{obj.publisher.companyprofile.city}}</li>
+                  {% endif %}
                   <li class="list-inline-item">{{obj.job_type}}</li>
                 </ul>
               </div>

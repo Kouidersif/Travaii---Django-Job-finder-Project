@@ -37,12 +37,12 @@ class UserLoginForm(AuthenticationForm):
 class JobForm(ModelForm):
     class Meta:
         model = Jobs
-        fields= ['position', 'job_category','job_type', 'num_people', 'job_shift', 'work_from', 'description','salary','salary_currency','interview_type', 'is_published']
+        fields= ['position', 'job_category','job_type', 'num_people', 'job_shift', 'work_from', 'description','salary_from','salary_to','salary_currency','interview_type', 'is_published']
         widgets= {
         'position': forms.TextInput(attrs={'placeholder':'Customer support representative'}),
         'num_people': forms.TextInput(attrs={'type':'number'}),
         'description': forms.Textarea(attrs={'placeholder':'Requirements or experience needed'}),
-        'salary': forms.TextInput(attrs={'type':'number'}),
+        
         
         } 
     def __init__(self, *args, **kwargs):
@@ -55,9 +55,12 @@ class JobForm(ModelForm):
         self.fields['job_category'].widget.attrs['placeholder']= 'Select category'
         self.fields['job_type'].widget.attrs['class']= 'form-select'
         self.fields['job_shift'].widget.attrs['class']= 'form-select'
-        self.fields['salary'].widget.attrs['type'] = 'number'
-        self.fields['salary'].widget.attrs['class']= 'form-control'
-        self.fields['salary'].widget.attrs['placeholder']= 'Get more applications by speifying the pay'
+        self.fields['salary_from'].widget.attrs['type'] = 'number'
+        self.fields['salary_from'].widget.attrs['class']= 'form-control'
+        self.fields['salary_from'].widget.attrs['placeholder']= 'from'
+        self.fields['salary_to'].widget.attrs['type'] = 'number'
+        self.fields['salary_to'].widget.attrs['class']= 'form-control'
+        self.fields['salary_to'].widget.attrs['placeholder']= 'to'
         self.fields['salary_currency'].widget.attrs['class']= 'form-select'
         #self.fields['pay_per'].widget.attrs['class']= 'form-select'
         self.fields['interview_type'].widget.attrs['class']= 'form-select'

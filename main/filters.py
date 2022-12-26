@@ -11,8 +11,8 @@ class SnippetFilter(django_filters.FilterSet):
         ('descending', 'Descending')
     ]
     ordering = django_filters.ChoiceFilter(label='Ordering', choices = CHOICES, method = 'filter_by_order')
-    min_price = django_filters.NumberFilter(field_name="salary", lookup_expr='gte')
-    max_price = django_filters.NumberFilter(field_name="salary", lookup_expr='lte')
+    min_price = django_filters.NumberFilter(field_name="salary_from", lookup_expr='gte')
+    max_price = django_filters.NumberFilter(field_name="salary_to", lookup_expr='lte')
 
     
     class Meta:
