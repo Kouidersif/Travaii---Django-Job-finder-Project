@@ -94,7 +94,7 @@ DATABASES = {
     'ENGINE': 'django.db.backends.postgresql_psycopg2',
     'NAME': 'travaiidb',
     'USER': 'dbtravaii_user',
-    'PASSWORD': 'IgF4!cum0%FP',
+    'PASSWORD': config('mdpdeb'),
     'HOST': 'localhost',
     'PORT': '',
 }
