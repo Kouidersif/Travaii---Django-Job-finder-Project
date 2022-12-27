@@ -16,6 +16,7 @@ subsc=[
     ('Large enterprise', 'Large enterprise'),
     ('Mid-market enterprises', 'Mid-market enterprises'),
     ('Small business', 'Small business'),
+    ('Trialing', 'Trialing'),
 ]
 class Customer(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
