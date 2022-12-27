@@ -215,6 +215,35 @@ def CreateJob(request):
             else:
                 return render(request, 'upgrade_message.html' )
 
+
+                
+            if subscription.status == 'trialing':
+                
+                    # need to add max can be published for each plan
+                    if user.work.count() >= 5:
+                        return render(request, 'upgrade_message.html' )
+                    else:
+                        form = JobForm()
+                        if request.method == 'POST':
+                            form = JobForm(request.POST)
+                            if form.is_valid():
+                                job = form.save(commit=False)
+                                job.publisher= request.user
+                                job.save()
+                                job.is_published=True
+                                job.save()
+                                return redirect('alljobs')
+                            else:
+                                messages.warning(request, form.errors)
+                        else:
+                            form = JobForm()
+                        info={
+                            'form': form
+                            }
+                    return render(request, 'main/crud/create_job.html',info )
+            else:
+                return render(request, 'upgrade_message.html' )
+
     except Customer.DoesNotExist:
         if user.work.count() >= 1:
             return render(request, 'upgrade_message.html' )

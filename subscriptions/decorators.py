@@ -22,7 +22,6 @@ def check_sub(view_func):
                 else:
                     return view_func(request, *args, **kwargs)
                     
-                    return view_func(request, *args, **kwargs)
             except Customer.DoesNotExist:
                 return view_func(request, *args, **kwargs)
         else:
