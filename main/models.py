@@ -65,6 +65,18 @@ salary_cur=[
 
 ]
 
+people_needd=[
+    ('1-10', '1-10'),
+    ('11-20', '11-20'),
+    ('21-49', '21-49'),
+    ('50-99', '50-99'),
+    ('100-249', '100-249'),
+    ('250-499', '250-499'),
+    ('500-999', '500-999'),
+    ('1000 or more', '1000 or more'),
+
+]
+
 class Jobs(models.Model):
     publisher= models.ForeignKey(User, related_name='work' ,on_delete=models.CASCADE, null=True) 
     job_category= models.ForeignKey('Category', related_name='myjobs' ,on_delete=models.SET_NULL, null=True)
@@ -74,7 +86,7 @@ class Jobs(models.Model):
     job_type= models.ForeignKey('Job_type', on_delete=models.SET_NULL,related_name='typeofjob', null=True, blank=True)
     description = RichTextField(config_name='awesome_ckeditor')
     tasks= models.TextField(max_length=300,  null=True, blank=True)
-    num_people= models.CharField(max_length=5, null=True, blank=True )
+    num_people= models.CharField(max_length=25,choices=people_needd, null=True, blank=True )
     is_urgent= models.BooleanField(default=False)
     job_shift=models.ForeignKey(Shifts,on_delete=models.SET_NULL, related_name='shifts', null=True, blank=True)
     salary_from = models.IntegerField(null=True, blank=True)

@@ -40,7 +40,7 @@ class JobForm(ModelForm):
         fields= ['position', 'job_category','job_type', 'num_people', 'job_shift', 'work_from', 'description','salary_from','salary_to','salary_currency','interview_type', 'is_published']
         widgets= {
         'position': forms.TextInput(attrs={'placeholder':'Customer support representative'}),
-        'num_people': forms.TextInput(attrs={'type':'number'}),
+        
         'description': forms.Textarea(attrs={'placeholder':'Requirements or experience needed'}),
         
         
@@ -49,7 +49,7 @@ class JobForm(ModelForm):
         super(JobForm, self).__init__(*args, **kwargs)
         self.fields['position'].widget.attrs['class']= 'form-control'
         self.fields['work_from'].widget.attrs['class']= 'form-select'
-        self.fields['num_people'].widget.attrs['class']= 'form-control'
+        self.fields['num_people'].widget.attrs['class']= 'form-select'
         self.fields['num_people'].widget.attrs['placeholder']= 'How many people needed for this job?'
         self.fields['job_category'].widget.attrs['class']= 'js-select form-select form-select-lg'
         self.fields['job_category'].widget.attrs['placeholder']= 'Select category'
