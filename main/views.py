@@ -132,7 +132,7 @@ def CreateJob(request):
                 
                 if subscription.current_period_end != datetime.date.today() and subscription.status == 'active':
                     # need to add max can be published for each plan
-                    if user.work.count() >= 2:
+                    if user.work.count() >= 10:
                         return render(request, 'upgrade_message.html' )
                     else:
                         form = JobForm()
@@ -160,7 +160,7 @@ def CreateJob(request):
                 
                 if subscription.current_period_end != datetime.date.today() and subscription.status == 'active':
                     # need to add max can be published for each plan
-                    if user.work.count() >= 5:
+                    if user.work.count() >= 20:
                         return render(request, 'upgrade_message.html' )
                     else:
                         form = JobForm()
@@ -191,7 +191,7 @@ def CreateJob(request):
                 
                 if subscription.current_period_end != datetime.date.today() and subscription.status == 'active':
                     # need to add max can be published for each plan
-                    if user.work.count() >= 5:
+                    if user.work.count() >= 40:
                         return render(request, 'upgrade_message.html' )
                     else:
                         form = JobForm()
