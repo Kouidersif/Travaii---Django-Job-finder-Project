@@ -19,7 +19,7 @@ from django.conf.urls.static import static
 from django.conf import settings 
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
+    path('akhtina/yarham/malik/', admin.site.urls),
     path('', include('main.urls')), 
     path('company/', include('company.urls')),
     path('tinymce/', include('tinymce.urls')),
