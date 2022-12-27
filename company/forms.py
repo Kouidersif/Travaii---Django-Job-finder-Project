@@ -87,10 +87,10 @@ class CompanyProfileForm(ModelForm):
         #second page
         self.fields['address'].widget.attrs['class'] = 'form-control form-control-sm'
         self.fields['address'].widget.attrs['placeholder'] = '1234 East 23th street'
-        self.fields['city'].widget.attrs['class'] = 'js-select form-select form-select-md' 
+        self.fields['city'].widget.attrs['class'] = 'js-select form-select' 
         self.fields['city'].widget.attrs['id'] = 'city'
         self.fields['city'].widget.attrs['placeholder'] = 'City' 
-        self.fields['state'].widget.attrs['class'] = 'js-select form-select form-select-md'
+        self.fields['state'].widget.attrs['class'] = 'js-select form-select'
         self.fields['state'].widget.attrs['placeholder'] = 'State'
         self.fields['zip_code'].widget.attrs['class'] = 'form-control form-control-sm'
         #third page

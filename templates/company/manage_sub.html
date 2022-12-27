@@ -1,6 +1,7 @@
 {% extends 'base.html' %}
 {% load static %}
 {% load mathfilters %}
+{% block title %}Manage Subscription - Travaii {% endblock title %}
 {% block content %}
 {% include 'parts/nav.html' %}
 
@@ -52,11 +53,9 @@
                         <div class="balance">
                           <h5>
                             Balance : 
-                            {% if customer_data.currency == 'eur' %}
-                            €{{user_balance|div:100}} Euro
-                            {% else %}
-                            $ {{user_balance|div:100}}
-                            {% endif %}
+                       
+                            {{user_balance|div:100}} {{customer_data.currency}}
+                            
                           </h5>
                         </div>
                      

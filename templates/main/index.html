@@ -256,7 +256,9 @@
             <div class="card-footer pt-0">
               <ul class="list-inline list-separator small text-body">
                 <li class="list-inline-item">Posted {{job.creation_date|timesince}} ago</li>
-                <li class="list-inline-item">{{job.publisher.companyprofile.city}}</li>
+                {% if job.publisher.companyprofile.city %}
+                <li class="list-inline-item"><i class="bi bi-geo-alt-fill"></i> {{job.publisher.companyprofile.city}}, {{job.publisher.companyprofile.state}}</li>
+                {% endif %}
                 <li class="list-inline-item">{{job.job_type}}</li>
               </ul>
             </div>
