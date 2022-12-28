@@ -2,11 +2,11 @@
 from django.db import models
 from ckeditor.fields import RichTextField
 from django.contrib.auth.models import AbstractUser
-
+from django.utils import timezone
 
 import datetime
 
-now = datetime
+now = timezone.now()
 
 salary_range=[
 

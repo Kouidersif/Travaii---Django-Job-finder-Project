@@ -28,7 +28,7 @@ from django.core.mail import EmailMultiAlternatives
 from django.template import Context
 from django.core.paginator import Paginator
 import random
-
+from django.utils import timezone
 
 
 
@@ -118,21 +118,25 @@ def CreateJob(request):
         if request.user.customer.membership:
             c = Customer.objects.filter(user= request.user)
             stripe_customer = Customer.objects.get(user=request.user)
-            #print(user.work.count())
             
             stripe.api_key = settings.STRIPE_SECRET_KEY
             subscription = stripe.Subscription.retrieve(stripe_customer.stripe_subscription_id)
             d = datetime.datetime.fromtimestamp(subscription.current_period_end)
-            #print(d)
+            start_date = timezone.make_aware(timezone.datetime.fromtimestamp(subscription.current_period_start))
+            end_date = timezone.make_aware(timezone.datetime.fromtimestamp(subscription.current_period_end))
+            
+            
+            # Filter the posts by the start and end date of the current billing interval
+            to_count = user.work.filter(creation_date__gte=start_date, creation_date__lte=end_date)
+            number_of_posts = to_count.count()
             product = stripe.Product.retrieve(subscription.plan.product)
             
-            #print(product.name)
             ##Small business PLAN 
             if request.user.customer.selected_membership == 'Small business':
                 
                 if subscription.current_period_end != datetime.date.today() and subscription.status == 'active':
                     # need to add max can be published for each plan
-                    if user.work.count() >= 10:
+                    if number_of_posts >= 10:
                         return render(request, 'upgrade_message.html' )
                     else:
                         form = JobForm()
@@ -160,7 +164,7 @@ def CreateJob(request):
                 
                 if subscription.current_period_end != datetime.date.today() and subscription.status == 'active':
                     # need to add max can be published for each plan
-                    if user.work.count() >= 20:
+                    if number_of_posts >= 20:
                         return render(request, 'upgrade_message.html' )
                     else:
                         form = JobForm()
@@ -191,7 +195,7 @@ def CreateJob(request):
                 
                 if subscription.current_period_end != datetime.date.today() and subscription.status == 'active':
                     # need to add max can be published for each plan
-                    if user.work.count() >= 40:
+                    if number_of_posts >= 40:
                         return render(request, 'upgrade_message.html' )
                     else:
                         form = JobForm()
@@ -214,13 +218,11 @@ def CreateJob(request):
                     return render(request, 'main/crud/create_job.html',info )
             else:
                 return render(request, 'upgrade_message.html' )
-
-
                 
             if subscription.status == 'trialing':
                 
                     # need to add max can be published for each plan
-                    if user.work.count() >= 5:
+                    if number_of_posts >= 5:
                         return render(request, 'upgrade_message.html' )
                     else:
                         form = JobForm()
