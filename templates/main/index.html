@@ -372,7 +372,7 @@
       </div>
     </div>
     <!-- End Card Grid -->
-
+    {% if request.user.is_company or not request.user.is_authenticated %}
     <!-- Testimonials -->
     <div class="overflow-hidden gradient-x-three-sm-primary rounded-2 mx-md-10">
       <div class="container content-space-2 content-space-lg-3">
@@ -424,7 +424,7 @@
       </div>
     </div>
     <!-- End Testimonials -->
-
+    {% endif %}
     <!-- Card Grid -->
     <div class="container content-space-2 content-space-lg-3">
       <!-- Heading -->
