@@ -104,9 +104,10 @@
 
     <!-- Card Grid -->
     <div class="container content-space-2 content-space-t-lg-4 content-space-b-lg-3">
+      {% if request.user.is_applicant or not request.user.is_authenticated %}
          <!-- Features -->
     <div class="position-relative">
-      <div class="container content-space-lg-3">
+      <div class="container content-space-lg-3 mb-9">
         <div class="row align-items-center">
           <div class="col-12 col-lg-9 mb-7 mb-md-0">
             <!-- Heading -->
@@ -130,7 +131,9 @@
                     </span>
                     <h4 class="card-title">Set your Career Interests.</h4>
                     <p class="card-text">Customize your job search with 'Set Your Career Interests.' Select your preferred industries and job roles to find the perfect job opportunity.</p>
-                    <a class="card-link" href="#">Set my career interests <i class="bi-chevron-right small ms-1"></i></a>
+                    
+                    <a class="card-link" href="{% url 'profile_setup' %}">Set my career interests <i class="bi-chevron-right small ms-1"></i></a>
+
                   </div>
                 </div>
                 <!-- End Card -->
@@ -150,7 +153,7 @@
                     </span>
                     <h4 class="card-title">Find jobs</h4>
                     <p class="card-text">Easily find your perfect job in your industry with our 'Search for Jobs in Your Industry' feature.</p>
-                    <a class="card-link" href="#">View all Jobs <i class="bi-chevron-right small ms-1"></i></a>
+                    <a class="card-link" href="{% url 'alljobs' %}">View all Jobs <i class="bi-chevron-right small ms-1"></i></a>
                   </div>
                 </div>
                 <!-- End Card -->
@@ -170,7 +173,7 @@
                     </span>
                     <h4 class="card-title">Easily apply</h4>
                     <p class="card-text">Apply for your dream job with our easy job application process. Simply search, apply, and wait for a call from the company.</p>
-                    <a class="card-link" href="#">Find Jobs <i class="fas bi-chevron-right small ms-1"></i></a>
+                    <a class="card-link" href="{% url 'alljobs' %}">Find Jobs <i class="fas bi-chevron-right small ms-1"></i></a>
                   </div>
                 </div>
                 <!-- End Card -->
@@ -187,8 +190,10 @@
       <div class="banner-half-middle-x bg-img-start d-none d-md-block" style="background-image: url(/static/assets/img/900x900/steps.png);"></div>
     </div>
     <!-- End Features -->
-    <hr style="margin: 10px;">
+    <hr class="mb-9">
       <!-- Features -->
+      {% endif %}
+      {% if request.user.is_company or not request.user.is_authenticated %}
 <div class="container">
   <div class="row justify-content-lg-between align-items-lg-center">
     <div class="col-lg-5 mb-9 mb-lg-0">
@@ -286,7 +291,9 @@
 </div>
 <!-- End Features -->
 
-<hr>
+
+<hr class="mb-9 mt-9">
+{% endif %}
       <div class="row row-cols-1 row-cols-sm-2 row-cols-lg-3 mb-5">
         {% for job in jobs|slice:":6" %}
         <div class="col mb-5">
@@ -308,9 +315,9 @@
                       <h6 class="card-title">
                         <a class="text-dark" href="{% url 'company_Profile' job.publisher.id %}">{{job.publisher.companyprofile.company_name}}</a>
 
-                        {% if obj.publisher.customer and obj.publisher.customer.selected_membership == 'Mid-market enterprises' %}
+                        {% if job.publisher.customer and job.publisher.customer.selected_membership == 'Mid-market enterprises' %}
                                   <i class="bi bi-patch-check-fill text-primary" title="Premium Account"></i> 
-                                  {% elif obj.publisher.customer and obj.publisher.customer.selected_membership == 'Large enterprise' %}     
+                                  {% elif job.publisher.customer and job.publisher.customer.selected_membership == 'Large enterprise' %}     
                                   <i class="bi bi-patch-check-fill text-primary" title="Premium Account"></i> 
 
                           {% endif %}
