@@ -131,8 +131,11 @@
                     </span>
                     <h4 class="card-title">Set your Career Interests.</h4>
                     <p class="card-text">Customize your job search with 'Set Your Career Interests.' Select your preferred industries and job roles to find the perfect job opportunity.</p>
-                    
+                      {% if request.user.is_authenticated and request.user.is_applicant %}
+                    <a class="card-link" href="{% url 'applicant_info' user.id %}">My Career Interests <i class="bi-chevron-right small ms-1"></i></a>
+                    {% else %}
                     <a class="card-link" href="{% url 'profile_setup' %}">Set my career interests <i class="bi-chevron-right small ms-1"></i></a>
+                    {% endif %}
 
                   </div>
                 </div>
