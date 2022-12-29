@@ -25,6 +25,8 @@ from applicants.models import ApplicantProfile
 from applicants.views import Confirm_message
 import random
 from main.models import Get_industry
+from main.forms import ContactForm
+
 from django.core.paginator import Paginator
 #Your password can’t be too similar to your other personal information.
 #Your password must contain at least 8 characters.
