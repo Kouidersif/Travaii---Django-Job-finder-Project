@@ -1,7 +1,7 @@
 console.log('hello sif');
 
 
-var stripe = Stripe('pk_test_51Lz03SKORmC2RvgXRhtthq6yKQVLC1xLCCSq7PWqJ8HqFClSjSOtvQBDN7ImsLdRilbvCTbe1XBQE7ppeKP3D5tL007zG2iI6B');
+var stripe = Stripe('pk_live_51Lz03SKORmC2RvgXf0IAm5tseSPsDozduvh8jFgRwCdn4fxeMKZAAPL6JC7btx654sLBbJBhvvhKo6o7Xc0NYWHB00Xm3uEJE0');
 
 var checkoutButton = document.getElementById('checkout-button');
 

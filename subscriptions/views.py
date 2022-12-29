@@ -278,31 +278,39 @@ def Update_subscription(request):
 ###choose PLAN
     
 
-@login_required
-@notLogged
+
 def subscribe(request):
-    try:
-        stripe_customer = Customer.objects.get(user=request.user)
-        stripe.api_key = settings.STRIPE_SECRET_KEY
-        subscription = stripe.Subscription.retrieve(stripe_customer.stripe_subscription_id)
-        product = stripe.Product.retrieve(subscription.plan.product)
-        if subscription.status == 'past_due':
-            return render(request, 'declined.html')
-        else:
-            check_interval = subscription['items']['data'][0]['price']
-            #print(check_interval.recurring.interval)
-            print(subscription.status)
-            current_plan = product.name
+    if request.user.is_authenticated:
+        try:
+            stripe_customer = Customer.objects.get(user=request.user)
+            stripe.api_key = settings.STRIPE_SECRET_KEY
+            subscription = stripe.Subscription.retrieve(stripe_customer.stripe_subscription_id)
+            product = stripe.Product.retrieve(subscription.plan.product)
+            if subscription.status == 'past_due':
+                return render(request, 'declined.html')
+            else:
+                check_interval = subscription['items']['data'][0]['price']
+                #print(check_interval.recurring.interval)
+                print(subscription.status)
+                current_plan = product.name
+                small_Business= ProName.objects.filter(name='Small business')
+                Mid_market_plan = ProName.objects.filter(name='Mid-market enterprises')
+                large_enterprise_plan = ProName.objects.filter(name='Large enterprise')
+                context={
+                    'small_Business':small_Business, 'Mid_market_plan':Mid_market_plan, 'large_enterprise_plan':large_enterprise_plan, 'check_interval':check_interval,
+                    'product':product, 'subscription':subscription, 'current_plan':current_plan
+                }
+                return render(request, 'choose.html', context)
+        except Customer.DoesNotExist:
             small_Business= ProName.objects.filter(name='Small business')
             Mid_market_plan = ProName.objects.filter(name='Mid-market enterprises')
-            large_enterprise_plan = ProName.objects.filter(name='Large enterprise')
+            large_enterprise_plan = ProName.objects.filter(name='Large enterprise' )
             context={
-                'small_Business':small_Business, 'Mid_market_plan':Mid_market_plan, 'large_enterprise_plan':large_enterprise_plan, 'check_interval':check_interval,
-                'product':product, 'subscription':subscription, 'current_plan':current_plan
+                'small_Business':small_Business, 'Mid_market_plan':Mid_market_plan, 'large_enterprise_plan':large_enterprise_plan
             }
             return render(request, 'choose.html', context)
 
-    except Customer.DoesNotExist:
+    else:
         small_Business= ProName.objects.filter(name='Small business')
         Mid_market_plan = ProName.objects.filter(name='Mid-market enterprises')
         large_enterprise_plan = ProName.objects.filter(name='Large enterprise' )
