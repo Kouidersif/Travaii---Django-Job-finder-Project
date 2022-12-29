@@ -32,6 +32,35 @@ from django.core.paginator import Paginator
 #Your password can’t be entirely numeric.
 
 
+
+
+
+def LandingPage(request):
+    form = ContactForm()
+    if request.method == 'POST':
+        form = ContactForm(request.POST)
+        if form.is_valid():
+            form.save()
+            messages.success(request, 'Thank you for reaching us, we will be back to you as soon as possible')
+            return redirect(request.META['HTTP_REFERER'])
+        else:
+            messages.success(request, form.errors)
+    else:
+        ContactForm()
+    context= {
+        'form':form
+    }
+    return render(request, 'company/my/landingpage.html', {'form':form})
+
+
+
+
+
+
+
+
+
+
 @only_non_authenticated
 def Signup_as_company(request):
     form = CompanySignUpForm()

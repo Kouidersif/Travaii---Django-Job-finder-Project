@@ -1,25 +1,6 @@
-    {% load static %}
+{% load static %}
 
-<style>
-  .logotext h1{
-  display: inline-block;
-  padding: 0;
-  margin-top: 0;
 
-}
-.logotext{
-  font-family: 'Lobster', cursive;
-  color: black;
-  font-size: 30px;
-
-}
-.spat{
-  display: inline-block;
-  padding: 0;
-  color: #377dff;
-  font-size: 60px;
-}
-</style>
 
 {% block content %}
 
@@ -35,8 +16,8 @@
           <!-- Logo -->
           <div class="mb-5">
             <a class="navbar-brand" href="{% url 'home' %}" aria-label="Front">
-              <h1 class="logotext"><span class="spat">T</span>ravaii</h1>
-            </a>
+              <div class="logo text-primary">Travaii</div>
+          </a>
           </div>
           <!-- End Logo -->
 

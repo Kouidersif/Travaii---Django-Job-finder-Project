@@ -3,6 +3,7 @@ from . import views
 from .decorators import notLogged
 urlpatterns= [
     #path('', views.HomePage.as_view(), name='jobs_list'),
+    path('', views.LandingPage, name='CompanyLandingPage'),
     path('signup/', views.Signup_as_company, name='sign_up_company'),
     path('setup/', views.Company_setup, name='company_setup'),
     path('profile/<int:pk>/', views.Setup_Profile, name='company_Profile'),

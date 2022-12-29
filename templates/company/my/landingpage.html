@@ -1,0 +1,465 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+
+
+<!-- ========== HEADER ========== -->
+<header id="header" class="navbar navbar-expand-lg navbar-end navbar-sticky-top navbar-light bg-white">
+    <div class="container">
+    <nav class="js-mega-menu navbar-nav-wrap">
+        <!-- Default Logo -->
+        <a class="navbar-brand" href="{% url 'home' %}" aria-label="Front">
+            <div class="logo text-primary">Travaii</div>
+        </a>
+        <!-- End Default Logo -->
+
+        <!-- Toggler -->
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-default">
+            <i class="bi-list"></i>
+        </span>
+        <span class="navbar-toggler-toggled">
+            <i class="bi-x"></i>
+        </span>
+        </button>
+        <!-- End Toggler -->
+
+        <!-- Collapse -->
+        <div class="collapse navbar-collapse" id="navbarNavDropdown">
+        <ul class="navbar-nav">
+            <!-- Landings -->
+            {% if not request.user.is_authenticated %}
+
+            <li class="nav-item">
+                <a class="nav-link active" href="{% url 'home' %}">Home</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{% url 'alljobs' %}">Jobs</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{% url 'candidates' %}">Candidates</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{% url 'subscription' %}">Pricing</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{% url 'log_in' %}">Login</a>
+            </li>
+            <li class="nav-item">
+                <a class="btn btn-outline-dark btn-transition" href="{% url 'sign_up_company' %}">Applicant</i></a>
+            </li>
+
+            <li class="nav-item">
+            <a class="btn btn-primary btn-transition" href="{% url 'sign_up_company' %}">Post Job</i></a>
+            </li>
+            {% elif request.user.is_authenticated and request.user.is_company %}
+            <li class="nav-item">
+            <a class="nav-link active" href="{% url 'home' %}">Home</a>
+            </li>
+            <li class="nav-item">
+            <a class="nav-link" href="{% url 'alljobs' %}">Jobs</a>
+            </li>
+            <li class="nav-item">
+            <a class="nav-link" href="{% url 'candidates' %}">Candidates</a>
+            </li>
+            
+            <li class="nav-item">
+            <a class="nav-link" href="{% url 'subscription' %}">Pricing</a>
+            </li>
+
+            <li class="nav-item">
+            <a class="btn btn-primary btn-transition" href="{% url 'create_job' %}">Post Job</i></a>
+            </li>
+            <li class="nav-item" style="border-bottom: 2px solid blue;">
+            <div class="btn-group">
+                
+                <button class="btn btn-ghost-primary dropdown-toggle" type="button" id="dropdownMenuButtonGhostPrimary" data-bs-toggle="dropdown" aria-expanded="false" style="font-weight: 800;">
+                <i class="bi bi-person" style="margin-right: 5px;"></i>   {{request.user.username|title}}
+                </button>
+                <div class="dropdown-menu dropdown-menu-left" aria-labelledby="dropdownMenuButton">
+                <a class="dropdown-item" href="{% url 'company_Profile' user.id %}">
+                    <i class="bi bi-building dropdown-item-icon"></i> Company Profile
+                </a>
+                <a class="dropdown-item" href="{% url 'account_categories' %}"> 
+                    <i class="bi bi-gear-wide-connected dropdown-item-icon"></i>Settings
+                </a>
+                <hr>
+            
+                <a class="dropdown-item" href="{% url 'contact' %}">
+                    <i class="bi bi-question-circle dropdown-item-icon"></i>Help
+                </a>
+                <a class="dropdown-item" href="{% url 'log_out' %}">
+                    <i class="bi bi-box-arrow-in-left dropdown-item-icon"></i>Log Out
+                </a>
+                </div>
+            </div>
+            </li>
+            {% endif %}
+            {% if request.user.is_authenticated and request.user.is_applicant %}
+        <li class="nav-item">
+            <a class="nav-link active" href="{% url 'home' %}">Home</a>
+        </li>
+
+        <!-- Dropdown -->
+        <li class="nav-item">
+            <a class="nav-link " href="{% url 'alljobs' %}"> Jobs</a>
+        </li>
+        <!-- Dropdown -->
+        <!-- Dropdown -->
+        <li class="nav-item" style="border-bottom: 2px solid blue;">
+        <div class="btn-group">
+            <button class="btn btn-ghost-primary dropdown-toggle" type="button" id="dropdownMenuButtonGhostPrimary" data-bs-toggle="dropdown" aria-expanded="false" style="font-weight: 800;">
+            <i class="bi bi-person"></i> {{request.user.username|title}}
+            </button>
+            <div class="dropdown-menu dropdown-menu-left" aria-labelledby="dropdownMenuButton">
+            <a class="dropdown-item" href="{% url 'profile' request.user.username %}">
+                <i class="bi bi-person-square dropdown-item-icon"></i> My Profile
+            </a>
+            <a class="dropdown-item" href="{% url 'account_settings' %}"> 
+                <i class="bi bi-gear-wide-connected dropdown-item-icon"></i>Settings
+            </a>
+            <a class="dropdown-item" href="{% url 'log_out' %}">
+                <i class="bi bi-box-arrow-in-left dropdown-item-icon"></i>Log Out
+            </a>
+            </div>
+        </div>
+        </li>
+    <!-- End Dropdown -->
+    {% endif %}
+        
+
+
+
+            
+        </ul>
+        </div>
+        <!-- End Collapse -->
+    </nav>
+    </div>
+</header>
+<!-- ========== END HEADER ========== -->
+
+
+<!-- Hero -->
+<div class="position-relative bg-img-start" style="background-image: url(/static/assets/img/1920x1080/img6.jpg);">
+    <div class="container content-space-t-2 content-space-t-md-3 content-space-3 content-space-b-lg-5">
+    <div class="w-lg-50">
+        <h1>Effortlessly Find Quality Candidates</h1>
+        <h2 class="h1 text-primary">Join our Satisfied Companies</h2>
+    </div>
+    </div>
+    
+    <!-- Shape -->
+    <div class="shape shape-bottom zi-1" style="margin-bottom: -.125rem">
+    <svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" viewBox="0 0 1920 100.1">
+        <path fill="#fff" d="M0,0c0,0,934.4,93.4,1920,0v100.1H0L0,0z"></path>
+    </svg>
+    </div>
+    <!-- End Shape -->
+</div>
+<!-- End Hero -->
+
+
+
+<!-- Feature Nav -->
+<div class="container content-space-1">
+<!-- Heading -->
+<div class="w-md-75 w-lg-50 text-center mx-md-auto mb-5 mb-md-9">
+  <span class="text-cap"><h4>Travaii The Smart Solution for Simplifying the Hiring Process </h4></span>
+  <p>Travaii simplifies the hiring process for companies, allowing them to efficiently 
+    find and hire the best candidates in a timely manner. It offers a range of features and 
+    tools that make it easy for companies to post job listings, review resumes and applications, 
+    and schedule interviews, all in one place. Travaii platforme
+    helps companies save time and resources by streamlining their hiring process and allowing 
+    them to focus on their core business activities.</p>
+</div>
+<!-- End Heading -->
+
+<div class="row align-items-lg-center">
+  <div class="col-lg-5 order-lg-2 mb-7 mb-lg-0">
+    <!-- Nav Scroller -->
+    <div class="js-nav-scroller hs-nav-scroller-horizontal">
+      <span class="hs-nav-scroller-arrow-prev" style="display: none;">
+        <a class="hs-nav-scroller-arrow-link" href="javascript:;">
+          <i class="bi-chevron-left"></i>
+        </a>
+      </span>
+
+      <span class="hs-nav-scroller-arrow-next" style="display: none;">
+        <a class="hs-nav-scroller-arrow-link" href="javascript:;">
+          <i class="bi-chevron-right"></i>
+        </a>
+      </span>
+
+      <!-- Nav Pills -->
+      <ul class="nav nav-lg nav-pills nav-pills-shadow flex-lg-column gap-lg-1 p-3" id="featuresTab" role="tablist">
+        <li class="nav-item" role="presentation">
+          <a class="nav-link active" href="#featuresOne" id="featuresOne-tab" data-bs-toggle="tab" data-bs-target="#featuresOne" role="tab" aria-controls="featuresOne" aria-selected="true" style="min-width: 25rem;">
+            <!-- Media -->
+            <div class="d-flex align-items-center align-items-lg-start">
+              <span class="svg-icon svg-icon-sm text-primary">
+       
+                <img src="/static/assets/vendor/duotone-icons/fil/fil005.svg" alt="">
+              </span>
+
+              <div class="flex-grow-1 ms-3">
+                <h4 class="mb-1">Job Lisiting in less than 5 mnts</h4>
+                <p class="text-body mb-0">Quickly post job openings</p>
+              </div>
+            </div>
+            <!-- End Media -->
+          </a>
+        </li>
+
+        <li class="nav-item" role="presentation">
+          <a class="nav-link" href="#featuresTwo" id="featuresTwo-tab" data-bs-toggle="tab" data-bs-target="#featuresTwo" role="tab" aria-controls="featuresTwo" aria-selected="false" style="min-width: 25rem;">
+            <!-- Media -->
+            <div class="d-flex align-items-center align-items-lg-start">
+              <span class="svg-icon svg-icon-sm text-primary">
+
+                <img src="/static/assets/vendor/duotone-icons/com/com006.svg" alt="">
+              </span>
+
+              <div class="flex-grow-1 ms-3">
+                <h4 class="mb-1">Find Candidates</h4>
+                <p class="text-body mb-0">Easily Find, Review and Hire Candidates.</p>
+              </div>
+            </div>
+            <!-- End Media -->
+          </a>
+        </li>
+
+        <li class="nav-item" role="presentation">
+          <a class="nav-link" href="#featuresThree" id="featuresThree-tab" data-bs-toggle="tab" data-bs-target="#featuresThree" role="tab" aria-controls="featuresThree" aria-selected="false" style="min-width: 25rem;">
+            <!-- Media -->
+            <div class="d-flex align-items-center align-items-lg-start">
+              <span class="svg-icon svg-icon-sm text-primary">
+              <img src="/static/assets/vendor/duotone-icons/art/art005.svg" alt="">
+              </span>
+
+              <div class="flex-grow-1 ms-3">
+                <h4 class="mb-1">Manage Jobs/Apps in one page</h4>
+                <p class="text-body mb-0">Edit, Remote or take actions from one page</p>
+              </div>
+            </div>
+            <!-- End Media -->
+          </a>
+        </li>
+      </ul>
+      <!-- End Nav Pills -->
+    </div>
+    <!-- End Nav Scroller -->
+  </div>
+  <!-- End Col -->
+
+  <div class="col-lg-7 order-lg-1">
+    <!-- Tab Content -->
+    <div class="tab-content" id="featuresTabContent">
+      <div class="tab-pane fade show active" id="featuresOne" role="tabpanel" aria-labelledby="featuresOne-tab">
+        <!-- Browser Device -->
+        <figure class="device-browser">
+          <div class="device-browser-header">
+            <div class="device-browser-header-btn-list">
+              <span class="device-browser-header-btn-list-btn"></span>
+              <span class="device-browser-header-btn-list-btn"></span>
+              <span class="device-browser-header-btn-list-btn"></span>
+            </div>
+            <div class="device-browser-header-browser-bar"><a href="https://www.travaii.com/">https://www.travaii.com/applicant/candidates/</a></div>
+          </div>
+
+          <div class="device-browser-frame">
+            <img class="device-browser-img" src="/static/assets/svg/categories/resumes.svg" alt="Image Description">
+          </div>
+        </figure>
+        <!-- End Browser Device -->
+      </div>
+
+      <div class="tab-pane fade" id="featuresTwo" role="tabpanel" aria-labelledby="featuresTwo-tab">
+        <!-- Browser Device -->
+        <figure class="device-browser">
+          <div class="device-browser-header">
+            <div class="device-browser-header-btn-list">
+              <span class="device-browser-header-btn-list-btn"></span>
+              <span class="device-browser-header-btn-list-btn"></span>
+              <span class="device-browser-header-btn-list-btn"></span>
+            </div>
+            <div class="device-browser-header-browser-bar">www.htmlstream.com/front/</div>
+          </div>
+
+          <div class="device-browser-frame">
+            <img class="device-browser-img" src="/static/assets/svg/categories/resumes.svg" alt="Image Description">
+          </div>
+        </figure>
+        <!-- End Browser Device -->
+      </div>
+
+      <div class="tab-pane fade" id="featuresThree" role="tabpanel" aria-labelledby="featuresThree-tab">
+        <!-- Browser Device -->
+        <figure class="device-browser">
+          <div class="device-browser-header">
+            <div class="device-browser-header-btn-list">
+              <span class="device-browser-header-btn-list-btn"></span>
+              <span class="device-browser-header-btn-list-btn"></span>
+              <span class="device-browser-header-btn-list-btn"></span>
+            </div>
+            <div class="device-browser-header-browser-bar"><a href="https://www.travaii.com/">https://www.travaii.com/company/application/</a></div>
+          </div>
+
+          <div class="device-browser-frame">
+            <img class="device-browser-img" src="/static/assets/svg/categories/applications.svg" alt="Image Description">
+          </div>
+        </figure>
+        <!-- End Browser Device -->
+      </div>
+    </div>
+    <!-- End Tab Content -->
+  </div>
+  <!-- End Col -->
+</div>
+<!-- End Row -->
+</div>
+<!-- End Feature Nav -->
+
+<!-- Gallery -->
+<div class="position-relative bg-img-start" style="background-image: url(/static/assets/svg/components/card-11.svg);">
+<div class="container content-space-2 content-space-lg-3 position-relative zi-2">
+  <div class="w-md-75 w-lg-50 text-center mx-md-auto mb-9">
+    <!-- Heading -->
+    <div class="mb-5">
+      <h1>Affordable Recruitment Solutions</h1>
+      <p>No matter which plan you choose, you can trust that Travaii is committed to providing you with the tools and resources you need to find the best candidates for your job openings, at a price that fits your budget.</p>
+    </div>
+    <!-- End Heading -->
+
+    <a class="btn btn-primary btn-transition" href="{% url 'subscription' %}">See Pricing</a>
+  </div>
+
+  <div class="row gx-2">
+    <div class="col-4 align-self-end mb-2">
+      <div class="ms-md-8">
+        <img class="img-fluid rounded-2" src="/static/assets/img/900x900/img1.jpg" alt="Image Description">
+      </div>
+    </div>
+    <!-- End Col -->
+
+    <div class="col-8 mb-2">
+      <!-- Video Block -->
+      <div id="youTubeVideoPlayer" class="video-player video-player-inline-btn rounded-2">
+        <img class="img-fluid video-player-preview rounded-2" src="/static/assets/img/900x450/img14.jpg" alt="Image">
+
+        <!-- Play Button -->
+        <a class="js-inline-video-player video-player-btn video-player-centered" href="javascript:;"
+           data-hs-video-player-options='{
+             "videoId": "d4eDWc8g0e0",
+             "parentSelector": "#youTubeVideoPlayer",
+             "targetSelector": "#youTubeVideoIframe",
+             "isAutoplay": true
+           }'>
+          <span class="video-player-icon shadow-sm">
+            <i class="bi-play-fill"></i>
+          </span>
+        </a>
+        <!-- End Play Button -->
+
+        <!-- Video Iframe -->
+        <div class="ratio ratio-16x9">
+          <div id="youTubeVideoIframe"></div>
+        </div>
+        <!-- End Video Iframe -->
+      </div>
+      <!-- End Video Block -->
+    </div>
+    <!-- End Col -->
+
+    <div class="col-8 mb-2">
+      <img class="img-fluid rounded-2" src="/static/assets/img/900x450/img13.jpg" alt="Image Description">
+    </div>
+    <!-- End Col -->
+
+    <div class="col-4 mb-2">
+      <div class="me-md-8">
+        <img class="img-fluid rounded-2" src="/static/assets/img/750x750/img2.jpg" alt="Image Description">
+      </div>
+    </div>
+    <!-- End Col -->
+  </div>
+  <!-- End Row -->
+</div>
+
+<!-- Shape -->
+<div class="shape shape-bottom zi-1">
+  <svg width="3000" height="500" viewBox="0 0 3000 500" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M0 500H3000V0L0 500Z" fill="#fff"/>
+  </svg>
+</div>
+<!-- End Shape -->
+</div>
+<!-- End Gallery -->
+
+
+<!-- Contact Form -->
+<div class="bg-dark rounded-2 mx-3 mx-xl-10" style="background-image: url(/static/assets/svg/components/wave-pattern-light.svg);">
+<div class="container-xl container-fluid content-space-1 content-space-md-2 px-4 px-md-8 px-lg-10">
+  <div class="row justify-content-lg-between align-items-lg-center">
+    <div class="col-md-10 col-lg-5 mb-9 mb-lg-0">
+      <!-- Info -->
+      <h1 class="text-white">You got Questions?</h1>
+      <p class="text-white-70">Our Team is ready to assist you!.</p>
+      <!-- End Info -->
+
+      <div class="border-top border-white-10 my-5" style="max-width: 10rem;"></div>
+
+      <!-- Blockquote -->
+      <figure>
+        <div class="mb-4">
+            <div class="logo text-primary">Travaii</div>
+        </div>
+
+        <blockquote class="blockquote blockquote-light">“ Get the Best Results for Your Business with Our Wide Reach”</blockquote>
+
+        <figcaption class="blockquote-footer blockquote-light">
+          <div class="d-flex align-items-center">
+            <div class="flex-grow-1 ms-3">
+              Sif Kdr
+              <span class="blockquote-footer-source">CEO | Travaii</span>
+            </div>
+          </div>
+        </figcaption>
+      </figure>
+      <!-- End Blockquote -->
+    </div>
+
+    <div class="col-lg-6">
+        
+      <!-- Card -->
+      <div class="card card-lg">
+        {% if messages %}
+        {% for message in messages %}
+        <div class="alert alert-{{message.tags}} rounded-0" role="alert">
+            {{message}}
+          </div>
+          {% endfor %}
+          {% endif %}
+        <div class="card-body">
+            
+          <div class="mb-4">
+            <h3 class="card-title">Fill out the form and we'll be in touch as soon as possible.</h3>
+          </div>
+
+         <form action="" method="post">
+            {% csrf_token %}
+            {{form.as_p}}
+            <div class="d-grid">
+                <button type="submit" class="btn btn-primary btn-lg">Send inquiry</button>
+              </div>
+         </form>
+        </div>
+      </div>
+      <!-- End Card -->
+    </div>
+  </div>
+</div>
+</div>
+<!-- End Contact Form -->
+
+{% endblock %}
