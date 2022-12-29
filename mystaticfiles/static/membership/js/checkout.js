@@ -1,4 +1,4 @@
-console.log('hello sif');
+console.log('hello admin');
 
 
 var stripe = Stripe('pk_live_51Lz03SKORmC2RvgXf0IAm5tseSPsDozduvh8jFgRwCdn4fxeMKZAAPL6JC7btx654sLBbJBhvvhKo6o7Xc0NYWHB00Xm3uEJE0');
