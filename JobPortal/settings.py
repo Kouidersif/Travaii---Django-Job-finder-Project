@@ -25,7 +25,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = config('NOT_SECRET')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 ALLOWED_HOSTS = ['https//travaii.com', 'https//travaii.com', '192.169.177.207', 'http://192.169.177.207', 'travaii.com', 'www.travaii.com']
 CSRF_TRUSTED_ORIGINS = ['https://*.travaii.com','https://*.127.0.0.1']
@@ -159,7 +159,9 @@ AUTH_USER_MODEL= 'main.User'
 #STRIPE_PUBLISHABLE_KEY = 'pk_test_51Lz03SKORmC2RvgXRhtthq6yKQVLC1xLCCSq7PWqJ8HqFClSjSOtvQBDN7ImsLdRilbvCTbe1XBQE7ppeKP3D5tL007zG2iI6B'
 STRIPE_PUBLISHABLE_KEY = 'pk_live_51Lz03SKORmC2RvgXf0IAm5tseSPsDozduvh8jFgRwCdn4fxeMKZAAPL6JC7btx654sLBbJBhvvhKo6o7Xc0NYWHB00Xm3uEJE0'
 STRIPE_SECRET_KEY = config('STPCEY')
+#STRIPE_SECRET_KEY = 'sk_test_51Lz03SKORmC2RvgXBDXoH9ulCpO8Bg4S8PniDbXU5PleTK4bRXyuBGVWXKaQ8ICYCT9XEIWSLi80lwIo8mQ5tut600SicR7GGr'
 STRIPE_ENDPOINT_SECRET = config('wbhk')
+
 
 
 
