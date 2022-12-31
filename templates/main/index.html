@@ -13,9 +13,35 @@
         a.appendChild(r);
     })(window,document,'https://static.hotjar.com/c/hotjar-','.js?sv=');
 </script>{% endblock hotjar %}
+
+
 {% block content %}
 
 
+<style>
+  @media (min-width: 992px) and (max-width: 3500px) {
+  #getstarted{
+    display: flex;
+    justify-content: flex-start;
+  }
+  .co{
+    display: flex;
+    justify-content: start;
+  }
+  
+}
+@media (max-width: 991px){
+  #getstarted{
+    display: flex;
+    justify-content: center;
+  }
+  .co{
+    display: flex;
+    justify-content: center;
+  }
+  
+}
+</style>
 
 {% include 'parts/nav.html' %}
 
@@ -44,30 +70,14 @@
             </div>
             <!-- End Heading -->
 
-            <form method="post" action="{% url 'search_for' %}">
-              {% csrf_token %}
-              <!-- Input Card -->
-              <div class="input-card input-card-sm">
-                <div class="input-card-form">
-                  <label for="jobTitleForm" class="form-label visually-hidden">Job, title, skills, or company</label>
-                  <div class="input-group input-group-merge">
-                    <span class="input-group-prepend input-group-text">
-                      <i class="bi-search"></i>
-                    </span>
-                    <input type="search" class="form-control" id="jobTitleForm" placeholder="Job, title, skills, or company"  name="searched" aria-label="Job, title, skills, or company">
-                  </div>
-                </div>
-
-                
-                <button type="submit" class="btn btn-primary" > Search </button>
-              </div>
-              <!-- End Input Card -->
-            </form>
-            
-            <p class="form-text">Search through over +{{jobs.count}} listings</p>
-
-            <p class="form-text">Find your dream job with us! <a href="{% url 'sign_up' %}"><b>Set your interests</b></a> and we'll match you with 
-              <br> the perfect opportunity.</p>
+              <div class="co">
+              <h5>Find your dream job with us – just tell us what you're looking for!</h5>
+             
+            </div>
+            <div class="content" id="getstarted">
+              <a class="btn btn-ghost-primary btn-transition" href="{% url 'sign_up' %}">Enter your job preferences <i class="bi-chevron-right small ms-1"></i></a>
+         
+          </div>
           </div>
           <!-- End Col -->
         </div>
@@ -130,8 +140,9 @@
                     <p class="card-text">Customize your job search with 'Set Your Career Interests.' Select your preferred industries and job roles to find the perfect job opportunity.</p>
                       {% if request.user.is_authenticated and request.user.is_applicant %}
                     <a class="card-link" href="{% url 'applicant_info' user.id %}">My Career Interests <i class="bi-chevron-right small ms-1"></i></a>
+                    
                     {% else %}
-                    <a class="card-link" href="{% url 'profile_setup' %}">Set my career interests <i class="bi-chevron-right small ms-1"></i></a>
+                    <a class="card-link" href="{% url 'sign_up' %}">Set my career interests <i class="bi-chevron-right small ms-1"></i></a>
                     {% endif %}
 
                   </div>
@@ -194,6 +205,18 @@
       <!-- Features -->
       {% endif %}
       <hr>
+          <!-- CTA -->
+<div class="container content-space-b-2 mt-5">
+  <div class="text-center bg-img-start py-6 bg-dark text-light" style="background: url(/static/assets/svg/components/shape-6.svg) center no-repeat;">
+    <div class="mb-5">
+      <h2 class="text-light">Discover the career path that is best suited for you</h2>
+      <p>Simply input your desired job criteria and let us do the work for you</p>
+    </div>
+
+    <a class="btn btn-primary btn-transition" href="{% url 'sign_up' %}">Get Started</a>
+  </div>
+</div>
+<!-- End CTA -->
 
 <!-- Info -->
 <div class="container content-space-2 content-space-lg-3">
