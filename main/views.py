@@ -279,7 +279,7 @@ def CreateJob(request):
 @check_sub
 def HomePage(request):
 
-    jobs=Jobs.objects.all()
+    jobs=Jobs.objects.filter(is_published=True)
     
     companies=CompanyProfile.objects.all()
     candidates=ApplicantProfile.objects.filter(is_public=True)
