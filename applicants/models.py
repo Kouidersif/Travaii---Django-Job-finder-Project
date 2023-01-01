@@ -85,3 +85,11 @@ class Delete_account_Feedback(models.Model):
     def __str__(self):
         return self.the_reason or 'feedback'
 
+
+
+
+class NewsLetter(models.Model):
+    email_field = models.EmailField()
+    job_category = models.ForeignKey(desired_Position, on_delete=models.SET_NULL, null=True)
+    def __str__(self):
+        return str(self.job_category) or (self.email_field) or ''

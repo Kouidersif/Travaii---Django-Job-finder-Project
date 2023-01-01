@@ -9,3 +9,4 @@ admin.site.register(Wilaya)
 admin.site.register(Delete_account_Feedback)
 
 
+admin.site.register(NewsLetter)

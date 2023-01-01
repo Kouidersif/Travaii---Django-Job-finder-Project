@@ -12,6 +12,18 @@ class DateInput(forms.DateInput):
     input_type= 'date'
 
 
+class NewsLetterForm(ModelForm):
+    class Meta:
+        model = NewsLetter
+        fields= '__all__'
+    def __init__(self, *args, **kwargs):
+        super(NewsLetterForm, self).__init__(*args, **kwargs)
+        self.fields['email_field'].widget.attrs['class'] = 'form-control'
+        self.fields['email_field'].widget.attrs['type'] = 'email'
+        self.fields['job_category'].widget.attrs['class'] = 'js-select form-select-md'
+        self.fields['job_category'].widget.attrs['placeholder'] = 'Enter your dream job'
+        
+
 
 
 class ApplicantProfileForm(ModelForm):

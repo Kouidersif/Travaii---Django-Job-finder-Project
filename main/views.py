@@ -29,6 +29,7 @@ from django.template import Context
 from django.core.paginator import Paginator
 import random
 from django.utils import timezone
+from applicants.forms import NewsLetterForm
 
 
 
@@ -284,7 +285,16 @@ def HomePage(request):
     candidates=ApplicantProfile.objects.filter(is_public=True)
     categ= Category.objects.all()
     s = Wilaya.objects.all()
-    context={'jobs':jobs, 'categ':categ, 'companies':companies, 'candidates':candidates}
+    form = NewsLetterForm()
+    if request.method == 'POST':
+        form =NewsLetterForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('sign_up')
+    else:
+        form = NewsLetterForm()
+
+    context={'jobs':jobs, 'categ':categ, 'companies':companies, 'candidates':candidates, 'form':form}
     return render(request, 'main/index.html', context)
 
 

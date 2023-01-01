@@ -59,55 +59,84 @@
 {% endif %}
 {% endif %}
 
-    <!-- Hero -->
-    <div class="position-relative gradient-x-three-sm-primary rounded-2 content-space-t-md-1 content-space-b-md-2 mx-md-10" style="margin-top:80px">
-      <div class="container position-relative content-space-t-2 content-space-t-lg-3 content-space-b-1">
-        <div class="row position-relative zi-2">
-          <div class="col-lg-8">
-            <!-- Heading -->
-            <div class="w-lg-75 text-center text-lg-start mb-5 mb-lg-7">
-              <h1 class="display-4">Find the most<br><span class="text-primary text-highlight-warning">exciting</span> job opportunities</h1>
-            </div>
-            <!-- End Heading -->
-
-              <div class="co">
-              <h5>Find your dream job with us – just tell us what you're looking for!</h5>
-             
-            </div>
-            <div class="content" id="getstarted">
-              <a class="btn btn-ghost-primary btn-transition" href="{% url 'sign_up' %}">Enter your job preferences <i class="bi-chevron-right small ms-1"></i></a>
-         
-          </div>
-          </div>
-          <!-- End Col -->
-        </div>
-        <!-- End Row -->
-
-        <div class="d-none d-lg-block col-lg-6 position-lg-absolute top-0 end-0">
-          <img class="img-fluid rounded-2" src="{% static 'assets/img/900x900/index.webp' %}" alt="Image Description">
-
-          <!-- SVG Shape -->
-          <div class="position-absolute top-0 start-0 zi-n1 mt-n6 ms-n7" style="width: 10rem;">
-            <svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" viewBox="0 0 335.2 335.2" width="100" height="100">
-              <circle fill="#FFC107" opacity=".7" cx="167.6" cy="167.6" r="130.1"/>
-            </svg>
-          </div>
-          <!-- End SVG Shape -->
-
-          <!-- SVG Shape -->
-          <div class="position-absolute bottom-0 end-0 zi-n1 mb-n6 me-n10" style="width: 10rem;">
-            <svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" viewBox="0 0 335.2 335.2" width="120" height="120">
-              <circle fill="none" stroke="#377dff" stroke-width="75" cx="167.6" cy="167.6" r="130.1"/>
-            </svg>
-          </div>
-          <!-- End SVG Shape 
-
-          <p class="form-text">Powered by: <img class="avatar avatar-sm avatar-4x3" src="{% static 'assets/svg/brands/google.svg' %}" alt="Image Description"></p>
-        -->
-        </div>
+      <!-- Signup Form -->
+<div class="container content-space-2 content-space-lg-3">
+  <div class="row justify-content-lg-between align-items-md-center">
+    <div class="col-md-5 mb-7 mb-md-0">
+      <div class="mb-5">
+        <h2>Take the first step towards your dream job</h2>
+        <p>Achieve your career goals with our help – simply enter your desired job and we'll do our best to get it for you.</p>
       </div>
+
+      <h4>Learn more about:</h4>
+
+      <!-- List Checked -->
+      <ul class="list-checked list-checked-primary">
+        <li class="list-checked-item">Unlimited Applications</li>
+        <li class="list-checked-item">We'll introduce you to companies searching for the best and brightest – just like you.</li>
+        <li class="list-checked-item">We will email you companies that are looking for you</li>
+      </ul>
+      <!-- End List Checked -->
     </div>
-    <!-- End Hero -->
+    <!-- End Col -->
+
+    <div class="col-md-7 col-lg-6">
+      <!-- Form -->
+      <form class="js-validate needs-validation" novalidate method="post" >
+        {% csrf_token %}
+        <!-- Card -->
+        <div class="card">
+          <div class="card-header bg-dark text-center">
+            <h4 class="card-header-title text-white">Simply tell us what is your dream job <span class="badge bg-primary text-light rounded-pill ms-1">Simple and Easy</span></h4>
+          </div>
+
+          <div class="card-body">
+         
+
+      
+            <!-- Form -->
+            <div class="mb-4">
+              <label class="form-label" for="signupHeroFormWorkEmail">Desired Job</label>
+              {{form.job_category}}
+              <span class="invalid-feedback">What is the job you are looking for?</span>
+            </div>
+            <!-- End Form -->
+                  <!-- Form -->
+                  <div class="mb-4">
+                    <label class="form-label" for="signupHeroFormWorkEmail">Email address</label>
+                      {{form.email_field}}
+      
+                    <span class="invalid-feedback">Please enter your email address</span>
+                  </div>
+                  <!-- End Form -->
+
+            <!-- Check -->
+            <div class="form-check mb-4">
+              <input type="checkbox" class="form-check-input" id="signupHeroFormPrivacyCheckEg2" name="signupFormPrivacyCheck" required>
+              <label class="form-check-label small" for="signupHeroFormPrivacyCheckEg2"> By submitting this form I have read and acknowledged the <a href="{% url 'privacyandpolicy' %}">Privacy Policy</a></label>
+              <span class="invalid-feedback">Please accept our Privacy Policy.</span>
+            </div>
+            <!-- End Check -->
+
+            <div class="row align-items-center">
+              
+              <div class="col-sm-5 text-sm-end">
+                <button type="submit" class="btn btn-primary btn-lg">Submit</button>
+              </div>
+              <!-- End Col -->
+            </div>
+            <!-- End Row -->
+          </div>
+        </div>
+        <!-- End Card -->
+      </form>
+      <!-- End Form -->
+    </div>
+    <!-- End Col -->
+  </div>
+  <!-- End Row -->
+</div>
+<!-- End Signup Form -->
 
     <!-- Card Grid -->
     <div class="container content-space-2 content-space-t-lg-4 content-space-b-lg-3">
