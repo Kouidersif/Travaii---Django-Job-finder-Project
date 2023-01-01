@@ -43,6 +43,9 @@
 }
 </style>
 
+<body class="bg-soft-dark">
+  
+
 {% include 'parts/nav.html' %}
 
 
@@ -85,8 +88,8 @@
       <form class="js-validate needs-validation" novalidate method="post" >
         {% csrf_token %}
         <!-- Card -->
-        <div class="card">
-          <div class="card-header bg-dark text-center">
+        <div class="card shadow-lg rounded-0">
+          <div class="card-header bg-dark text-center rounded-0">
             <h4 class="card-header-title text-white">Simply tell us what is your dream job <span class="badge bg-primary text-light rounded-pill ms-1">Simple and Easy</span></h4>
           </div>
 
@@ -404,6 +407,6 @@
 
 {% include 'parts/footer.html' %}
 
-
+</body>
 {% endblock content %}
 
