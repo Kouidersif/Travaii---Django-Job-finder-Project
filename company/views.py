@@ -180,35 +180,35 @@ def manage_subscription(request):
     
     co_data= CompanyProfile.objects.filter(owner=request.user)
     try:
-
-            stripe_customer = Customer.objects.get(user=request.user)
-            customer_data= stripe.Customer.retrieve(stripe_customer.stripeid)
-            stripe.api_key = settings.STRIPE_SECRET_KEY
-            subscription = stripe.Subscription.retrieve(stripe_customer.stripe_subscription_id)
-            product = stripe.Product.retrieve(subscription.plan.product)
-            user_balance = abs(customer_data.balance)
-            end_date = datetime.datetime.fromtimestamp(subscription.current_period_end)
-            start_date= datetime.datetime.fromtimestamp(subscription.current_period_start)
-            all_invoices = stripe.Invoice.list(limit=10,
-            customer = stripe_customer.stripeid,
+        stripe_customer = Customer.objects.get(user=request.user)
+        customer_data= stripe.Customer.retrieve(stripe_customer.stripeid)
+        stripe.api_key = settings.STRIPE_SECRET_KEY
+        subscription = stripe.Subscription.retrieve(stripe_customer.stripe_subscription_id)
+        product = stripe.Product.retrieve(subscription.plan.product)
+        user_balance = abs(customer_data.balance)
+        end_date = datetime.datetime.fromtimestamp(subscription.current_period_end)
+        start_date= datetime.datetime.fromtimestamp(subscription.current_period_start)
+        all_invoices = stripe.Invoice.list(limit=10,
+        customer = stripe_customer.stripeid,
+        )
+            
+        
+        payment_method = stripe.Customer.list_payment_methods(
+            customer=stripe_customer.stripeid,
+            type="card",
             )
-                
+        intent = stripe.SetupIntent.create(
+            customer=stripe_customer.stripeid,
+            payment_method_types=["card"],
+            )
+        last4digits = payment_method['data']
+        
             
-            payment_method = stripe.Customer.list_payment_methods(
-                customer=stripe_customer.stripeid,
-                type="card",
-                )
-            intent = stripe.SetupIntent.create(
-                customer=stripe_customer.stripeid,
-                payment_method_types=["card"],
-                )
-            
-                
-            context={'customer_data':customer_data,'user_balance':user_balance,
-                'subscription':subscription, 'product':product, 'end_date':end_date,  'co_data':co_data,
-                'start_date':start_date, 'stripe_customer':stripe_customer,'all_invoices':all_invoices
-            , 'client_secret':intent.client_secret}
-            return render(request, 'company/manage_sub.html', context)
+        context={'customer_data':customer_data,'user_balance':user_balance,'last4digits':last4digits,
+            'subscription':subscription, 'product':product, 'end_date':end_date,  'co_data':co_data,
+            'start_date':start_date, 'stripe_customer':stripe_customer,'all_invoices':all_invoices
+        , 'client_secret':intent.client_secret}
+        return render(request, 'company/manage_sub.html', context)
     except Customer.DoesNotExist:
         co_data= CompanyProfile.objects.filter(owner=request.user)
         return render(request, 'company/manage_sub.html', {'co_data':co_data})

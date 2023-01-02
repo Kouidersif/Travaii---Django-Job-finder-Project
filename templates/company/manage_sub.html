@@ -15,14 +15,14 @@
     
 
 <!-- End Page Header -->
-  <main id="content" role="main" class="bg-light ">
+  <main id="content" role="main" class="bg-light">
     
 
     <!-- End Breadcrumb -->
 
     <!-- Content -->
     <div class="container content-space-1 content-space-t-lg-0 content-space-b-lg-2 mt-10 ">
-      <div class="row">
+      <div class="row" style="margin-top:7.5rem!important">
   
         <!-- End Col -->
 
@@ -223,7 +223,7 @@
                   {% endfor %}
                 </ul>
                 <!-- End List Group -->
-
+{% if subscription %}
                 <!-- Card -->
                 <a class="card card-dashed card-centered" href="javascript:;" data-bs-toggle="modal" data-bs-target="#accountAddCardModal">
                   <div class="card-body card-dashed-body py-8">
@@ -232,6 +232,7 @@
                   </div>
                 </a>
                 <!-- End Card -->
+                {% endif %}
               </div>
               <!-- End Body -->
                 <!-- Add Card Modal -->
@@ -322,7 +323,7 @@
           
     <!-- End Content -->
     
-
+    </div>
   </main>
   <!-- ========== END MAIN CONTENT ========== -->
 
