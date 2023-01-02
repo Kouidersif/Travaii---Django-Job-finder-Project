@@ -22,7 +22,7 @@ class NewsLetterForm(ModelForm):
         self.fields['email_field'].widget.attrs['type'] = 'email'
         self.fields['email_field'].widget.attrs['placeholder'] = 'Enter your email'
         self.fields['job_category'].widget.attrs['class'] = 'js-select form-select-md'
-        self.fields['job_category'].widget.attrs['placeholder'] = 'Enter your dream job'
+        self.fields['job_category'].widget.attrs['placeholder'] = 'choose your dream job'
         
 
 
