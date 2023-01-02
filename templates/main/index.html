@@ -257,8 +257,8 @@
   <!-- End Row -->
 </div>
 <!-- End Info -->
-
-      <hr>
+{% if jobs %}
+    <div>      <hr>
       <div class="row row-cols-1 row-cols-sm-2 row-cols-lg-3 mb-5">
         {% for job in jobs|slice:":6" %}
         <div class="col mb-5">
@@ -334,6 +334,7 @@
       </div>
     </div>
     <!-- End Card Grid -->
+    {% endif %}
     <hr>
     <!-- Card Grid -->
     <div class="container content-space-2 content-space-lg-3">
