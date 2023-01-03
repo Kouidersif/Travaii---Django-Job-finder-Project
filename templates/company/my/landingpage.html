@@ -146,62 +146,56 @@
 <!-- ========== END HEADER ========== -->
 
 
+
 <!-- Hero -->
-<div class="position-relative bg-img-start" style="background-image: url(/static/assets/img/company/media/img6.webp);">
-    <div class="container content-space-t-2 content-space-t-md-3 content-space-3 content-space-b-lg-5">
-    <div class="w-lg-50">
-        <h1>Effortlessly Find Quality Candidates</h1>
-        <h2 class="h1 text-primary">Join our Satisfied Companies</h2>
+<div class="position-relative bg-primary overflow-hidden">
+  <div class="container position-relative zi-2 content-space-3 content-space-md-5">
+    <div class="w-md-75 w-xl-65 text-center mx-md-auto">
+      <!-- Heading -->
+      <div class="mb-7">
+        <h1 class="display-4 text-white mb-4">Effortlessly Find Quality Candidates</h1>
+        <p class="lead text-white mb-4">Join our Satisfied Companies</p>
+      </div>
+      <!-- End Title & Description -->
+
+      <div class="d-grid d-sm-flex justify-content-center gap-2">
+        <a class="btn btn-light btn-transition px-6" href="{% url 'sign_up_company' %}">Start Free Trial</a>
+        <a class="btn text-white" href="{% url 'contact' %}">Contact Us<i class="bi-chevron-right small ms-1"></i></a>
+      </div>
+      <div class="container " style="display: flex;justify-content: center;">
+        <p style="color:white;margin-top: 10px; ">*No credit card required</p>
+       </div>
     </div>
-    </div>
-    
-    <!-- Shape -->
-    <div class="shape shape-bottom zi-1" style="margin-bottom: -.125rem">
-    <svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" viewBox="0 0 1920 100.1">
-        <path fill="#fff" d="M0,0c0,0,934.4,93.4,1920,0v100.1H0L0,0z"></path>
+  </div>
+
+  <!-- Background Shape -->
+  <figure class="position-absolute top-0 start-0 w-65">
+    <svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" viewBox="0 0 1246 1078">
+      <g opacity=".4">
+        <linearGradient id="doubleEllipseTopLeftID1" gradientUnits="userSpaceOnUse" x1="2073.5078" y1="1.7251" x2="2273.4375" y2="1135.5818" gradientTransform="matrix(-1 0 0 1 2600 0)">
+          <stop offset="0.4976" style="stop-color:gulpLighten[#377dff,30]"/>
+          <stop offset="1" style="stop-color:#377dff"/>
+        </linearGradient>
+        <polygon fill="url(#doubleEllipseTopLeftID1)" points="519.8,0.6 0,0.6 0,1078 863.4,1078   "/>
+        <linearGradient id="doubleEllipseTopLeftID2" gradientUnits="userSpaceOnUse" x1="1717.1648" y1="3.779560e-05" x2="1717.1648" y2="644.0417" gradientTransform="matrix(-1 0 0 1 2600 0)">
+          <stop offset="1.577052e-06" style="stop-color:gulpLighten[#377dff,30]"/>
+          <stop offset="1" style="stop-color:#377dff"/>
+        </linearGradient>
+        <polygon fill="url(#doubleEllipseTopLeftID2)" points="519.7,0 1039.4,0.6 1246,639.1 725.2,644   "/>
+      </g>
     </svg>
-    </div>
-    <!-- End Shape -->
+  </figure>
+  <!-- End Background Shape -->
+
+  <!-- Shape -->
+  <div class="shape shape-bottom zi-1" style="margin-bottom: -.125rem">
+    <svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" viewBox="0 0 1920 100.1">
+      <path fill="#fff" d="M0,0c0,0,934.4,93.4,1920,0v100.1H0L0,0z"></path>
+    </svg>
+  </div>
+  <!-- End Shape -->
 </div>
 <!-- End Hero -->
-
-<!-- CTA -->
-<div class="bg-dark" style="background-image: url(/static/assets/svg/components/wave-pattern-light.svg);">
-  <div class="container content-space-2">
-    <div class="row justify-content-lg-between align-items-lg-center">
-      <div class="col-md mb-5 mb-md-0">
-        <h2 class="text-white mb-0">Try our product for free and post job openings as much as you want</h2>
-      </div>
-      <!-- End Col -->
-
-      <div class="col-md-auto">
-        <div class="d-grid d-sm-flex gap-3">
-          <a class="btn btn-light btn-transition" href="{% url 'sign_up_company' %}">Start for free</a>
-      
-        </div>
-      </div>
-      <!-- End Col -->
-    </div>
-    <!-- End Row -->
-  </div>
-</div>
-<!-- End CTA -->
-
-<!-- Feature Nav -->
-<div class="container content-space-1">
-<!-- Heading -->
-<div class="w-md-75 w-lg-50 text-center mx-md-auto mb-5 mb-md-9">
-  <span class="text-cap"><h4>Travaii The Smart Solution for Simplifying the Hiring Process </h4></span>
-  <p>Travaii simplifies the hiring process for companies, allowing them to efficiently 
-    find and hire the best candidates in a timely manner. It offers a range of features and 
-    tools that make it easy for companies to post job listings, review resumes and applications, 
-    and schedule interviews, all in one place. Travaii platforme
-    helps companies save time and resources by streamlining their hiring process and allowing 
-    them to focus on their core business activities.</p>
-</div>
-<!-- End Heading -->
-<!-- End Heading -->
-
 <!-- Stats -->
     <!-- Stats -->
     <div class="container content-space-2 content-space-lg-3">
@@ -209,7 +203,7 @@
         <div class="row">
           <div class="col-sm-4 mb-3 mb-sm-0">
             <div class="text-center">
-              <h5 class="h1">+4k <i class="bi bi-eye"></i></h5>
+              <h5 class="h1">+5k <i class="bi bi-eye"></i></h5>
               <p>Applicants visiting <b>Travaii</b> during this time to find jobs</p>
             </div>
           </div>
@@ -217,7 +211,7 @@
     
           <div class="col-sm-4 mb-3 mb-sm-0">
             <div class="text-center">
-              <h5 class="h1">70k+ <i class="bi bi-bar-chart"></i></h5>
+              <h5 class="h1">95k+ <i class="bi bi-bar-chart"></i></h5>
               <p>Viewing our Posts</p>
             </div>
           </div>
@@ -235,6 +229,51 @@
       </div>
     </div>
     <!-- End Stats -->
+
+<!-- CTA -->
+<div class="container">
+  <div class="w-lg-75 mx-lg-auto">
+    <div class="card card-sm overflow-hidden">
+      <!-- Card -->
+      <div class="card-body">
+        <div class="row justify-content-md-start align-items-md-center text-center text-md-start">
+          <div class="col-md offset-md-3 mb-3 mb-md-0">
+            <h4 class="card-title">Try our product for free and post job openings as much as you want</h4>
+          </div>
+
+          <div class="col-md-auto">
+            <a class="btn btn-primary btn-transition" href="{% url 'sign_up_company' %}">Get started</a>
+          </div>
+        </div>
+
+        <!-- SVG Shape -->
+        <figure class="w-25 d-none d-md-block position-absolute top-0 start-0 mt-n2">
+          <img class="card-img" src="{% static '/assets/svg/illustrations/apps.svg' %}" alt="Image Description">
+        </figure>
+        <!-- End SVG Shape -->
+      </div>
+      <!-- End Card -->
+    </div>
+  </div>
+</div>
+<!-- End CTA -->
+
+<!-- Feature Nav -->
+<div class="container content-space-1 mt-5">
+<!-- Heading -->
+<div class="w-md-75 w-lg-50 text-center mx-md-auto mb-5 mb-md-9">
+  <span class="text-capitalize"><h4>Travaii The Smart Solution for Simplifying the Hiring Process </h4></span>
+  <p>Travaii simplifies the hiring process for companies, allowing them to efficiently 
+    find and hire the best candidates in a timely manner. It offers a range of features and 
+    tools that make it easy for companies to post job listings, review resumes and applications, 
+    and schedule interviews, all in one place. Travaii platforme
+    helps companies save time and resources by streamlining their hiring process and allowing 
+    them to focus on their core business activities.</p>
+</div>
+<!-- End Heading -->
+<!-- End Heading -->
+
+
 
 <div class="row align-items-lg-center">
   <div class="col-lg-5 order-lg-2 mb-7 mb-lg-0">
