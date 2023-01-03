@@ -293,8 +293,12 @@ def HomePage(request):
             return redirect('sign_up')
     else:
         form = NewsLetterForm()
+    
+    f = SnippetFilter(request.GET, queryset=Jobs.objects.filter(is_published=True))
+    all_jobs = f.qs
+    categories = category= Category.objects.all()
 
-    context={'jobs':jobs, 'categ':categ, 'companies':companies, 'candidates':candidates, 'form':form}
+    context={'jobs':jobs, 'companies':companies, 'f':f,'all_jobs':all_jobs,'categories':categories, 'candidates':candidates, 'form':form}
     return render(request, 'main/index.html', context)
 
 

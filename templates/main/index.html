@@ -1,39 +1,16 @@
 {% extends 'base.html' %}
 {% load static %}
 
-{% block title %} Your Next Great Hire is Here - Travaii {% endblock title %}
+{% block title %} Your Next Great Job is Here - Travaii {% endblock title %}
 
 
 
 {% block content %}
 
 
-<style>
-  @media (min-width: 992px) and (max-width: 3500px) {
-  #getstarted{
-    display: flex;
-    justify-content: flex-start;
-  }
-  .co{
-    display: flex;
-    justify-content: start;
-  }
-  
-}
-@media (max-width: 991px){
-  #getstarted{
-    display: flex;
-    justify-content: center;
-  }
-  .co{
-    display: flex;
-    justify-content: center;
-  }
-  
-}
-</style>
 
-<body class="">
+
+<body>
   
 
 {% include 'parts/nav.html' %}
@@ -52,346 +29,229 @@
 {% endif %}
 {% endif %}
 
-      <!-- Signup Form -->
-<div class="container content-space-2 content-space-lg-3">
-  <div class="row justify-content-lg-between align-items-md-center">
-    <div class="col-md-5 mb-7 mb-md-0">
-      <div class="mb-5">
-        <h2>Take the first step towards your dream job</h2>
-        <p>Achieve your career goals with our help – simply enter your desired job and we'll do our best to get it for you.</p>
-      </div>
 
-      <h4>Learn more about:</h4>
-
-      <!-- List Checked -->
-      <ul class="list-checked list-checked-primary">
-        <li class="list-checked-item">Unlimited Applications</li>
-        <li class="list-checked-item">We'll introduce you to companies searching for the best and brightest – just like you.</li>
-        <li class="list-checked-item">We will email you companies that are looking for you</li>
-      </ul>
-      <!-- End List Checked -->
-    </div>
-    <!-- End Col -->
-
-    <div class="col-md-7 col-lg-6">
-      <!-- Form -->
-      <form class="js-validate needs-validation" novalidate method="post" >
-        {% csrf_token %}
-        <!-- Card -->
-        <div class="card shadow-lg rounded-0">
-          <div class="card-header bg-dark text-center rounded-0">
-            <h4 class="card-header-title text-white">What job are you looking for? <span class="badge bg-warning text-black rounded-pill ms-1">Fill the form</span></h4>
-          </div>
-
-          <div class="card-body">
-         
-
-      
-            <!-- Form -->
-            <div class="mb-4">
-              <label class="form-label" for="signupHeroFormWorkEmail">Desired Job</label>
-              {{form.job_category}}
-              <span class="invalid-feedback">What is the job you are looking for?</span>
-            </div>
-            <!-- End Form -->
-                  <!-- Form -->
-                  <div class="mb-4">
-                    <label class="form-label" for="signupHeroFormWorkEmail">Email address</label>
-                      {{form.email_field}}
-      
-                    <span class="invalid-feedback">Please enter your email address</span>
-                  </div>
-                  <!-- End Form -->
-
-            <!-- Check -->
-            <div class="form-check mb-4">
-              <input type="checkbox" class="form-check-input" id="signupHeroFormPrivacyCheckEg2" name="signupFormPrivacyCheck" required>
-              <label class="form-check-label small" for="signupHeroFormPrivacyCheckEg2"> By submitting this form I have read and acknowledged the <a href="{% url 'privacyandpolicy' %}">Privacy Policy</a></label>
-              <span class="invalid-feedback">Please accept our Privacy Policy.</span>
-            </div>
-            <!-- End Check -->
-
-            <div class="row align-items-end">
-              
-              <div class="col-sm-5 text-sm-end">
-                <button type="submit" class="btn btn-primary btn-lg">Send me jobs</button>
-              </div>
-              <!-- End Col -->
-            </div>
-            <!-- End Row -->
+<!-- Hero -->
+<div class="bg-soft-primary" style="margin-top: 89px;">
+  <div class="container content-space-2">
+    <form method="get">
+      <!-- Input Card -->
+      <div class="input-card input-card-sm mb-3">
+        <div class="input-card-form">
+          <label for="searchAppsForm" class="form-label visually-hidden">Search for Jobs</label>
+          <div class="input-group input-group-merge">
+            <span class="input-group-prepend input-group-text">
+              <i class="bi-search"></i>
+            </span>
+            {{f.form.position}}
           </div>
         </div>
-        <!-- End Card -->
-      </form>
-      <!-- End Form -->
+        <button type="submit" class="btn btn-primary">
+         Search <i class="bi bi-search"></i>
+        </button>
+      </div>
+      <!-- End Input Card -->
+    </form>
+
+    <div class="row align-items-center">
+      <div class="col-md-auto mb-3 mb-lg-0">
+        <h6 class="mb-1">Popular Categories <i class="bi bi-bookmarks"></i>:</h6>
+      </div>
+      <!-- End Col -->
+
+      <div class="col-md mb-3 mb-lg-0">
+
+        <!-- Check -->
+        <div class="form-check form-check-inline">
+          
+          <label class="form-check-label" for="jobSearchToCheckbox1"><a href="{% url 'category_list' 1845 %}">IT, computers & Internet</a></label>
+        </div>
+        <!-- End Check -->
+        <!-- Check -->
+        <div class="form-check form-check-inline">
+          
+          <label class="form-check-label" for="jobSearchToCheckbox1"><a href="{% url 'category_list' 1858 %}">Telecommunications</a></label>
+        </div>
+        <!-- End Check -->
+        <!-- Check -->
+        <div class="form-check form-check-inline">
+          
+          <label class="form-check-label" for="jobSearchToCheckbox1"><a href="{% url 'category_list' 1860 %}">Upper & senior management</a></label>
+        </div>
+        <!-- End Check -->
+        
+      </div>
     </div>
-    <!-- End Col -->
+    <!-- End Row -->
   </div>
-  <!-- End Row -->
 </div>
-<!-- End Signup Form -->
-<div class="alert alert-dark rounded-0" role="alert">
-  🔥 Don't wait! The number of applicants is on the rise. Be one of the first to apply and increase your chances of getting the job.
-  <a href="{% url 'sign_up' %}" class="text-primary m-2" style="font-weight: bold;">Get Started <i class="bi-chevron-right small ms-1"></i></a>
-</div>
-    <!-- Card Grid -->
-    <div class="container content-space-2 content-space-t-lg-4 content-space-b-lg-3">
-      {% if request.user.is_applicant or not request.user.is_authenticated %}
-         <!-- Features -->
-    <div class="position-relative">
-      <div class="container content-space-lg-3 mb-9">
-        <div class="row align-items-center">
-          <div class="col-12 col-lg-9 mb-7 mb-md-0">
-            <!-- Heading -->
-            <div class="w-md-65 mb-7">
-              <h2 class="h1">Don't let the job search stress you out</h2>
-              <p>Let Travaii do the work for you! Our advanced search filters allow you to find jobs that fit your specific needs and goals. Start your job search today and take control of your career.</p>
-            </div>
-            <!-- End Heading -->
-
-            <div class="row">
-              <div class="col-md-4 mb-3 mb-md-0">
-                <!-- Card -->
-                <div class="card h-100">
-                  <div class="card-body">
-                    <span class="svg-icon text-primary mb-3">
-                      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path opacity="0.3" d="M20 15H4C2.9 15 2 14.1 2 13V7C2 6.4 2.4 6 3 6H21C21.6 6 22 6.4 22 7V13C22 14.1 21.1 15 20 15ZM13 12H11C10.5 12 10 12.4 10 13V16C10 16.5 10.4 17 11 17H13C13.6 17 14 16.6 14 16V13C14 12.4 13.6 12 13 12Z" fill="#035A4B"></path>
-                        <path d="M14 6V5H10V6H8V5C8 3.9 8.9 3 10 3H14C15.1 3 16 3.9 16 5V6H14ZM20 15H14V16C14 16.6 13.5 17 13 17H11C10.5 17 10 16.6 10 16V15H4C3.6 15 3.3 14.9 3 14.7V18C3 19.1 3.9 20 5 20H19C20.1 20 21 19.1 21 18V14.7C20.7 14.9 20.4 15 20 15Z" fill="#035A4B"></path>
-                        </svg>
-
-                    </span>
-                    <h4 class="card-title">Set your Career Interests.</h4>
-                    <p class="card-text">Customize your job search with 'Set Your Career Interests.' Select your preferred industries and job roles to find the perfect job opportunity.</p>
-                      {% if request.user.is_authenticated and request.user.is_applicant %}
-                    <a class="card-link" href="{% url 'applicant_info' user.id %}">My Career Interests <i class="bi-chevron-right small ms-1"></i></a>
-                    
-                    {% else %}
-                    <a class="card-link" href="{% url 'sign_up' %}">Set my career interests <i class="bi-chevron-right small ms-1"></i></a>
-                    {% endif %}
-
-                  </div>
-                </div>
-                <!-- End Card -->
-              </div>
-              <!-- End Col -->
-
-              <div class="col-md-4 mb-3 mb-md-0">
-                <!-- Card -->
-                <div class="card h-100">
-                  <div class="card-body">
-                    <span class="svg-icon text-primary mb-3">
-                      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                      <path d="M21.7 18.9L18.6 15.8C17.9 16.9 16.9 17.9 15.8 18.6L18.9 21.7C19.3 22.1 19.9 22.1 20.3 21.7L21.7 20.3C22.1 19.9 22.1 19.3 21.7 18.9Z" fill="#035A4B"/>
-                      <path opacity="0.3" d="M11 20C6 20 2 16 2 11C2 6 6 2 11 2C16 2 20 6 20 11C20 16 16 20 11 20ZM11 4C7.1 4 4 7.1 4 11C4 14.9 7.1 18 11 18C14.9 18 18 14.9 18 11C18 7.1 14.9 4 11 4ZM8 11C8 9.3 9.3 8 11 8C11.6 8 12 7.6 12 7C12 6.4 11.6 6 11 6C8.2 6 6 8.2 6 11C6 11.6 6.4 12 7 12C7.6 12 8 11.6 8 11Z" fill="#035A4B"/>
-                      </svg>
-
-                    </span>
-                    <h4 class="card-title">Find jobs</h4>
-                    <p class="card-text">Easily find your perfect job in your industry with our 'Search for Jobs in Your Industry' feature.</p>
-                    <a class="card-link" href="{% url 'alljobs' %}">View all Jobs <i class="bi-chevron-right small ms-1"></i></a>
-                  </div>
-                </div>
-                <!-- End Card -->
-              </div>
-              <!-- End Col -->
-
-              <div class="col-md-4">
-                <!-- Card -->
-                <div class="card h-100">
-                  <div class="card-body">
-                    <span class="svg-icon text-primary mb-3">
-                      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M15.43 8.56949L10.744 15.1395C10.6422 15.282 10.5804 15.4492 10.5651 15.6236C10.5498 15.7981 10.5815 15.9734 10.657 16.1315L13.194 21.4425C13.2737 21.6097 13.3991 21.751 13.5557 21.8499C13.7123 21.9488 13.8938 22.0014 14.079 22.0015H14.117C14.3087 21.9941 14.4941 21.9307 14.6502 21.8191C14.8062 21.7075 14.9261 21.5526 14.995 21.3735L21.933 3.33649C22.0011 3.15918 22.0164 2.96594 21.977 2.78013C21.9376 2.59432 21.8452 2.4239 21.711 2.28949L15.43 8.56949Z" fill="#035A4B"></path>
-                        <path opacity="0.3" d="M20.664 2.06648L2.62602 9.00148C2.44768 9.07085 2.29348 9.19082 2.1824 9.34663C2.07131 9.50244 2.00818 9.68731 2.00074 9.87853C1.99331 10.0697 2.04189 10.259 2.14054 10.4229C2.23919 10.5869 2.38359 10.7185 2.55601 10.8015L7.86601 13.3365C8.02383 13.4126 8.19925 13.4448 8.37382 13.4297C8.54839 13.4145 8.71565 13.3526 8.85801 13.2505L15.43 8.56548L21.711 2.28448C21.5762 2.15096 21.4055 2.05932 21.2198 2.02064C21.034 1.98196 20.8409 1.99788 20.664 2.06648V2.06648Z" fill="#035A4B"></path>
-                        </svg>
-
-                    </span>
-                    <h4 class="card-title">Easily apply</h4>
-                    <p class="card-text">Apply for your dream job with our easy job application process. Simply search, apply, and wait for a call from the company.</p>
-                    <a class="card-link" href="{% url 'alljobs' %}">Find Jobs <i class="fas bi-chevron-right small ms-1"></i></a>
-                  </div>
-                </div>
-                <!-- End Card -->
-              </div>
-              <!-- End Col -->
-            </div>
-            <!-- End Row -->
+<!-- CTA -->
+<div class="container" style="margin-top: 10px;">
+  <div class="w-lg-75 mx-lg-auto">
+    <div class="card card-sm overflow-hidden">
+      <!-- Card -->
+      <div class="card-body">
+        <div class="row justify-content-md-start align-items-md-center text-center text-md-start">
+          <div class="col-md offset-md-3 mb-3 mb-md-0">
+            <h4 class="card-title">Free, unlimited job postings for employees</h4>
           </div>
-          <!-- End Col -->
+
+          <div class="col-md-auto">
+            <a class="btn btn-primary btn-transition" href="{% url 'sign_up_company' %}">Get started <i class="bi bi-chevron-right"></i></a>
+          </div>
         </div>
-        <!-- End Row -->
+
+        <!-- SVG Shape -->
+        <figure class="w-25 d-none d-md-block position-absolute top-0 start-0 mt-n2">
+          <img class="card-img" src="/static/assets/svg/illustrations/apps.svg" alt="Image Description">
+        </figure>
+        <!-- End SVG Shape -->
       </div>
-
-      <div class="banner-half-middle-x bg-img-start d-none d-md-block" style="background-image: url(/static/assets/img/900x900/remotejobsforeveryone.webp);"></div>
+      <!-- End Card -->
     </div>
-    <!-- End Features -->
-  
-      <!-- Features -->
-      {% endif %}
-      <hr>
-          <!-- CTA -->
-<div class="container content-space-b-2 mt-5">
-  <div class="text-center bg-img-start py-6 bg-dark text-light" style="background: url(/static/assets/svg/components/shape-6.svg) center no-repeat;">
-    <div class="mb-5">
-      <h2 class="text-light">Discover the career path that is best suited for you</h2>
-      <p>Simply input your desired job criteria and let us do the work for you</p>
-    </div>
-
-    <a class="btn btn-primary btn-transition" href="{% url 'sign_up' %}">Get Started</a>
   </div>
 </div>
 <!-- End CTA -->
-
-<!-- Info -->
-<div class="container content-space-2 content-space-lg-3">
-  <div class="row justify-content-lg-between">
-    <div class="d-flex col-lg-4 mb-5 mb-lg-0">
-      <h2>About <span class="text-primary">Travaii</span></h2>
-    </div>
-    <!-- End Col -->
-
-    <div class="col-lg-6">
-      <p><b class="text-dark">Travaii</b> simplifies the hiring process for companies, allowing them to efficiently find and hire the best candidates in a timely manner. </p>
-      <p>Travaii offers a range of features and tools that make it easy for companies to post job listings, review resumes and applications, and schedule interviews, all in one place. Travaii platforme helps companies save time and resources by streamlining their hiring process and allowing them to focus on their core business activities.</p>
-    </div>
-    <!-- End Col -->
-  </div>
-  <!-- End Row -->
+<!-- End Hero -->
+{% if request.GET %}
+{% if f.qs %}
+<!-- Heading -->
+<div class="d-flex justify-content-between align-items-center mb-3 p-2">
+  <h4 class="mb-0">All Jobs</h4>
+  <a class="link" href="#">View all <i class="bi-chevron-right small ms-1"></i></a>
 </div>
-<!-- End Info -->
-{% if jobs %}
-    <div>      <hr>
-      <div class="row row-cols-1 row-cols-sm-2 row-cols-lg-3 mb-5">
-        {% for job in jobs|slice:":6" %}
-        <div class="col mb-5">
-          <!-- Card -->
-          <div class="card card-bordered h-100">
-            <!-- Card Body -->
-            <div class="card-body">
-              <div class="row mb-3">
-                <div class="col">
-                  <!-- Media -->
-                  <div class="d-flex align-items-center">
-                    <div class="flex-shrink-0">
-                      {% if job.publisher.companyprofile.company_logo %}
-                      <img class="avatar avatar-sm avatar-circle" src="{{job.publisher.companyprofile.company_logo.url}}" alt="Image Description" style="width:53px;height: 53px;">
-                      {% endif %}
-                    </div>
+<!-- End Heading -->
 
-                    <div class="flex-grow-1 ms-3">
-                      <h6 class="card-title">
-                        <a class="text-dark" href="{% url 'company_Profile' job.publisher.id %}">{{job.publisher.companyprofile.company_name}}</a>
+<div class="row gx-3 mx-n2 p-2">
 
-                        {% if job.publisher.customer and job.publisher.customer.selected_membership == 'Mid-market enterprises' %}
+  {% for obj in f.qs %}
+  <div class="col-sm-6 col-md-4 mb-3">
+    <!-- Card -->
+    <div class="card card-bordered card-transition h-100">
+      <a class="card-body" href="{% url 'detail_job' obj.id %}">
+        <div class="d-flex">
+          <div class="flex-shrink-0">
+            {% if obj.publisher.companyprofile.company_logo %}
+            <img class="avatar avatar-xs" src="{{obj.publisher.companyprofile.company_logo.url}}" alt="Logo">
+            {% endif %}
+          </div>
+
+          <div class="flex-grow-1 ms-3">
+            <div class="d-flex align-items-center">
+              <h5 class="card-title mb-0">{{obj.position}} <span class="badge bg-soft-info text-info me-2">
+                <span class="legend-indicator bg-info"></span>{{obj.work_from}}
+              </span></h5>
+              
+            </div>
+            <p class="card-text text-body small">{{obj.publisher.companyprofile.company_name}}
+              {% if obj.publisher.customer and obj.publisher.customer.selected_membership == 'Mid-market enterprises' %}
                                   <i class="bi bi-patch-check-fill text-primary" title="Premium Account"></i> 
-                                  {% elif job.publisher.customer and job.publisher.customer.selected_membership == 'Large enterprise' %}     
+                                  {% elif obj.publisher.customer and obj.publisher.customer.selected_membership == 'Large enterprise' %}     
                                   <i class="bi bi-patch-check-fill text-primary" title="Premium Account"></i> 
 
                           {% endif %}
-                      </h6>
+            </p>
+          </div>
+        </div>
+      </a>
+    </div>
+    <!-- End Card -->
+  </div>
+  <!-- End Col -->
+
+
+</div>
+<!-- End Row -->
+
+{% endfor %}
+{% else %}
+<hr>
+<!-- Testimonials -->
+<div class="container mt-2">
+  <div class="text-center">
+    <img class="avatar avatar-lg avatar-4x3" src="/static/assets/svg/illustrations/oc-person-3.svg" alt="Illustration">
+  </div>
+
+  <!-- Blockquote -->
+  <figure class="w-md-75 text-center mx-md-auto">
+    <blockquote class="blockquote">Don't see the job you want? Leave your email and desired position, and we'll notify you.
+      or <a href="{% url 'sign_up' %}">Sign Up</a> 
+      </blockquote>
+  </figure>
+  <!-- End Blockquote -->
+</div>
+<!-- End Testimonials -->
+<hr>
+{% endif %}
+
+
+{% endif %}
+   <!-- Signup Form -->
+   <div class="container content-space-2 content-space-lg-3">
+    <div class="row justify-content-lg-between align-items-md-center">
+      <div class="col-md-5">
+        <div class="mb-5">
+          <h2>Take the first step towards your dream job</h2>
+          <p>Achieve your career goals with our help – simply enter your desired job and we'll do our best to get it for you.</p>
+        </div>
+
+      </div>
+      <!-- End Col -->
+  
+      <div class="col-md-7 col-lg-6">
+        <!-- Form -->
+        <form class="js-validate needs-validation" novalidate method="post" >
+          {% csrf_token %}
+          <!-- Card -->
+          <div class="card shadow-lg">
+            <div class="card-header bg-primary text-center">
+              <h4 class="card-header-title text-white">Don't miss out - fill out the form below to get started!</h4>
+            </div>
+  
+            <div class="card-body">
+           
+  
+        
+              <!-- Form -->
+              <div class="mb-4">
+                <label class="form-label" for="signupHeroFormWorkEmail">Desired Job</label>
+                {{form.job_category}}
+                <span class="invalid-feedback">What is the job you are looking for?</span>
+              </div>
+              <!-- End Form -->
+                    <!-- Form -->
+                    <div class="mb-4">
+                      <label class="form-label" for="signupHeroFormWorkEmail">Email address</label>
+                        {{form.email_field}}
+        
+                      <span class="invalid-feedback">Please enter your email address</span>
                     </div>
-                  </div>
-                  <!-- End Media -->
+                    <!-- End Form -->
+  
+              <!-- Check -->
+              <div class="form-check mb-4">
+                <input type="checkbox" class="form-check-input" id="signupHeroFormPrivacyCheckEg2" name="signupFormPrivacyCheck" required>
+                <label class="form-check-label small" for="signupHeroFormPrivacyCheckEg2"> By submitting this form I have read and acknowledged the <a href="{% url 'privacyandpolicy' %}">Privacy Policy</a></label>
+                <span class="invalid-feedback">Please accept our Privacy Policy.</span>
+              </div>
+              <!-- End Check -->
+  
+              <div class="row align-items-center">
+                
+                 <div class="d-grid mb-3">
+                  <button type="submit" class="btn btn-primary btn-lg">Submit</button>
                 </div>
-                <!-- End Col -->
               </div>
               <!-- End Row -->
-
-              <h3 class="card-title">
-                <a class="text-dark" href="{% url 'detail_job' job.id %}">{{job.position}}</a>
-              </h3>
-
-              <span class="d-block small text-body mb-1">{{job.salary_currency}} {{job.salary_from}} - {{job.salary_to}}</span>
-
-              <span class="badge bg-soft-info text-info me-2">
-                <span class="legend-indicator bg-info"></span>{{job.work_from}}
-              </span>
             </div>
-            <!-- End Card Body -->
-
-            <!-- Card Footer -->
-            <div class="card-footer pt-0">
-              <ul class="list-inline list-separator small text-body">
-                <li class="list-inline-item">Posted {{job.creation_date|timesince}} ago</li>
-                {% if job.publisher.companyprofile.city %}
-                <li class="list-inline-item"><i class="bi bi-geo-alt-fill"></i> {{job.publisher.companyprofile.city}}, {{job.publisher.companyprofile.state}}</li>
-                {% endif %}
-                <li class="list-inline-item">{{job.job_type}}</li>
-              </ul>
-            </div>
-            <!-- End Card Footer -->
           </div>
           <!-- End Card -->
-        </div>
-        {% endfor %}
-        <!-- End Col -->
-
-
-
+        </form>
+        <!-- End Form -->
       </div>
-      <!-- End Row -->
-
-      <div class="text-center">
-        <a class="btn btn-primary" href="{% url 'alljobs' %}">View all jobs <i class="bi-chevron-right small ms-1"></i></a>
-      </div>
+      <!-- End Col -->
     </div>
-    <!-- End Card Grid -->
-    {% endif %}
-    <hr>
-    <!-- Card Grid -->
-    <div class="container content-space-2 content-space-lg-3">
-      <!-- Heading -->
-      <div class="w-md-75 w-lg-50 text-center mx-md-auto mb-7">
-        <h2>Browse jobs by category</h2>
-        {% if request.user.is_authenticated and request.user.is_applicant %}
-        {% if not request.user.applicantprofile %}
-        <p>Find a job you love. <a class="link" href="{% url 'profile_setup' %}">Set your career interests.</a></p>
-        {% endif %}
-        {% endif %}
-      </div>
-      <!-- End Heading -->
-
-      <div class="row row-cols-1 row-cols-sm-2 1 row-cols-md-3 row-cols-lg-4 mb-5">
-        {% for category in categ|slice:":4" %}
-        <div class="col mb-3 mb-sm-4">
-          <!-- Card -->
-          <a class="card card-sm card-bordered card-transition h-100" href="{% url 'category_list' category.id %}">
-            <div class="card-body">
-              <div class="row align-items-center">
-                <div class="col">
-                  <h5 class="card-title text-inherit">{{category.name}}</h5>
-                  <p class="card-text text-body small">{{category.myjobs.count}} job positions</p>
-                </div>
-                <!-- End Col -->
-                
-                <div class="col-auto">
-                  <span class="text-muted">
-                    <i class="bi-chevron-right small"></i>
-                  </span>
-                </div>
-                <!-- End Col -->
-              </div>
-              <!-- End Row -->
-            </div>
-          </a>
-          <!-- End Card -->
-        </div>
-        <!-- End Col -->
-
- 
-        {% endfor %}
-
-
-
-      </div>
-      <!-- End Row -->
-
-      <div class="text-center">
-        <a class="btn btn-outline-primary" href="{% url 'category' %}">View all Categories <i class="bi-chevron-right small ms-1"></i></a>
-      </div>
-    </div>
-    <!-- End Card Grid -->
+    <!-- End Row -->
+  </div>
 
 
   </main>
