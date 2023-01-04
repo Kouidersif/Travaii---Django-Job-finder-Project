@@ -102,7 +102,7 @@ def Company_setup(request):
                 )
             except:
                 pass
-            return redirect('alljobs')
+            return redirect('email_confirm')
             
 
     else:

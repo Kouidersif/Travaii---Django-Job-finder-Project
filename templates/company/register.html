@@ -6,219 +6,148 @@
 
 
 {% block content %}
-<style>
-    .alert{
-        border-radius: 0;
-    }
-    .errorlist{
-        
-        text-transform: capitalize;
-    }
-    #divbut{
-        position: relative;
-        margin-bottom: 35px;
-        
-    }
-    #toconfirm{
-        display: inline-block;
-        background: black;
-        color: white;
-        padding: 8px;
-        left: 15%;
-        width: 70%;
-        border: none;
-        
-        
-        
-        
-    }
 
-    #mycon{
-        height: 80vh;
-        border: 1px solid black;
-        background: white;
-        
-    }
-    i{
-        color: black;
-    }
-    form{
-        position: absolute;
-        display: inline-block;
-        width: 50%;
-        
-       left: 5px;
-       padding: 15px;
-    }
-    form input{
-        width: 50%;
-      
-    }
-  
-    label{
-        font-weight: 800;
-    }
-    @media screen and (max-width: 780px) {
-    #mycon{
-        margin-top: 0;
 
-        height: 100%;
-        padding: 50px;
-        
-    }
-  .myimage{
-    display: none;
-  }
-  form{
-    position: relative;
-    margin-top: 0;
-   
-    width: 100%;
+<body class="bg-soft-primary">
 
-  }
-}
-@media (min-width: 781px) and (max-width: 992px){
-    
-    #mycon{
-        margin-top: 0;
 
-        height: 100%;
-        padding: 50px;
-        
-    }
-    form{
-    position: relative;
-    margin-top: 0;
-   
-    width: 50%;
-
-  }
-
-}
-@media (min-width: 781px) and (max-width: 3500px) {
-    #mycon{
-        margin-top: 0;
-
-        height: 100%;
-        padding: 50px;
-        
-    }
-    form{
-    position: relative;
-    margin-top: 0;
-   
-    width: 50%;
-
-  }
-  form button{
-    left: 50px;
-  }
-    
-}
-#mycon{
-  margin-top: 110px;
-}
-</style>
-{% include 'parts/nav.html' %}
-<body >
-    
-
-<div id="mycon" class="position-relative container p-5">
-
-        <form action="" method="post">
-            {% csrf_token %}
-            <h2 class="text-center">Employeer</h2>
-    <!-- Input Group -->
-<div class="mb-3 ">
-    <label for="inputGroupMergeFullName" class="form-label">Full name</label>
-  
-    <div class="input-group input-group-merge">
-      <div class="input-group-prepend input-group-text" id="inputGroupMergeFullNameAddOn">
-        <i class="bi-person"></i>
+<!-- Signup Form -->
+<div class="container content-space-2 content-space-lg-3">
+  <div class="row justify-content-lg-between align-items-md-center">
+    <div class="col-md-5 mb-7 mb-md-0">
+      <div class="mb-5">
+        <h2>We are thrilled to have you join our board and have no doubt that you will have a meaningful impact.</h2>
+        <p>Discover the benefits that Travaii has to offer when you complete your profile as a new company:</p>
       </div>
 
-      {{form.full_name}}
+
+      <!-- List Checked -->
+      <ul class="list-checked list-checked-primary">
+        <li class="list-checked-item" style="color: black;">Free Trial Month</li>
+        <li class="list-checked-item" style="color: black;">Access to all features such as : Posting unlimited Jobs, Resumes and more...</li>
+        <li class="list-checked-item" style="color: black;">Verified Account badge <i class="bi bi-patch-check-fill text-primary"></i></li>
+        <li class="list-checked-item" style="color: black;">And more to discover</li>
+      </ul>
+      <!-- End List Checked -->
     </div>
+    <!-- End Col -->
+
+    <div class="col-md-7 col-lg-6">
+      <!-- Form -->
+      <form class="js-validate needs-validation" novalidate method="post">
+         {% csrf_token %}
+        <!-- Card -->
+        <div class="card">
+          <div class="card-header bg-primary text-center">
+            <h4 class="card-header-title text-white">Register your comapny <span class="badge bg-warning text-dark rounded-pill ms-1">Free</span></h4>
+          </div>
+
+          <div class="card-body">
+            <div class="row gx-3">
+              <div class="col-sm-6">
+                <!-- Form -->
+                <div class="mb-4">
+                  <label class="form-label" for="signupHeroFormFirstName">Full name</label>
+                  {{form.full_name}}
+                  <span class="invalid-feedback">Please enter your full name</span>
+                  {% if form.full_name.errors %}
+                  <span class="text-danger">{{form.full_name.errors}}</span>
+                  {% endif %}
+                </div>
+                <!-- End Form -->
+              </div>
+              <!-- End Col -->
+
+              <div class="col-sm-6">
+                <!-- Form -->
+                <div class="mb-4">
+                  <label class="form-label" for="signupHeroFormLasttName">Username</label>
+                  {{form.username}}
+                  <span class="invalid-feedback">Please enter your username</span>
+                  {% if form.username.errors %}
+                  <span class="text-danger">{{form.username.errors}}</span>
+                  {% endif %}
+                </div>
+                <!-- End Form -->
+              </div>
+              <!-- End Col -->
+            </div>
+            <!-- End Row -->
+
+            <!-- Form -->
+            <div class="mb-4">
+              <label class="form-label" for="signupHeroFormWorkEmail">Email address</label>
+              {{form.email}}
+              <span class="invalid-feedback">Please enter your email address</span>
+              {% if form.username.errors %}
+                  <span class="text-danger">{{form.email.errors}}</span>
+                  {% endif %}
+            </div>
+            <!-- End Form -->
+
+            <div class="row gx-3">
+              <div class="col-sm-6">
+                <!-- Form -->
+                <div class="mb-4">
+                  <label class="form-label" for="signupHeroFormSignupPassword">Password</label>
+                  {{form.password1}}
+            <span class="invalid-feedback">Your password must include 8+ characters</span>
+            {% if form.password1.errors %}
+            <span class="text-danger">{{form.password1.errors}}</span>
+            {% endif %}
+                </div>
+                <!-- End Form -->
+              </div>
+              <!-- End Col -->
+
+              <div class="col-sm-6">
+                <!-- Form -->
+                <div class="mb-4" data-hs-validation-validate-class>
+                  <label class="form-label" for="signupHeroFormSignupConfirmPassword">Confirm password</label>
+                  {{form.password2}}
+                  <span class="invalid-feedback">Password does not match the confirm password</span>
+                  {% if form.password2.errors %}
+                  <span class="text-danger">{{form.password2.errors}}</span>
+                  {% endif %}
+                </div>
+                <!-- End Form -->
+              </div>
+              <!-- End Col -->
+            </div>
+            <!-- End Row -->
+
+            <!-- Check -->
+            <div class="form-check mb-4">
+              <input type="checkbox" class="form-check-input" id="signupHeroFormPrivacyCheckEg2" name="signupFormPrivacyCheck" required>
+              <label class="form-check-label small" for="signupHeroFormPrivacyCheckEg2"> By submitting this form I have read and acknowledged the <a href="{% url 'privacyandpolicy' %}">Privacy Policy</a></label>
+              <span class="invalid-feedback">Please accept our Privacy Policy.</span>
+            </div>
+            <!-- End Check -->
+
+            <div class="row align-items-center">
+              <div class="col-sm-7 mb-3 mb-sm-0">
+                <p class="card-text small">Already have an account? <a class="link" href="{% url 'log_in' %}">Log In</a></p>
+               
+              </div>
+              <!-- End Col -->
+
+              <div class="col-sm-5 text-end">
+                <button type="submit" class="btn btn-primary btn-lg">Create Account</button>
+              </div>
+              <!-- End Col -->
+            </div>
+            <!-- End Row -->
+            <div class="container d-flex justify-content-center mt-3"> <p class="card-text small">You came here by mistake? <a class="link" href="{% url 'home' %}">Go Back</a></p></div>
+          </div>
+        </div>
+        <!-- End Card -->
+      </form>
+      <!-- End Form -->
+    </div>
+    <!-- End Col -->
   </div>
-  <!-- End Input Group -->
-    <!-- Input Group -->
-    <div class="mb-3">
-        <label for="inputGroupMergeEmail" class="form-label">Username</label>
-      
-        <div class="input-group input-group-merge">
-          <div class="input-group-prepend input-group-text" id="inputGroupMergeEmailAddOn">
-            <i class="bi bi-person-circle"></i>
-          </div>
-          
-          {{form.username}}
-        
-        </div>
-      </div>
-      <!-- End Input Group -->
-  
-  <!-- Input Group -->
-  <div class="mb-3">
-    <label for="inputGroupMergeEmail" class="form-label">Email</label>
-  
-    <div class="input-group input-group-merge">
-      <div class="input-group-prepend input-group-text" id="inputGroupMergeEmailAddOn">
-        <i class="bi-envelope-open"></i>
-      </div>
-   
-      {{form.email}}
-    </div>
-  </div>
-  <!-- End Input Group -->
-     <!-- Input Group -->
-     <div class="mb-3">
-        <label for="inputGroupMergeEmail" class="form-label">Phone Number</label>
-      
-        <div class="input-group input-group-merge">
-          <div class="input-group-prepend input-group-text" id="inputGroupMergeEmailAddOn">
-            <i class="bi bi-telephone-fill"></i>
-          </div>
-  
-          {{form.phone_number}}
-        </div>
-      </div>
-      <!-- End Input Group -->
-    <!-- Input Group -->
-    <div class="mb-3">
-        <label for="inputGroupMergeEmail" class="form-label">Password</label>
-      
-        <div class="input-group input-group-merge">
-          <div class="input-group-prepend input-group-text" id="inputGroupMergeEmailAddOn">
-            <i class="bi bi-fingerprint"></i>
-          </div>
-     
-          {{form.password1}}
-        </div>
-      </div>
-      <!-- End Input Group -->
-         <!-- Input Group -->
-    <div class="mb-3">
-        <label for="inputGroupMergeEmail" class="form-label">Confirm Password</label>
-      
-        <div class="input-group input-group-merge">
-          <div class="input-group-prepend input-group-text" id="inputGroupMergeEmailAddOn">
-            <i class="bi bi-fingerprint"></i>
-          </div>
-          {{form.password2}}
-        </div>
-      </div>
-      <p class="privacy">By pressing Create Account you agree with our <a href="{% url 'privacyandpolicy' %}">Privacy & Policy</a></p>
-      {% if form.errors %}
-      <div class="alert alert-soft-danger" role="alert">
-        {{form.errors}}
-      </div>
-      {% endif %}
-      <!-- End Input Group -->
-      <div id="divbut" class="input-group-prepend">
-      <button id="toconfirm" type="submit" class="position-absolute">Create an Account</button>
-    </div>
-</form>
-    <img src="{% static 'assets/svg/brands/co.jpg' %}" class="myimage position-absolute h-100 top-0 end-0 w-50 display-inline-block " alt="" >
-
+  <!-- End Row -->
 </div>
+<!-- End Signup Form -->
 </body>
 {% endblock %}
