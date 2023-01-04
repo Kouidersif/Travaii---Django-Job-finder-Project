@@ -109,6 +109,11 @@ class Category(models.Model):
         return self.name
     
     
+class SearchedJobs(models.Model):
+    search_content = models.CharField(max_length=500, null=True, blank=True)
+    when = models.DateTimeField(auto_now_add=now)
+    def __str__(self):
+        return str(self.search_content) or 'Empty Search'
     
 
 class Work_from(models.Model):

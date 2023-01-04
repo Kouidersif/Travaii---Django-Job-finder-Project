@@ -2,7 +2,7 @@ from django.contrib import admin
 from .models import *
 
 
-
+admin.site.register(SearchedJobs)
 admin.site.register(User)
 admin.site.register(Get_industry)
 admin.site.register(Category)

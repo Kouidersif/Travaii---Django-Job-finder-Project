@@ -297,6 +297,14 @@ def HomePage(request):
     f = SnippetFilter(request.GET, queryset=Jobs.objects.filter(is_published=True))
     all_jobs = f.qs
     categories = category= Category.objects.all()
+    try:
+        if request.method == 'GET':
+            search = request.GET.get('position')
+            SearchedJobs.objects.create(
+                search_content = search
+            )
+    except:
+        pass
 
     context={'jobs':jobs, 'companies':companies, 'f':f,'all_jobs':all_jobs,'categories':categories, 'candidates':candidates, 'form':form}
     return render(request, 'main/index.html', context)
