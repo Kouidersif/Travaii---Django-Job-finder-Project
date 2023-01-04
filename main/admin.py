@@ -18,6 +18,6 @@ admin.site.register(Experience)
 admin.site.register(Education)
 admin.site.register(Skills)
 admin.site.register(Billing)
-
+admin.site.register(number_user_facebook)
 
 

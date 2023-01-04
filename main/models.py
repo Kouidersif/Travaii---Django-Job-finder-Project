@@ -227,3 +227,11 @@ class Get_industry(models.Model):
     industry_name = models.CharField(max_length=200, null=True, blank=True)
     def __str__(self):
         return self.industry_name
+
+
+
+
+class number_user_facebook(models.Model):
+    users_l = models.IntegerField(default=0, null=True, blank=True)
+    def __str__(self):
+        return f'Total visits from facebook : {self.users_l}'

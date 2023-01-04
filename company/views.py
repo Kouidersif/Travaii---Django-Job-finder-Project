@@ -24,7 +24,7 @@ from subscriptions.decorators import check_sub
 from applicants.models import ApplicantProfile
 from applicants.views import Confirm_message
 import random
-from main.models import Get_industry
+from main.models import Get_industry, number_user_facebook
 from main.forms import ContactForm
 
 from django.core.paginator import Paginator
@@ -38,6 +38,14 @@ from django.core.paginator import Paginator
 
 
 def LandingPage(request):
+    try:
+        from_where = 'fbclid'
+        if from_where in request.GET:
+            count, created = number_user_facebook.objects.get_or_create()
+            count.users_l += 1
+            count.save()
+    except:
+        pass
     form = ContactForm()
     if request.method == 'POST':
         form = ContactForm(request.POST)

@@ -286,6 +286,17 @@ def HomePage(request):
     categ= Category.objects.all()
     s = Wilaya.objects.all()
     form = NewsLetterForm()
+    #counting number of visits from facebook
+    try:
+        from_where = 'fbclid'
+        if from_where in request.GET:
+            count, created = number_user_facebook.objects.get_or_create()
+            count.users_l += 1
+            count.save()
+    except:
+        pass
+    
+
     if request.method == 'POST':
         form =NewsLetterForm(request.POST)
         if form.is_valid():
@@ -297,6 +308,7 @@ def HomePage(request):
     f = SnippetFilter(request.GET, queryset=Jobs.objects.filter(is_published=True))
     all_jobs = f.qs
     categories = category= Category.objects.all()
+    #getting what people are searching for
     try:
         if request.method == 'GET':
             search = request.GET.get('position')
@@ -306,6 +318,7 @@ def HomePage(request):
                 )
     except:
         pass
+    
 
     context={'jobs':jobs, 'companies':companies, 'f':f,'all_jobs':all_jobs,'categories':categories, 'candidates':candidates, 'form':form}
     return render(request, 'main/index.html', context)
