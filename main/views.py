@@ -300,9 +300,10 @@ def HomePage(request):
     try:
         if request.method == 'GET':
             search = request.GET.get('position')
-            SearchedJobs.objects.create(
-                search_content = search
-            )
+            if search:
+                SearchedJobs.objects.create(
+                    search_content = search
+                )
     except:
         pass
 
