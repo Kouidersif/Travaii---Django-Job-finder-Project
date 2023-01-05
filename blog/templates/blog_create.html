@@ -1,0 +1,92 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+
+
+{% block content %}
+{% include 'nav/navbar.html' %}
+<!-- Form -->
+<div class="container content-space-2 content-space-lg-3">
+    <!-- Form -->
+    <div class="mx-auto" style="max-width: 50rem;">
+      <!-- Form -->
+      <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+             <!-- Form -->
+             <div class="mb-4">
+                <label class="form-label" for="hireUsFormWorkEmail">Blog Title</label>
+                {{form.title}}
+            </div>
+              <!-- End Form -->
+  
+              <div class="row">
+                <div class="col-sm-6">
+                  <!-- Form -->
+                  <div class="mb-4">
+                    <label class="form-label" for="hireUsFormFirstName">Category</label>
+                    {{form.category}}
+                </div>
+                  <!-- End Form -->
+                </div>
+        
+                <div class="col-sm-6">
+                  <!-- Form -->
+                  <div class="mb-4">
+          
+                    <label for="tagsLabel" class="form-label">Tags</label>
+
+                    {{form.tags}}
+                </div>
+                  <!-- End Form -->
+                </div>
+              </div>
+              <!-- End Form -->
+  
+
+              <div class="row">
+                <div class="col-sm-6">
+                  <!-- Form -->
+                  <div class="mb-4">
+                    <label class="form-label" for="hireUsFormFirstName">Post Media</label>
+                    {{form.blog_media}}
+                </div>
+                  <!-- End Form -->
+                </div>
+        
+                <div class="col-sm-6">
+                  <!-- Form -->
+                  <div class="mb-4">
+                    <label class="form-label" for="hireUsFormLasttName">Thumbnail</label>
+                    {{form.thumbnail}}
+                </div>
+                  <!-- End Form -->
+                </div>
+              </div>
+              <!-- End Form -->
+  
+        <!-- Form -->
+        <div class="mb-4">
+          <label class="form-label" for="hireUsFormDetails">Details</label>
+            {{form.content}}
+        </div>
+        <!-- End Form -->
+  
+        <div class="d-grid mb-2">
+          <button type="submit" class="btn btn-primary btn-lg">Send inquiry</button>
+        </div>
+  
+        <div class="text-center">
+          <span class="form-text">We'll get back to you in 1-2 business days.</span>
+        </div>
+      </form>
+      <!-- End Form -->
+    </div>
+    <!-- End Form -->
+  </div>
+  <!-- End Form -->
+
+{% load static %}
+<script type="text/javascript" src='{% static "ckeditor/ckeditor-init.js" %}'></script>
+<script type="text/javascript" src='{% static "ckeditor/ckeditor/ckeditor.js" %}'></script>
+{% endblock content %}

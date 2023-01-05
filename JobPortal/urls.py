@@ -25,6 +25,7 @@ urlpatterns = [
     path('tinymce/', include('tinymce.urls')),
     path('applicant/', include('applicants.urls')),
     path('subscription/',include('subscriptions.urls')),
+    path('blog/',include('blog.urls')),
     path('ckeditor/', include('ckeditor_uploader.urls')),
     
 ]

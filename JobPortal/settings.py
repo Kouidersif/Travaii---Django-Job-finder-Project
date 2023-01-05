@@ -51,6 +51,7 @@ INSTALLED_APPS = [
     'bootstrapform',
     'ckeditor',
     'mathfilters',
+    'blog',
 ]
 
 MIDDLEWARE = [

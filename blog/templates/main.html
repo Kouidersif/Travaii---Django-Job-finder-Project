@@ -1,0 +1,408 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en" dir="">
+<head>
+<!-- Required Meta Tags Always Come First -->
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+<!-- Title -->
+<title>Travaii - Blog</title>
+
+<!-- Favicon -->
+<link rel="shortcut icon" href="/favicon.ico">
+
+<!-- Font -->
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
+
+<!-- CSS Implementing Plugins -->
+<link rel="stylesheet" href="{% static 'assets/vendor/bootstrap-icons/font/bootstrap-icons.css' %}">
+<link rel="stylesheet" href="{% static 'assets/vendor/hs-mega-menu/dist/hs-mega-menu.min.css' %}">
+<link rel="stylesheet" href="{% static 'assets/vendor/swiper/swiper-bundle.min.css' %}">
+
+<!-- CSS Front Template -->
+<link rel="stylesheet" href="{% static 'assets/css/theme.min.css' %}">
+</head>
+
+<body>
+<!-- ========== HEADER ========== -->
+{% include 'nav/navbar.html' %}
+
+<!-- ========== END HEADER ========== -->
+
+<!-- ========== MAIN CONTENT ========== -->
+<main id="content" role="main">
+    <!-- Hero -->
+    <div class="position-relative">
+       
+    <!-- Swiper Main Slider -->
+  <div class="js-swiper-blog-journal-hero swiper">
+    <div class="swiper-wrapper">
+        {% for blog in blogs %}
+      <div class="js-swiper-slide-preload swiper-slide d-flex gradient-x-overlay-sm-dark bg-img-start" style="background-image: url({{blog.blog_media.url}}); min-height: 40rem;">
+        <!-- Container -->
+        <div class="container d-flex align-items-center" style="min-height: 40rem;">
+          <div class="w-lg-50 me-3">
+            <!-- Media -->
+            <div class="d-flex align-items-center mb-3">
+              <div class="flex-shrink-0">
+                <div class="avatar avatar-circle">
+                    {% if blog.author_name.profile_pic %}
+                  <img class="avatar-img" src="{{blog.author_name.profile_pic.url}}" alt="Image Description">
+                  {% endif %}
+                </div>
+              </div>
+
+              <div class="flex-grow-1 ms-3">
+                <a class="text-white" href="#">{{blog.author_name.full_name}}</a>
+              </div>
+            </div>
+            <!-- End Media -->
+
+            <div class="mb-5">
+              <h2 class="h1 text-white">{{blog.title}}</h2>
+            </div>
+            
+            <a class="btn btn-primary btn-transition" href="{% url 'blog-detail' blog.id blog.slug %}">Read article <i class="bi-chevron-right small ms-1"></i></a>
+          </div>
+        </div>
+        <!-- End Container -->
+      </div>
+      {% endfor %}
+
+    </div>
+
+    <!-- Swiper Pagination -->
+    <div class="js-swiper-blog-journal-hero-pagination swiper-pagination swiper-pagination-light swiper-pagination-vertical swiper-pagination-middle-y-end me-3 d-lg-none"></div>
+
+    <div class="js-swiper-preloader d-flex align-items-center justify-content-center top-0 position-absolute w-100 h-100 bg-white zi-1">
+      <div class="spinner spinner-border text-primary"></div>
+    </div>
+  </div>
+  <!-- End Swiper Main Slider -->
+ 
+  
+     <!-- Swiper Thumbs Slider -->
+  <div class="d-none d-lg-block container translate-middle-y position-absolute top-50 start-0 end-0 zi-2">
+    <div class="translate-middle-y position-absolute top-50 end-0">
+      <div class="js-swiper-blog-journal-hero-thumbs swiper" style="opacity:0;max-width: 13rem;">
+        <div class="swiper-wrapper">
+            {% for blog in blogs %}
+          <!-- Slide -->
+          <div class="swiper-slide swiper-pagination-progress swiper-pagination-progress-light py-3">
+            <p class="text-white">{{blog.title|truncatechars:20}}</p>
+
+            <div class="swiper-pagination-progress-body">
+              <div class="js-swiper-pagination-progress-body-helper swiper-pagination-progress-body-helper"></div>
+            </div>
+          </div>
+          <!-- End Slide -->
+          {% endfor %}
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- End Swiper Thumbs Slider -->
+    </div>
+    <!-- End Hero -->
+
+    <!-- Card Grid -->
+    <div class="container content-space-2 content-space-lg-3">
+    <div class="row justify-content-lg-between">
+        <div class="col-lg-8 mb-10 mb-lg-0">
+        <div class="d-grid gap-7 mb-7">
+            {% for blog in blogs %}
+            
+            <!-- Card -->
+            <div class="card card-flush card-stretched-vertical">
+            <div class="row">
+                <div class="col-sm-5">
+                    {% if blog.blog_media %}
+                <img class="card-img" src="{{blog.blog_media.url}}" alt="Image Description" style="width: 292.66px;height: 365.81px;">
+                {% endif %}
+                </div>
+                <!-- End Col -->
+
+                <div class="col-sm-7">
+                <!-- Card Body -->
+                <div class="card-body">
+                    <div class="mb-2">
+                    <a class="card-link" href="#">{{blog.category}}</a>
+                    </div>
+
+                    <h3 class="card-title">
+                    <a class="text-dark" href="./blog-article.html">{{blog.title}}</a>
+                    </h3>
+                    
+               
+                    
+                    <!-- Card Footer -->
+                    <div class="card-footer">
+                    <div class="d-flex">
+                        <div class="flex-shrink-0">
+                        <a class="avatar avatar-circle" href="#">
+                            {% if blog.author_name.profile_pic %}
+                        <img class="avatar-img" src="{{blog.author_name.profile_pic.url}}" alt="Image Description">
+                        {% endif %}
+                        </a>
+                        </div>
+                        <div class="flex-grow-1 ms-3">
+                        <a class="card-link link-dark" href="#">{{blog.author_name.full_name}}</a>
+                        <p class="card-text small">{{blog.Created_on|timesince}} ago</p>
+                        </div>
+                    </div>
+                    </div>
+                    <!-- End Card Footer -->
+                </div>
+                <!-- End Card Body -->
+                </div>
+                <!-- End Col -->
+            </div>
+            <!-- End Row -->
+            </div>
+            <!-- End Card -->
+         
+    
+            {% endfor %}
+        </div>
+        <!-- Sticky Block End Point -->
+        <div id="stickyBlockEndPoint"></div>
+
+        </div>
+        <!-- End Col -->
+
+        <div class="col-lg-3">
+        <div class="mb-7">
+            <div class="mb-3">
+            <h3>Newsletter</h3>
+            </div>
+
+            <!-- Form -->
+            <form method="post">
+                {% csrf_token  %}
+            <div class="mb-2">
+               {{form.email}}
+            </div>
+            <div class="d-grid">
+                <button type="submit" class="btn btn-primary">Subscribe</button>
+            </div>
+            </form>
+            <!-- End Form -->
+
+            <p class="form-text">Get special offers on the latest developments from Travaii including job offers.</p>
+        </div>
+
+        <div class="mb-7">
+            <div class="mb-3">
+            <h3>Productivity</h3>
+            </div>
+
+            <!-- List Group -->
+            <ul class="list-group list-group-lg">
+                {% for blog in blogs|slice:"3" %}
+            <!-- Item -->
+            <li class="list-group-item">
+                <a href="#">
+                <div class="row align-items-center">
+                    <div class="col">
+                    <h5 class="mb-1">{{blog.title}}</h5>
+                    <p class="text-body small mb-0">{{blog.Created_on}}</p>
+                    </div>
+                    <!-- End Col -->
+
+                    <div class="col-auto">
+                    <i class="bi-chevron-right"></i>
+                    </div>
+                    <!-- End Col -->
+                </div>
+                <!-- End Row -->
+                </a>
+            </li>
+            <!-- End Item -->
+
+{% endfor %}
+            </ul>
+            <!-- End List Group -->
+        </div>
+
+        <!-- Sticky Block Start Point -->
+        <div id="stickyBlockStartPoint"></div>
+
+        <div class="js-sticky-block"
+            data-hs-sticky-block-options='{
+                "parentSelector": "#stickyBlockStartPoint",
+                "targetSelector": "#header",
+                "breakpoint": "md",
+                "startPoint": "#stickyBlockStartPoint",
+                "endPoint": "#stickyBlockEndPoint",
+                "stickyOffsetTop": 80
+            }'>
+            <div class="mb-7">
+            <div class="mb-3">
+                <h3>Travaii's Announcements</h3>
+            </div>
+
+            <div class="d-grid gap-2">
+                {% if announcements %}
+                {% for announcement in announcements|slice:"3" %}
+                
+                <!-- Card -->
+                <a class="d-block" href="#">
+                <div class="d-flex align-items-center">
+                    <div class="flex-shrink-0">
+                    <div class="avatar avatar-lg">
+                        {% if announcement.image %}
+                        <img class="avatar-img" src="{{announcement.image.url}}" alt="Image Description">
+                        {% endif %}
+                    </div>
+                    </div>
+                    <div class="flex-grow-1 ms-3">
+                    <h5 class="text-inherit mb-0">{{announcement.title}}</h5>
+                    </div>
+                </div>
+                </a>
+                <!-- End Card -->
+                
+                {% endfor %}
+                {% else %}
+                <p>No Announcements yet<p>
+                    {% endif %}
+
+
+            </div>
+            </div>
+
+            <div class="mb-7">
+            <div class="mb-3">
+                <h3>Tags</h3>
+            </div>
+                {% for tag in tags|slice:"11" %}
+            <a class="btn btn-soft-secondary btn-xs mb-1" href="#">{{tag.tag_name}}</a>
+            {% endfor %}
+            </div>
+        </div>
+        </div>
+        <!-- End Col -->
+    </div>
+    <!-- End Row -->
+    </div>
+    <!-- End Card Grid -->
+</main>
+<!-- ========== END MAIN CONTENT ========== -->
+
+<!-- JS Global Compulsory  -->
+<script src="{% static 'assets/vendor/bootstrap/dist/js/bootstrap.bundle.min.js' %}"></script>
+
+<!-- JS Implementing Plugins -->
+<script src="{% static 'assets/vendor/hs-header/dist/hs-header.min.js' %}"></script>
+<script src="{% static 'assets/vendor/hs-mega-menu/dist/hs-mega-menu.min.js' %}"></script>
+<script src="{% static 'assets/vendor/hs-show-animation/dist/hs-show-animation.min.js' %}"></script>
+<script src="{% static 'assets/vendor/hs-go-to/dist/hs-go-to.min.js' %}"></script>
+<script src="{% static 'assets/vendor/swiper/swiper-bundle.min.js' %}"></script>
+<script src="{% static 'assets/vendor/hs-sticky-block/dist/hs-sticky-block.min.js' %}"></script>
+<!-- JS Front -->
+<script src="{% static '/assets/js/theme.min.js' %}"></script>
+
+<!-- JS Plugins Init. -->
+<script>
+    (function() {
+    // INITIALIZATION OF HEADER
+    // =======================================================
+    new HSHeader('#header').init()
+
+
+    // INITIALIZATION OF MEGA MENU
+    // =======================================================
+    new HSMegaMenu('.js-mega-menu', {
+        desktop: {
+            position: 'left'
+        }
+        })
+
+
+    // INITIALIZATION OF SHOW ANIMATIONS
+    // =======================================================
+    new HSShowAnimation('.js-animation-link')
+
+
+    // INITIALIZATION OF BOOTSTRAP VALIDATION
+    // =======================================================
+    HSBsValidation.init('.js-validate', {
+        onSubmit: data => {
+        data.event.preventDefault()
+        alert('Submited')
+        }
+    })
+
+
+    // INITIALIZATION OF BOOTSTRAP DROPDOWN
+    // =======================================================
+    HSBsDropdown.init()
+
+
+    // INITIALIZATION OF GO TO
+    // =======================================================
+    new HSGoTo('.js-go-to')
+
+
+    // INITIALIZATION OF SWIPER
+    // =======================================================
+    function loadImage( path ) {
+        return new Promise(function (resolve) {
+        const img = new Image()
+
+        img.addEventListener('load', () => {
+            resolve()
+        })
+
+        img.src = path.replace(/url\(\"(.*?)\"\)/g, '$1')
+        })
+    }
+
+    const $preloader = document.querySelector('.js-swiper-preloader')
+    const promises = [...document.querySelectorAll('.js-swiper-slide-preload')]
+            .map(slide => loadImage(window.getComputedStyle(slide).backgroundImage))
+
+    Promise.all(promises)
+            .then(() => {
+                $preloader.remove()
+
+                var sliderThumbs = new Swiper('.js-swiper-blog-journal-hero-thumbs', {
+                direction: 'vertical',
+                watchSlidesVisibility: true,
+                watchSlidesProgress: true,
+                slidesPerView: 3,
+                history: false,
+                on: {
+                    'afterInit': function (swiper) {
+                    swiper.el.style.opacity = 1
+                    swiper.el.querySelectorAll('.js-swiper-pagination-progress-body-helper')
+                            .forEach($progress => $progress.style.transitionDuration = `${swiper.params.autoplay.delay}ms`)
+                    }
+                }
+                });
+
+                var swiper = new Swiper('.js-swiper-blog-journal-hero',{
+                effect: 'fade',
+                autoplay: true,
+                loop: true,
+                pagination: {
+                    el: '.js-swiper-blog-journal-hero-pagination',
+                    clickable: true,
+                },
+                thumbs: {
+                    swiper: sliderThumbs
+                }
+                });
+            })
+
+
+    // INITIALIZATION OF STICKY BLOCKS
+    // =======================================================
+    new HSStickyBlock('.js-sticky-block', {
+        targetSelector: document.getElementById('header').classList.contains('navbar-fixed') ? '#header' : null
+    })
+    })()
+</script>
+</body>
+</html>
