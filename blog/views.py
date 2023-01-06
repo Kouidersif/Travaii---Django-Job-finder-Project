@@ -25,19 +25,18 @@ def BlogHome(request):
 
 
 
-class CreateBlog(CreateView):
-    form_class= PostBlogForm
-    template_name = 'blog_create.html'
-    def post(self, request):
-        form = self.form_class(request.POST, request.FILES)
+def CreateBlog(request):
+    form = PostBlogForm()
+    if request.method == 'POST':
+        form = PostBlogForm(request.POST, request.FILES)
         if form.is_valid():
-            author = form.save(commit=False)
-            author.author_name = request.user
-            author.save()
-            # process the form data
+            job = form.save(commit=False)
+            job.author_name = request.user
+            job.save()
             return redirect('blog-home')
-        
-        return render(request, self.template_name, {'form': form})
+    else:
+        form = PostBlogForm()
+    return render(request, 'blog_create.html', {'form':form})
 
 
 def BlogDetails(request, pk, slug):

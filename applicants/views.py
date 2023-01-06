@@ -72,6 +72,15 @@ def Confirm_message(request, user, to_email):
 
 @only_non_authenticated
 def Signup_as_applicant(request):
+    #counting number of visits from facebook
+    try:
+        from_where = 'fbclid'
+        if from_where in request.GET:
+            count, created = number_user_facebook.objects.get_or_create()
+            count.users_l += 1
+            count.save()
+    except:
+        pass
     form= ApplicantSignUpForm()
     if request.method == 'POST':
         form = ApplicantSignUpForm(request.POST, request.FILES)

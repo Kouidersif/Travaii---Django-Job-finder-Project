@@ -131,7 +131,7 @@
                     </div>
 
                     <h3 class="card-title">
-                    <a class="text-dark" href="./blog-article.html">{{blog.title}}</a>
+                    <a class="text-dark" href="{% url 'blog-detail' blog.id blog.slug %}">{{blog.title}}</a>
                     </h3>
                     
                

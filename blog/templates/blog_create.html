@@ -48,7 +48,7 @@
                 <div class="col-sm-6">
                   <!-- Form -->
                   <div class="mb-4">
-                    <label class="form-label" for="hireUsFormFirstName">Post Media</label>
+                    <label class="form-label" for="hireUsFormFirstName">Post Media (1920x1080 recommended)</label>
                     {{form.blog_media}}
                 </div>
                   <!-- End Form -->
@@ -72,13 +72,17 @@
         </div>
         <!-- End Form -->
   
+           <!-- Form -->
+           <div class="mb-4">
+            <label class="form-label" for="hireUsFormWorkEmail">Blog Title</label>
+            {{form.slug}}
+        </div>
+          <!-- End Form -->
         <div class="d-grid mb-2">
-          <button type="submit" class="btn btn-primary btn-lg">Send inquiry</button>
+          <button type="submit" class="btn btn-primary btn-lg">POST</button>
         </div>
   
-        <div class="text-center">
-          <span class="form-text">We'll get back to you in 1-2 business days.</span>
-        </div>
+
       </form>
       <!-- End Form -->
     </div>
