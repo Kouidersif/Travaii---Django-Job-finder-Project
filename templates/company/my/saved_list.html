@@ -47,7 +47,9 @@
             </td>
             <td>
                 <a href="{% url 'profile' applicant.owner.username %}" target="_blank" rel="noopener noreferrer">View Profile</a> |
+                {% if candidate.applicant_cv  %}
                 <a href="{{applicant.applicant_cv.url}}" target="_blank" rel="noopener noreferrer">View Resume</a>
+                {% endif %}
             </td>
           </tr>
           {% empty %}
