@@ -2,9 +2,10 @@
 
 {% load static %}
 
-
+{% block title %}{{blogs.title}} - Travaii Blog{% endblock title %}
 
 {% block content %}
+
 {% include 'nav/navbar.html' %}
   <!-- ========== MAIN CONTENT ========== -->
   <main id="content" role="main">
@@ -65,8 +66,12 @@
 
 
 
-      <div class="w-lg-65 mx-lg-auto">
-            {{blogs.content|safe}}
+                    <div class="w-lg-65 mx-lg-auto">
+                    
+              {{ blogs.content|safe }}
+              <img src="{{blogs.blog_media.url}}" alt="image description" class="img-fluid rounded-lg">
+              
+              
             
       </div>
 

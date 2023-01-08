@@ -2,243 +2,203 @@
 {% load static %}
 
 
-{% block title %}Sign up - Applicants{% endblock title %}
+
+{% block title %}Sign up - Travaii {% endblock title %}
 
 
 {% block content %}
 <style>
-    .alert{
-        border-radius: 0;
-    }
-    .input-group{
-      border-radius: 0;
-    }
-    .errorlist{
-        
-        text-transform: capitalize;
-    }
-    #divbut{
-        position: relative;
-        margin-bottom: 35px;
-        
-    }
-    #toconfirm{
-        display: inline-block;
-        background: #fa7a24;
-        color: white;
-        padding: 8px;
-        left: 15%;
-        width: 70%;
-        border: none;
-        
-        
-        
-        
-    }
-
-    #mycon{
-        height: 80vh;
-        border: 1px solid black;
-        background: white;
-        
-    }
-    i{
-        color: red;
-       
-    }
-    form{
-        position: absolute;
-        display: inline-block;
-        width: 50%;
-        
-       left: 5px;
-       padding: 15px;
-    }
-    form input{
-        width: 50%;
-      
-    }
-  
-    label{
-        font-weight: 800;
-    }
-    @media screen and (max-width: 780px) {
-    #mycon{
-        margin-top: 0;
-
-        height: 100%;
-        padding: 50px;
-        
-    }
-  .myimage{
-    display: none;
-  }
-  form{
-    position: relative;
-    margin-top: 0;
-   
-    width: 100%;
+  .mb-3{
+    width: 500px;
 
   }
-}
-.privacy{
-  font-weight: 300;
-}
-@media (min-width: 781px) and (max-width: 992px){
-    
-    #mycon{
-        margin-top: 0;
-
-        height: 100%;
-        padding: 50px;
-        
-    }
-    form{
-    position: relative;
-    margin-top: 0;
-   
-    width: 50%;
+  label{
+    font-weight: 800;
+  }
+  @media (max-width:320px){
+    .mb-3{
+    width: 300px;
 
   }
-
-}
-@media (min-width: 781px) and (max-width: 3500px) {
-    #mycon{
-        margin-top: 0;
-
-        height: 100%;
-        padding: 50px;
-        
-    }
-    form{
-    position: relative;
-    margin-top: 0;
-   
-    width: 50%;
-
   }
-  form button{
-    left: 50px;
-  }
-    
-}
-#mycon{
-  margin-top: 100px;
-}
 </style>
-{% include 'parts/nav.html' %}
-<body >
-    
 
-<div id="mycon" class="position-relative container p-5">
+<body class="d-flex align-items-center min-h-100">
+  <!-- ========== HEADER ========== -->
+  <header id="header" class="navbar navbar-expand navbar-light navbar-absolute-top">
+    <div class="container-fluid">
+      <nav class="navbar-nav-wrap">
 
-        <form action="" method="post">
-            {% csrf_token %}
-            <h2 class="text-center">Job Seeker</h2>
-    <!-- Input Group -->
-<div class="mb-3 ">
-    <label for="inputGroupMergeFullName" class="form-label">Full name</label>
-  
-    <div class="input-group input-group-merge">
-      <div class="input-group-prepend input-group-text" id="inputGroupMergeFullNameAddOn">
-        <i class="bi-person"></i>
-      </div>
+        <!-- Default Logo -->
+        <a class="navbar-brand d-flex d-lg-none" href="{% url 'home' %}" aria-label="Front">
+          <div class="logo text-primary">Travaii</div>
+        </a>
 
-      {{form.full_name}}
+
+
+      </nav>
     </div>
-  </div>
-  <!-- End Input Group -->
-    <!-- Input Group -->
-    <div class="mb-3">
-        <label for="inputGroupMergeEmail" class="form-label">Username</label>
-      
-        <div class="input-group input-group-merge">
-          <div class="input-group-prepend input-group-text" id="inputGroupMergeEmailAddOn">
-            <i class="bi bi-person-circle"></i>
+  </header>
+  <!-- ========== END HEADER ========== -->
+
+  <!-- ========== MAIN CONTENT ========== -->
+  <main id="content" role="main" class="flex-grow-1">
+    <!-- Form -->
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-lg-5 col-xl-4 d-none d-lg-flex justify-content-center align-items-center min-vh-lg-100 position-relative bg-dark" style="background-image: url(/static/assets/svg/components/wave-pattern-light.svg);">
+          <div class="flex-grow-1 p-5">
+            <!-- Blockquote -->
+            <figure class="text-center">
+              <div class="mb-4">
+                <!--.
+                <img class="avatar avatar-xl avatar-4x3" src="{% static '/assets/svg/brands/mailchimp-white.svg' %}" alt="Logo">
+                .-->
+                <h1 class="text-white">Travaii</h1>
+              </div>
+
+              <blockquote class="blockquote blockquote-light"> “Think of many things, do one.”</blockquote>
+
+              
+            </figure>
+            <!-- End Blockquote -->
+
+
           </div>
-          
-          {{form.username}}
-        
         </div>
-      </div>
-      <!-- End Input Group -->
-  
-  <!-- Input Group -->
-  <div class="mb-3">
-    <label for="inputGroupMergeEmail" class="form-label">Email</label>
-  
-    <div class="input-group input-group-merge">
-      <div class="input-group-prepend input-group-text" id="inputGroupMergeEmailAddOn">
-        <i class="bi-envelope-open"></i>
-      </div>
-   
-      {{form.email}}
-    </div>
-  </div>
-  <!-- End Input Group -->
-  <!-- Input Group -->
-  <div class="mb-3">
-    <label for="inputGroupMergeEmail" class="form-label">Gender</label>
-  
-    <div class="input-group input-group-merge">
-      <div class="input-group-prepend input-group-text" id="inputGroupMergeEmailAddOn">
-        <i class="bi bi-gender-male"></i>  <i class="bi bi-gender-female"></i>
+        <!-- End Col -->
+
+        <div class="col-lg-7 col-xl-8 d-flex justify-content-center align-items-center min-vh-lg-100">
+          <div class="flex-grow-1 mx-auto" style="max-width: 28rem;">
+            <!-- Heading -->
+            <div class="text-center mt-9">
+              <h1 class="h2">Welcome to Travaii</h1>
+              <p>First step towards your job.</p>
             </div>
- 
-      {{form.gender}}
-    </div>
-  </div>
-  <!-- End Input Group -->
+            <!-- End Heading -->
+          
 
-    <!-- Input Group -->
-    <div class="mb-3">
-        <label for="inputGroupMergeEmail" class="form-label">Password</label>
-      
-        <div class="input-group input-group-merge">
-          <div class="input-group-prepend input-group-text" id="inputGroupMergeEmailAddOn">
-            <i class="bi bi-fingerprint"></i>
-          </div>
-     
-          {{form.password1}}
-        </div>
-      </div>
-      <!-- End Input Group -->
-         <!-- Input Group -->
-    <div class="mb-3">
-        <label for="inputGroupMergeEmail" class="form-label">Confirm Password</label>
-      
-        <div class="input-group input-group-merge">
-          <div class="input-group-prepend input-group-text" id="inputGroupMergeEmailAddOn">
-            <i class="bi bi-fingerprint"></i>
-          </div>
-          
-          {{form.password2}}
-        </div>
-      </div>
-      <div class="mb-3">
-        <label for="inputGroupMergeEmail" class="form-label">How did you know about us?</label>
-      
-        <div class="input-group input-group-merge">
-          <div class="input-group-prepend input-group-text" id="inputGroupMergeEmailAddOn">
-          </div>
-          
-          {{form.source}}
-        </div>
-      </div>
-      <p class="privacy">By pressing Create Account you agree with <a href="{% url 'privacyandpolicy' %}">Privacy & Policy</a></p>
-      {% if form.errors %}
-      <div class="alert alert-soft-danger" role="alert">
-        {{form.errors}}
-      </div>
-      {% endif %}
-      <!-- End Input Group -->
-      <div id="divbut" class="input-group-prepend">
-      <button id="toconfirm" type="submit" class="position-absolute">Create an Account</button>
-    </div>
+             <!-- Form -->
+             <form class="js-validate needs-validation" novalidate method="post">
+                {% csrf_token %}
+                <!-- Form -->
+                <div class="mb-3">
+                  <label class="form-label" for="signupModalFormSignupEmail">Full Name</label>
+                  {{form.full_name}}
+                  <span class="invalid-feedback">Please enter your full name</span>
+                  {% if form.full_name.errors %}
+                  <span class="text-danger">{{form.full_name.errors}}</span>
+                  {% endif %}
+                </div>
+                <!-- End Form -->
+  
+                <!-- Form -->
+                <div class="mb-3">
+                  <label class="form-label" for="signupModalFormSignupUsername">Username</label>
+  
+                  {{form.username}}
+                  <span class="invalid-feedback">Please enter your username</span>
+                  {% if form.username.errors %}
+                  <span class="text-danger">{{form.username.errors}}</span>
+                  {% endif %}
+                </div>
+                <!-- End Form -->
+  
+                <!-- Form -->
+                <div class="mb-3">
+                  <label class="form-label" for="signupModalFormSignupEmail">Email</label>
+  
+                 
+                  {{form.email}}
+                  <span class="invalid-feedback">Please enter your email</span>
+                  {% if form.email.errors %}
+                  <span class="text-danger">{{form.email.errors}}</span>
+                  {% endif %}
+  
+         
+                </div>
+                <!-- End Form -->
+                     <!-- Form -->
+                     <div class="mb-3">
+                        <label class="form-label" for="signupModalFormSignupEmail">Gender</label>
+        
+                       
+                        {{form.gender}}
+                        <span class="invalid-feedback">Please enter your gender</span>
+                        {% if form.gender.errors %}
+                        <span class="text-danger">{{form.gender.errors}}</span>
+                        {% endif %}
+        
+               
+                      </div>
+                      <!-- End Form -->
+                           <!-- Form -->
+                <div class="mb-3">
+                    <label class="form-label" for="signupModalFormSignupEmail">Password</label>
     
-</form>
-    <img src="{% static 'assets/svg/brands/wfo.jpg' %}" class="myimage position-absolute h-100 top-0 end-0 w-50 display-inline-block " alt="" >
+                    {{form.password1}}
+                    <span class="invalid-feedback">Your password must include 8+ characters</span>
+                    {% if form.password1.errors %}
+                    <span class="text-danger">{{form.password1.errors}}</span>
+                    {% endif %}
+    
+           
+                  </div>
+                  <!-- End Form -->
+              <!-- Form -->
+              <div class="mb-3">
+                <label class="form-label" for="signupModalFormSignupEmail">Confirm Password</label>
 
-</div>
+                {{form.password2}}
+                  <span class="invalid-feedback">Password does not match the confirm password</span>
+                  {% if form.password2.errors %}
+                  <span class="text-danger">{{form.password2.errors}}</span>
+                  {% endif %}
+
+       
+              </div>
+              <!-- End Form -->
+              <div class="mb-3">
+                <label class="form-label" for="signupModalFormSignupEmail">How did you know about us?</label>
+
+                {{form.source}}
+                  <span class="invalid-feedback">Please help us by choosing an option</span>
+                  {% if form.source.errors %}
+                  <span class="text-danger">{{form.source.errors}}</span>
+                  {% endif %}
+
+       
+              </div>
+              <!-- End Form -->
+
+                  <!-- Check -->
+            <div class="form-check mb-4">
+                <input type="checkbox" class="form-check-input" id="signupHeroFormPrivacyCheckEg2" name="signupFormPrivacyCheck" required>
+                <label class="form-check-label small" for="signupHeroFormPrivacyCheckEg2"> By submitting this form I have read and acknowledged the <a href="{% url 'privacyandpolicy' %}">Privacy Policy</a></label>
+                <span class="invalid-feedback">Please accept our Privacy Policy.</span>
+              </div>
+              <!-- End Check -->
+                
+  
+                <div class="d-grid mb-3">
+                  <button type="submit" class="btn btn-primary btn-lg">Sign up</button>
+                </div>
+  
+                <div class="text-center">
+                  <p>Already have an account? <a class="link" href="{% url 'log_in' %}">Log in here</a></p>
+                </div>
+              </form>
+              <!-- End Form -->
+          </div>
+        </div>
+        <!-- End Col -->
+      </div>
+      <!-- End Row -->
+    </div>
+    <!-- End Form -->
+  </main>
+
 </body>
-{% endblock %}
+
+
+{% endblock content %}
