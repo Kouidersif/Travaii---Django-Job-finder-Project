@@ -69,6 +69,35 @@
                     <div class="w-lg-65 mx-lg-auto">
                     
               {{ blogs.content|safe }}
+              <hr>
+              <!-- CTA -->
+<div class="container">
+  <div class="w-lg-75 mx-lg-auto">
+    <div class="card card-sm overflow-hidden">
+      <!-- Card -->
+      <div class="card-body">
+        <div class="row justify-content-md-start align-items-md-center text-center text-md-start">
+          <div class="col-md offset-md-3 mb-3 mb-md-0">
+            <h4 class="card-title">Find your dream job on our website!</h4>
+          </div>
+
+          <div class="col-md-auto">
+            <a class="btn btn-primary btn-transition" href="{% url 'home' %}">Explore Jobs</a>
+          </div>
+        </div>
+
+        <!-- SVG Shape -->
+        <figure class="w-25 d-none d-md-block position-absolute top-0 start-0 mt-n2">
+          <img class="card-img" src="{% static '/assets/svg/illustrations/apps.svg' %}" alt="Image Description">
+        </figure>
+        <!-- End SVG Shape -->
+      </div>
+      <!-- End Card -->
+    </div>
+  </div>
+</div>
+<!-- End CTA -->
+              <hr>
               <img src="{{blogs.blog_media.url}}" alt="image description" class="img-fluid rounded-lg">
               
               

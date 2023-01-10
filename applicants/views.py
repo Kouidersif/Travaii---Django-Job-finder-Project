@@ -188,19 +188,9 @@ class DeleteSkill(generic.DeleteView):
 @login_required
 @notLogged
 def candidates(request):
-    try:
-        stripe_customer = Customer.objects.get(user=request.user)
-        stripe.api_key = settings.STRIPE_SECRET_KEY
-        subscription = stripe.Subscription.retrieve(stripe_customer.stripe_subscription_id)
-        product = stripe.Product.retrieve(subscription.plan.product)
-        end_date = datetime.datetime.fromtimestamp(subscription.current_period_end)
-        candidates=ApplicantProfile.objects.filter(is_public='Anyone')
-        candid = CandidateFilter(request.GET, queryset=candidates)
-        
-        
-    except Customer.DoesNotExist:
-        return render(request, 'company/upgrade_to_see_candidates.html' )
-    context={'candidates':candidates, 'candid':candid, 'subscription':subscription, 'product':product, 'end_date':end_date}
+    candidates=ApplicantProfile.objects.filter(is_public='Anyone').order_by('-applicant_cv')
+    candid = CandidateFilter(request.GET, queryset=candidates)
+    context={'candidates':candidates, 'candid':candid}
     return render(request, 'users/candidates.html', context)
     
 

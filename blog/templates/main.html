@@ -38,7 +38,7 @@
     <!-- Swiper Main Slider -->
   <div class="js-swiper-blog-journal-hero swiper">
     <div class="swiper-wrapper">
-        {% for blog in blogs %}
+        {% for blog in blogs|slice:"3" %}
       <div class="js-swiper-slide-preload swiper-slide d-flex gradient-x-overlay-sm-dark bg-img-start" style="background-image: url({{blog.blog_media.url}}); min-height: 40rem;">
         <!-- Container -->
         <div class="container d-flex align-items-center" style="min-height: 40rem;">
@@ -87,7 +87,7 @@
     <div class="translate-middle-y position-absolute top-50 end-0">
       <div class="js-swiper-blog-journal-hero-thumbs swiper" style="opacity:0;max-width: 13rem;">
         <div class="swiper-wrapper">
-            {% for blog in blogs %}
+            {% for blog in blogs|slice:"3" %}
           <!-- Slide -->
           <div class="swiper-slide swiper-pagination-progress swiper-pagination-progress-light py-3">
             <p class="text-white">{{blog.title|truncatechars:20}}</p>
