@@ -143,7 +143,7 @@
                           {% if candidate.profile_pic %}
                           <img class="avatar avatar-sm avatar-4x3" src="{{candidate.profile_pic.url}}" alt="Image Description">
                           {% else %}
-                          <img class="avatar avatar-sm avatar-4x3" src="https://wallpapers.com/images/featured/4co57dtwk64fb7lv.jpg" alt="Image Description">
+                          <img class="avatar avatar-sm avatar-4x3" src="https://media.istockphoto.com/id/1313958250/vector/user-avatar-profile-icon-black-vector-illustration-on-transparent-background-website-or-app.jpg?s=612x612&w=0&k=20&c=oGGyxXc1jaRAopcs4ZEkZ1LbtAoQwKp4Q0niLvJNk-o=" alt="Image Description">
                           {% endif %}
                         </div>
                         <div class="flex-grow-1 ms-3">
@@ -171,6 +171,8 @@
                 <div class="card-footer pt-0">
                   <ul class="list-inline list-separator small text-body">
                     <li class="list-inline-item"><i class="bi bi-geo-alt-fill"></i> {{candidate.state}}</li>
+                    <li class="list-inline-item"><a href="#" target="_blank" rel="noopener noreferrer" class="text-dark">{{candidate.owner.gender}}</a></li>
+
                     <li class="list-inline-item">
                       {% if request.user.customer %}
                       {% if candidate.applicant_cv  %}
