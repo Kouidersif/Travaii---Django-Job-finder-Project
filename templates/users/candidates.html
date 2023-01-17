@@ -181,11 +181,7 @@
                       <p>No Resume</p>
                       {% endif %}
                       {% else %}
-                      <!-- Button trigger modal -->
-                      <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModalCenter">
-                        View Resume
-                      </button>
-                      <!-- End Button trigger modal -->
+                      <a href="{% url 'subscription' %}" target="_blank" rel="noopener noreferrer">View Resume</a>
                       {% endif %}
                     </li>
                     <li class="list-inline-item"><a href="{% url 'profile' candidate.owner.username %}" target="_blank" rel="noopener noreferrer">View Profile</a></li>
@@ -211,29 +207,12 @@
       <!-- End Row -->
     </div>
     <!-- End Card Grid -->
+
+<!-- Modal -->
   </main>
   <!-- ========== END MAIN CONTENT ========== -->
 
 
-<!-- Modal -->
-<div id="exampleModalCenteredScrollable" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenteredScrollableTitle" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalCenteredScrollableTitle">Accessible for Premium Companies</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-      <div class="modal-body">
-        <p>Want to access this exclusive feature? Upgrade your subscription now and get access to this and many more benefits. Don't miss out, upgrade today!</p>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-white" data-bs-dismiss="modal">Close</button>
-        <a href="{% url 'subscription' %}" class="btn btn-primary">Upgrade</a>
-      </div>
-    </div>
-  </div>
-</div>
-<!-- End Modal -->
 <script>
   document.getElementById("id_desired_industry").setAttribute("class", "form-select form-select-md");
   document.getElementById("id_desired_job_type").setAttribute("class", "js-select form-select form-select-md");

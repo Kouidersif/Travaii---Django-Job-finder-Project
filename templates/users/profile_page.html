@@ -133,9 +133,11 @@
                   {% if applicant.desired_job %}
                   <p>{{applicant.desired_job}}</p>
                   {% else %}
+                  {% if applicant.owner == request.user %}
                   <div class="alert alert-soft-primary" role="alert">
-                    Applicant has not specified yet
+                    <h4 class="text-primary"> <a href="{% url 'applicant_info' request.user.id %}">Add</a> </h4>
                   </div>
+                  {% endif %}
                   {% endif %}
                 </div>
                 
@@ -145,9 +147,11 @@
                   {% if applicant.desired_job_type %}
                   <p>{{applicant.desired_job_type}}</p>
                   {% else %}
+                  {% if applicant.owner == request.user %}
                   <div class="alert alert-soft-primary" role="alert">
-                    Applicant has not specified yet
+                    <h4 class="text-primary"> <a href="{% url 'applicant_info' request.user.id %}">Add</a> </h4>
                   </div>
+                  {% endif %}
                   {% endif %}
                 </div>
               </div>
@@ -159,9 +163,11 @@
                   {% if applicant.desired_shift %}
                   <p>{{applicant.desired_shift}}</p>
                   {% else %}
+                  {% if applicant.owner == request.user %}
                   <div class="alert alert-soft-primary" role="alert">
-                    Applicant has not specified yet
+                    <h4 class="text-primary"> <a href="{% url 'applicant_info' request.user.id %}">Add</a> </h4>
                   </div>
+                  {% endif %}
                   {% endif %}
                 </div>
               </div>
@@ -208,7 +214,8 @@
             <!-- End Step -->
             {% else %}
             <div class="alert alert-soft-primary" role="alert">
-              Applicant has not specified yet
+              <h4 class="text-primary"> <a href="{% url 'show_experience' %}">Add</a> </h4>
+              
             </div>
             {% endif %}
           </div>
