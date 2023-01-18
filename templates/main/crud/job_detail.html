@@ -150,9 +150,10 @@
               {{work.description|safe}}
             </div>
             {% endfor %}
-            {% if request.user.is_applicant %}
+              
             <div class="d-grid mt-7">
-                
+              {% if request.user.is_authenticated %}
+              {% if request.user.is_applicant %}
                 {% for work in job %}
                 {% if applying %}
                 <a class="btn btn-success btn-transition" href="{% url 'my_applications' request.user.id %}">you have already applied - Press to check status</a>
@@ -169,27 +170,22 @@
                 </div>
                
                 {% else %}
-                {% if not request.user.applicantprofile.applicant_cv %}
-                <div class="alert alert-soft-danger" role="alert">
-                  <div class="d-flex">
-                    <div class="flex-shrink-0">
-                      <i class="bi-exclamation-triangle-fill"></i>
-                    </div>
-                    <div class="flex-grow-1 ms-2">
-                      Information: You have not uploaded your resume, your application may not be considered <a href="{% url 'applicant_info' request.user.id %}" ><strong class="text-primary">Upload Resume</strong> </a>  
-                    </div>
-                  </div>
-                </div>
-                {% endif %}
+                
               <a class="btn btn-primary btn-transition" href="{% url 'apply_for' work.id %}">Apply for this job</a>
               {% endif %}
+              
               {% endfor %}
               
-
+              
+              {% endif %}
+              {% else %}
+              <a class="btn btn-primary btn-transition" href="{% url 'sign_up' %}">Apply for this job</a>
+              {% endif %}
             </div>
 
             
-            {% endif %}
+            
+            
           </div>
         </div>
         <!-- Content -->
