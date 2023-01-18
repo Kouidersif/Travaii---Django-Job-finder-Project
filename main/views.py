@@ -495,4 +495,4 @@ def ApplyList(request):
 
 
 def no_permission(request):
-    return render(request, 'error_page/Error.html')
+    return render(request, 'error_page/error.html')
