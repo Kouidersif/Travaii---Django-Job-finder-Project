@@ -15,7 +15,7 @@
     <main id="content" role="main">
         <!-- Page Header -->
         {% for work in job %}
-        <div class="container content-space-t-2">
+        <div class="container content-space-t-2 mt-5">
           <div class="w-lg-75 mx-lg-auto">
             <div class="page-header">
               <!-- Media -->
@@ -66,6 +66,11 @@
                   <ul class="list-inline list-separator d-flex align-items-center mb-2">
                     <li class="list-inline-item">
                       <a class="link" href="{% url 'company_Profile' work.publisher.id  %}">{{work.publisher.companyprofile.company_name}}</a>
+                      {% if work.publisher.customer and work.publisher.customer.selected_membership == 'Mid-market enterprises' %}
+                      <i class="bi bi-patch-check-fill text-primary" title="Premium Account"></i> 
+                      {% elif work.publisher.customer and work.publisher.customer.selected_membership == 'Large enterprise' %}     
+                      <i class="bi bi-patch-check-fill text-primary" title="Premium Account"></i> 
+                      {% endif %}
                     </li>
                   </ul>
     
