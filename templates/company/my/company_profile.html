@@ -301,7 +301,7 @@
                   <a class="text-dark" href="{% url 'detail_job' job.id %}">{{job.position}}</a>
                 </h3>
 
-                <span class="d-block small text-body mb-1">{{job.salary_currency}} {{job.salary}}</span>
+                <span class="d-block small text-body mb-1">{{job.salary_currency}} {{job.salary_from}} - {{job.salary_to}}</span>
                 {% if job.work_from %}
                 <span class="badge bg-soft-info text-info me-2">
                   <span class="legend-indicator bg-info"></span>{{job.work_from}}

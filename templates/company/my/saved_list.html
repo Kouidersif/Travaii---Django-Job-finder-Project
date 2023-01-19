@@ -1,11 +1,12 @@
 {% extends 'base.html' %}
 {% load static %}
+{% block title %}Saved List {% endblock title %}
 
 {% block content %}
 {% include 'parts/nav.html' %}
-<div class="container mt-9">
+<div class="container" style="margin-top: 100px;">
 <div class="card mb-10 rounded-0">
-    <div class="card-header rounded-0" style="background-image: radial-gradient( circle farthest-corner at 10% 20%,  rgba(37,145,251,0.98) 0.1%, rgba(0,7,128,1) 99.8% );">
+    <div class="card-header rounded-2" style="background: #b5c6e0;">
       <h5 class="card-header-title text-light">Applicants</h5>
     </div>
   
@@ -47,15 +48,17 @@
             </td>
             <td>
                 <a href="{% url 'profile' applicant.owner.username %}" target="_blank" rel="noopener noreferrer">View Profile</a> |
+                {% if request.user.customer %}
                 {% if candidate.applicant_cv  %}
                 <a href="{{applicant.applicant_cv.url}}" target="_blank" rel="noopener noreferrer">View Resume</a>
+                {% endif %}
                 {% endif %}
             </td>
           </tr>
           {% empty %}
            <td>
             <div class="alert alert-soft-primary position-relative text-center" role="alert" style="margin-left: 50%;margin-bottom:50px;">
-              For now there are no Applicants yet!
+              You have no saved profiles yet...!
             </div>
             <div class="m">
               <img src="{% static 'assets/svg/illustrations/oc-building-apps.svg' %}" class="img-fluid" alt="Error" style="margin-left:25%;">
