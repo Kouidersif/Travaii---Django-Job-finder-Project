@@ -96,7 +96,11 @@
           </div>
 
           <div class="col-md-auto">
+            {% if request.user.is_authenticated and request.user.is_company %}
+            <a class="btn btn-primary btn-transition" href="{% url 'CompanyLandingPage' %}">Get started <i class="bi bi-chevron-right"></i></a>
+            {% else %}
             <a class="btn btn-primary btn-transition" href="{% url 'sign_up_company' %}">Get started <i class="bi bi-chevron-right"></i></a>
+            {% endif %}
           </div>
         </div>
 
