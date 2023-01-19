@@ -38,6 +38,7 @@ class ProName(models.Model):
     product_ids= models.CharField(max_length=150)
     price_per_year = models.IntegerField()
     price_year_id_code= models.CharField(max_length=150)
+    
     #year_description= models.CharField(max_length=200)
     ####
     price_per_month= models.IntegerField()
