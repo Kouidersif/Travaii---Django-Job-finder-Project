@@ -123,7 +123,7 @@ def Company_setup(request):
 def Setup_Profile(request, pk):
     data = User.objects.get(id=pk)
     co_data= CompanyProfile.objects.filter(owner__id=pk)
-    publisher= Jobs.objects.filter(publisher__id=pk)
+    publisher= Jobs.objects.filter(publisher__id=pk, is_published=True)
     app= Applying.objects.filter(id=pk)
     photos= Photos_c.objects.filter(photo_publisher__id= pk, is_public=True)
     
