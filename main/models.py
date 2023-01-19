@@ -84,7 +84,7 @@ class Jobs(models.Model):
     position = models.CharField(max_length=200,null=True, blank=True)
     work_from= models.ForeignKey('Work_from', on_delete=models.SET_NULL,related_name='workplace', null=True, blank=True)
     job_type= models.ForeignKey('Job_type', on_delete=models.SET_NULL,related_name='typeofjob', null=True, blank=True)
-    description = RichTextField(config_name='awesome_ckeditor')
+    description = models.TextField()
     tasks= models.TextField(max_length=300,  null=True, blank=True)
     num_people= models.CharField(max_length=25,choices=people_needd, null=True, blank=True )
     is_urgent= models.BooleanField(default=False)
