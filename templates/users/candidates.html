@@ -121,15 +121,15 @@
         <div class="col-lg-9">
           <div class="row align-items-center mb-5">
             <div class="col-sm mb-3 mb-sm-0">
-              <h3 class="mb-0">We are Trudly Proud of {{candid.qs.count}} Talents</h3>
+              <h3 class="mb-0">We are Truly Proud of {{candid.qs.count}} Talents</h3>
             </div>
 
           </div>
           <!-- End Row -->
 
           <div class="row row-cols-1 row-cols-sm-2 mb-5">
-          {% if candid.qs %}
-          {% for candidate in candid.qs %}
+          {% if page_objects %}
+          {% for candidate in page_objects %}
             <div class="col mb-5">
               <!-- Card -->
               <div class="card card-bordered h-100">
@@ -143,7 +143,7 @@
                           {% if candidate.profile_pic %}
                           <img class="avatar avatar-sm avatar-4x3" src="{{candidate.profile_pic.url}}" alt="Image Description">
                           {% else %}
-                          <img class="avatar avatar-sm avatar-4x3" src="https://media.istockphoto.com/id/1313958250/vector/user-avatar-profile-icon-black-vector-illustration-on-transparent-background-website-or-app.jpg?s=612x612&w=0&k=20&c=oGGyxXc1jaRAopcs4ZEkZ1LbtAoQwKp4Q0niLvJNk-o=" alt="Image Description">
+                          <img class="avatar avatar-sm avatar-4x3" src="https://www.pngall.com/wp-content/uploads/5/User-Profile-PNG-Image.png" alt="Image Description">
                           {% endif %}
                         </div>
                         <div class="flex-grow-1 ms-3">
@@ -201,6 +201,30 @@
             {% endif %}
           </div>
           <!-- End Row -->
+                    <!-- Pagination -->
+          <nav aria-label="Page navigation example">
+          
+            <ul class="pagination justify-content-center">
+              <li class="page-item">
+                {% if page_objects.has_previous %}
+                <a href="?page={{ page_objects.previous_page_number }}" class="page-link" tabindex="-1">Previous</a>
+                {% endif %}
+              </li>
+              {% for page in paginator.page_range|slice:"10" %}
+              {% if page == page_number %}
+              <li class="page-item"><a class="page-link" href="#">{{ page }}</a></li>
+              {% else %}
+              <li class="page-item"><a class="page-link" href="?page={{ page }}">{{ page }}</a></li>
+              {% endif %}
+              {% endfor %}
+              <li class="page-item">
+                {% if page_objects.has_next %}
+                <a class="page-link" href="?page={{ page_objects.next_page_number }}">Next</a>
+                {% endif %}
+              </li>
+            </ul>
+          </nav>
+          <!-- End Pagination -->
         </div>
         <!-- End Col -->
       </div>

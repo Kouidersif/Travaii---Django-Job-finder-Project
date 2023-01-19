@@ -12,6 +12,7 @@ from django.views import generic
 from main.forms import *
 from .filtering import *
 from django.contrib.auth.decorators import login_required
+from django.core.paginator import Paginator
 from subscriptions.models import Customer
 from django.conf import settings
 import stripe
@@ -190,7 +191,11 @@ class DeleteSkill(generic.DeleteView):
 def candidates(request):
     candidates=ApplicantProfile.objects.filter(is_public='Anyone').order_by('-applicant_cv')
     candid = CandidateFilter(request.GET, queryset=candidates)
-    context={'candidates':candidates, 'candid':candid}
+    filtered = candid.qs
+    paginator = Paginator(filtered, 10)
+    page_number = request.GET.get('page', 1)
+    page_objects = paginator.page(page_number)
+    context={'candidates':candidates, 'candid':candid, 'paginator':paginator,'page_number':page_number,'page_objects':page_objects}
     return render(request, 'users/candidates.html', context)
     
 
