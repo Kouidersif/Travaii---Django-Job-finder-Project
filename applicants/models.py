@@ -49,12 +49,12 @@ class ApplicantProfile(models.Model):
     save_applicant= models.ManyToManyField(User, related_name='save_applicant', blank=True)
     github= models.URLField(blank=True, null=True, unique=True)
     p_website= models.URLField(blank=True, null=True, unique=True)
-    desired_job= models.ForeignKey(desired_Position, related_name='applicant_job', on_delete=models.SET_NULL, null=True)
-    desired_industry= models.ForeignKey(Category, on_delete=models.SET_NULL, null=True, related_name='applicant_job_industry')
+    desired_job= models.ForeignKey(desired_Position, related_name='applicant_job',blank=True, on_delete=models.SET_NULL, null=True)
+    desired_industry= models.ForeignKey(Category, on_delete=models.SET_NULL, null=True,blank=True, related_name='applicant_job_industry')
     desired_job_type= models.ForeignKey(Job_type, on_delete=models.SET_NULL, related_name='applicant_job_type', null=True,blank=True)
     desired_shift= models.ForeignKey(Shifts,on_delete=models.SET_NULL, null=True,related_name='applicant_job_shift', blank=True)
     applicant_cv= models.FileField(blank=True, upload_to='resume/applicant/%y/%m/%d',
-    validators=[FileExtensionValidator( ['pdf', 'jpg', 'jpeg', 'png'] ) ]
+    validators=[FileExtensionValidator( ['pdf', 'jpg', 'jpeg', 'png', 'docx'] ) ]
     )
     birthday= models.DateField()
     about= models.TextField(null=True, blank=True)
