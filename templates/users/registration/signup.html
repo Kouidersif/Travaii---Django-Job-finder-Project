@@ -7,21 +7,7 @@
 
 
 {% block content %}
-<style>
-  .mb-3{
-    width: 500px;
 
-  }
-  label{
-    font-weight: 800;
-  }
-  @media (max-width:320px){
-    .mb-3{
-    width: 300px;
-
-  }
-  }
-</style>
 
 <body class="d-flex align-items-center min-h-100">
   <!-- ========== HEADER ========== -->
@@ -157,19 +143,7 @@
 
        
               </div>
-              <!-- End Form -->
-              <div class="mb-3">
-                <label class="form-label" for="signupModalFormSignupEmail">How did you know about us?</label>
-
-                {{form.source}}
-                  <span class="invalid-feedback">Please help us by choosing an option</span>
-                  {% if form.source.errors %}
-                  <span class="text-danger">{{form.source.errors}}</span>
-                  {% endif %}
-
-       
-              </div>
-              <!-- End Form -->
+             
 
                   <!-- Check -->
             <div class="form-check mb-4">

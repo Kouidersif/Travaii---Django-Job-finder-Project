@@ -163,7 +163,7 @@ class UserUpdateForm(UserChangeForm):
 class ApplicantSignUpForm(UserCreationForm):
     class Meta:
         model = User
-        fields= ['full_name', 'username', 'email',  'gender', 'password1', 'password2', 'source', 'phone_number']
+        fields= ['full_name', 'username', 'email',  'gender', 'password1', 'password2', 'phone_number']
 
     def __init__(self, *args, **kwargs):
         super(ApplicantSignUpForm, self).__init__(*args, **kwargs)
@@ -204,8 +204,6 @@ class ApplicantSignUpForm(UserCreationForm):
         self.fields['gender'].widget.attrs['class'] = 'form-select'
         self.fields['gender'].widget.attrs['placeholder'] = 'Gender'
 
-        self.fields['source'].widget.attrs['class'] = 'form-select'
-        self.fields['source'].widget.attrs['placeholder'] = 'source'
         self.fields['phone_number'].widget.attrs['class']= 'js-input-mask form-control'
         self.fields['phone_number'].widget.attrs['placeholder']='xxx-xxx-xx-xx'
         
