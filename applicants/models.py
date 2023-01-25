@@ -90,6 +90,6 @@ class Delete_account_Feedback(models.Model):
 
 class NewsLetter(models.Model):
     email_field = models.EmailField()
-    job_category = models.ForeignKey(desired_Position, on_delete=models.SET_NULL, null=True)
+    job_category = models.CharField(max_length=300, null=True, blank = True)
     def __str__(self):
         return str(self.job_category) or (self.email_field) or ''

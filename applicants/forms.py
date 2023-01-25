@@ -21,8 +21,8 @@ class NewsLetterForm(ModelForm):
         self.fields['email_field'].widget.attrs['class'] = 'form-control'
         self.fields['email_field'].widget.attrs['type'] = 'email'
         self.fields['email_field'].widget.attrs['placeholder'] = 'Enter your email'
-        self.fields['job_category'].widget.attrs['class'] = 'js-select form-select-md'
-        self.fields['job_category'].widget.attrs['placeholder'] = 'choose your dream job'
+        self.fields['job_category'].widget.attrs['class'] = 'form-control'
+        self.fields['job_category'].widget.attrs['placeholder'] = 'Enter your job'
         
 
 
