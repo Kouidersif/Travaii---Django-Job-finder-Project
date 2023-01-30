@@ -30,11 +30,10 @@ from django.core.paginator import Paginator
 import random
 from django.utils import timezone
 from applicants.forms import NewsLetterForm
-
+import geoip2.database
 
 
 #Create Trial 
-
 def CreateTrial(request):
     if request.user.is_authenticated and request.user.is_superuser:
         if request.method == 'POST':
@@ -348,9 +347,15 @@ def Test(request):
     #message.send()
     #test
     #return render(request, 'test.html')
-    return HttpResponse('Permission error')
+    user_ip_address = request.META.get('HTTP_X_FORWARDED_FOR')
+    if user_ip_address:
+        ip = user_ip_address.split(',')[0]
+    else:
+        ip = request.META.get('REMOTE_ADDR')
+    with geoip2.database.Reader('GeoLite2-City.mmdb') as reader:
+        response = reader.city(ip)
+    return HttpResponse(response)
     
-
 
 
 def ConfirmEmailPage(request):

@@ -25,7 +25,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = config('NOT_SECRET')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 ALLOWED_HOSTS = ['https//travaii.com', 'https//travaii.com', '192.169.177.207', 'http://192.169.177.207', 'travaii.com', 'www.travaii.com']
 CSRF_TRUSTED_ORIGINS = ['https://*.travaii.com','https://*.127.0.0.1']
@@ -52,6 +52,7 @@ INSTALLED_APPS = [
     'ckeditor',
     'mathfilters',
     'blog',
+    'geoip2',
 ]
 
 MIDDLEWARE = [
