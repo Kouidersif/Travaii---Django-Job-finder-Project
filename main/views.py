@@ -339,22 +339,23 @@ def Search_for(request):
 
 
 def Test(request):
-    #mail_subject = 'hello'
-    #html_message= 'hello testing'
-    #from_email='no-reply@travaii.com'
-    #message = EmailMessage(mail_subject, html_message,from_email, to=['islamkouider61@gmail.com'])
-    #message.content_subtype = 'html' # this is required because there is no plain text email version
-    #message.send()
+    mail_subject = 'hello'
+    html_message= 'hello testing'
+    from_email='support@travaii.com'
+    message = EmailMessage(mail_subject, html_message,from_email, to=['kouidersif04@gmail.com'])
+    message.content_subtype = 'html' # this is required because there is no plain text email version
+    message.send()
+    return HttpResponse('dibe')
     #test
     #return render(request, 'test.html')
-    user_ip_address = request.META.get('HTTP_X_FORWARDED_FOR')
-    if user_ip_address:
-        ip = user_ip_address.split(',')[0]
-    else:
-        ip = request.META.get('REMOTE_ADDR')
-    with geoip2.database.Reader('GeoLite2-City.mmdb') as reader:
-        response = reader.city(ip)
-    return HttpResponse(response)
+    # user_ip_address = request.META.get('HTTP_X_FORWARDED_FOR')
+    # if user_ip_address:
+    #     ip = user_ip_address.split(',')[0]
+    # else:
+    #     ip = request.META.get('REMOTE_ADDR')
+    # with geoip2.database.Reader('GeoLite2-City.mmdb') as reader:
+    #     response = reader.city(ip)
+    # return HttpResponse(response)
     
 
 

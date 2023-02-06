@@ -52,7 +52,7 @@ def activate(request, uidb64, token):
 def Confirm_message(request, user, to_email):
     try:
         mail_subject = 'Please activate your Account'
-        from_email='no-reply@travaii.com'
+        from_email='support@travaii.com'
         templ = render_to_string('users/welcome_email.html', {
             'name':request.user.full_name,
             'domain':get_current_site(request).domain,

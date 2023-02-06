@@ -26,7 +26,9 @@ from applicants.views import Confirm_message
 import random
 from main.models import Get_industry, number_user_facebook
 from main.forms import ContactForm
-
+from django.core.mail import EmailMessage
+import time
+from datetime import timedelta
 from django.core.paginator import Paginator
 #Your password can’t be too similar to your other personal information.
 #Your password must contain at least 8 characters.
@@ -103,6 +105,35 @@ def Company_setup(request):
             company.owner= request.user   
             company.is_profile_completed = True       
             company.save()
+
+            customer = stripe.Customer.create(
+                        email=request.user.email,
+                        name = request.user.full_name,
+                        )
+            end_date = datetime.date.today() + timedelta(days=30)
+            unix_time = int(time.mktime(end_date.timetuple()))
+            subscription = stripe.Subscription.create(
+            customer=customer.id,
+            items=[{"price": 'price_1MRyVAKORmC2RvgXFQV3ZIIM'}],
+            trial_end=unix_time,
+            )
+            Customer.objects.create(
+                user = request.user,
+                stripeid = customer.id,
+                stripe_subscription_id = subscription.id,
+                membership = True,
+                selected_membership = 'Large enterprise',
+            )
+            mail_subject = 'Free Trial Subscription Activated - Travaii'
+            html_message = 'Hello!<br><br>'
+            html_message += f'Hi {request.user.full_name} <br> We are excited to inform you that you have received a free trial subscription to our platform. During this trial period, you can start sharing job openings for free.<br><br>'
+            html_message += 'Thank you for choosing us!<br><br>'
+            html_message += 'Best regards,<br>The Travaii Team'
+            from_email= 'support@travaii.com'
+            message = EmailMessage(mail_subject, html_message,from_email, to=[request.user.email])
+            message.content_subtype = 'html' # this is required because there is no plain text email version
+            message.send()
+
             try:
                 company_input = request.POST.get('industry')
                 Get_industry.objects.create(

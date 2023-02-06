@@ -79,7 +79,7 @@
               <label class="form-label" for="signupHeroFormWorkEmail">Email address</label>
               {{form.email}}
               <span class="invalid-feedback">Please enter your email address</span>
-              {% if form.username.errors %}
+              {% if form.email.errors %}
                   <span class="text-danger">{{form.email.errors}}</span>
                   {% endif %}
             </div>

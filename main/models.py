@@ -208,6 +208,7 @@ class Applying(models.Model):
 
     def __str__(self):
         return self.job.position
+        
 
 
 class ContactUs(models.Model):
