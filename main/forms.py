@@ -4,6 +4,10 @@ from django import forms
 from django.contrib.auth.forms import PasswordChangeForm
 from django.contrib.auth.forms import AuthenticationForm
 from .models import User
+from captcha.fields import ReCaptchaField
+
+
+
 
 class PwdChangingForm(PasswordChangeForm):
     class Meta:
@@ -71,6 +75,7 @@ class JobForm(ModelForm):
 
 
 class ContactForm(ModelForm):
+    captcha = ReCaptchaField()
     class Meta:
         model = ContactUs
         fields= '__all__'

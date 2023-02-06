@@ -53,6 +53,7 @@ INSTALLED_APPS = [
     'mathfilters',
     'blog',
     'geoip2',
+    'captcha',
 ]
 
 MIDDLEWARE = [
@@ -265,3 +266,7 @@ MAX_UPLOAD_SIZE = 2621440
 LOGIN_REDIRECT_URL = 'home' 
 
 LOGIN_URL = 'log_in'
+
+
+RECAPTCHA_PUBLIC_KEY = '6LfnTFokAAAAAPdlwtGq20ksNoaA2rIlxCjIruMI'
+RECAPTCHA_PRIVATE_KEY = '6LfnTFokAAAAAICX3t4kX7Cj1QtsoPCj_PIaeocr'
