@@ -48,9 +48,12 @@
                 {% csrf_token %}
                 
                 <h6>Make decision</h6>
-                         {{form.request}}
+                {{form.request}}
+                <hr>
+                <h6>Leave a meessage (Optional)</h6>
+                {{form.response_message}}
 <hr>
-                <p>If you are approving {{object.sender.full_name}}, please consider that he gets a notification and will be immediately able to see the decision</p>
+<p>If you are making an approval, please keep in mind that the applicant will receive a notification and have immediate visibility of the response.</p>
        
        
         <div class="modal-footer">

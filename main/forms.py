@@ -90,11 +90,11 @@ class ContactForm(ModelForm):
 class EditApplyForm(ModelForm):
     class Meta:
         model = Applying
-        fields= ['request']
+        fields= ['request', 'response_message']
         widgets= {
         'request': forms.Select(attrs={'class':'form-select'}),
+        'response_message': forms.Textarea(attrs={'class':'form-control', 'placeholder':"Do you have any message or information to share with the applicant?"}),
         }
-
 
 
 class DateInput(forms.DateInput):

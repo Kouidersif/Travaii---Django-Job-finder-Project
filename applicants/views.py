@@ -49,6 +49,15 @@ def activate(request, uidb64, token):
 
 
 
+
+@login_required
+def CompanyResponse(request, pk):
+    job = Applying.objects.get(id=pk)
+    return render(request, 'users/view/respo.html', {'job':job})
+
+
+
+
 def Confirm_message(request, user, to_email):
     try:
         mail_subject = 'Please activate your Account'

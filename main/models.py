@@ -3,7 +3,11 @@ from django.db import models
 from ckeditor.fields import RichTextField
 from django.contrib.auth.models import AbstractUser
 from django.utils import timezone
-
+from django.db.models.signals import pre_save, post_save
+from django.dispatch import receiver
+from django.core.mail import EmailMessage
+from django.core.mail import send_mail
+from django.conf import settings
 import datetime
 
 now = timezone.now()
@@ -202,12 +206,33 @@ class Applying(models.Model):
     expected_salary_currency= models.CharField(max_length=15,choices=salary_cur, null=True, blank=True)
     experience= models.CharField(max_length=5, null=True, blank=True, choices=exper)
     request= models.CharField(max_length=10, choices=status, default='Pending' , null=True)
+    response_message = models.TextField(null=True, blank=True)
     submited= models.BooleanField(default=False)
 
 
 
     def __str__(self):
         return self.job.position
+
+
+
+
+@receiver(pre_save,sender=Applying)
+def getNotified(sender, instance, **kwargs):
+    try:
+        old_instance = sender.objects.get(id=instance.id)
+        mail_subject  = f'{instance.job.publisher.companyprofile.company_name} Replied to your application!'
+        html_message  = f'Hello {instance.sender.full_name},<br><br> This is to inform you that {instance.job.publisher.companyprofile.company_name} has replied to your application for {instance.job.position} position. We encourage you to log in to your account and check the response.<br><br>'
+        html_message += 'Best regards,<br>The Travaii Team'
+        from_email='support@travaii.com'
+        message = EmailMessage(mail_subject, html_message,from_email, to=[instance.sender.email])
+        message.content_subtype = 'html' # this is required because there is no plain text email version
+        if old_instance.request != instance.request or old_instance.response_message != instance.response_message :
+            message.send()
+    except sender.DoesNotExist:
+        # This means the instance is being created for the first time,
+        # so there's no need to compare the old and new values.
+        print('no')
         
 
 

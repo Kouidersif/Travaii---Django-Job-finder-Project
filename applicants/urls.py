@@ -30,6 +30,8 @@ urlpatterns= [
     path('settings/', views.Account_settings, name='account_settings'),
     path('delete/skill/<int:pk>/', notApplicant(views.DeleteSkill.as_view()), name='delete_skill'),
 
+    path('view/message/<int:pk>/', views.CompanyResponse, name='view_message'),
+
     #experience
 
     path('show_experience/', views.ShowExperience, name='show_experience'),
