@@ -33,10 +33,10 @@
                 </div>
                 {% endfor %}
                 {% endif %}
-                {% if form1.errors %}
+                {% if form.errors %}
              
                 <div class="alert alert-warning" role="alert">
-                  {{form1.errors}}
+                  {{form.errors}}
                 </div>
                 
                 {% endif %}
@@ -52,7 +52,7 @@
                       <div class="input-group-prepend input-group-text" id="inputGroupMergeFullNameAddOn">
                         <i class="bi-person"></i>
                       </div>
-                      {{form1.full_name}}
+                      {{form.full_name}}
                     </div>
                   </div>
                   <!-- End Input Group -->
@@ -63,7 +63,7 @@
                       <div class="input-group-prepend input-group-text" id="inputGroupMergeFullNameAddOn">
                         <i class="bi-person"></i>
                       </div>
-                      {{form1.username}}
+                      {{form.username}}
                     </div>
                   </div>
                   <!-- End Input Group -->
@@ -74,7 +74,7 @@
                       <div class="input-group-prepend input-group-text" id="inputGroupMergeFullNameAddOn">
                         <i class="bi-envelope-open"></i>
                       </div>
-                         {{form1.email}}
+                         {{form.email}}
                     </div>
                   </div>
                   <!-- End Input Group -->

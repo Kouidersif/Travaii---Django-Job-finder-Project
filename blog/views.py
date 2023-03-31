@@ -1,14 +1,15 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from .models import Article, Tags
 from .forms import BlogNewsLetterForm, PostBlogForm
-from django.views.generic import FormView, CreateView
+from django.views import generic
+from django.contrib.auth.mixins import LoginRequiredMixin
 
 
 
 
 
 
-class BlogHome(FormView):
+class BlogHome(generic.FormView):
     form_class = BlogNewsLetterForm
     template_name = 'main.html'
     def form_valid(self, form):
@@ -28,7 +29,7 @@ class BlogHome(FormView):
 
 
 
-class CreateBlog(CreateView):
+class CreateBlog(LoginRequiredMixin, generic.CreateView):
     form_class = PostBlogForm
     template_name = 'blog_create.html'
     def form_valid(self, form):

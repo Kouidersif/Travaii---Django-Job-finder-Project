@@ -1,41 +1,33 @@
 
 from django.shortcuts import render,get_object_or_404, redirect
 from django.urls import reverse
-from django.http import HttpResponseRedirect, HttpResponse
-from main.forms import JobForm
+from django.http import HttpResponse
 from .models import CompanyProfile, Photos_c
 from main.models import User, Jobs, Applying
 from subscriptions.models import Customer
-from .forms import CompanySignUpForm, CompanyProfileForm, UpdateUserForm, Cancel_SubscForm, PhotoForm
-from django.views.generic import CreateView, View, UpdateView, TemplateView, DeleteView
+from .forms import CompanySignUpForm, CompanyProfileForm, UpdateUserForm, PhotoForm
+from django.views import generic
 from applicants.mixins import CompanyAndLogin
-from django.http import HttpResponseRedirect
 from django.contrib.auth import authenticate, login
-from .decorators import notLogged, only_non_authenticated
+from .decorators import notLogged
 import stripe
 from django.conf import settings
 import datetime
 from django.contrib.auth.decorators import login_required
-from subscriptions.models import ProName
 from django.contrib import messages
 from .myfilter import ApplicantsFilter
-from datetime import date
 from subscriptions.decorators import check_sub
 from applicants.models import ApplicantProfile
 from applicants.views import Confirm_message
-import random
-from main.models import Get_industry, number_user_facebook
+from main.models import number_user_facebook
 from main.forms import ContactForm
-from django.core.mail import EmailMessage
-import time
-from datetime import timedelta
 from django.core.paginator import Paginator
-#Your password can’t be too similar to your other personal information.
-#Your password must contain at least 8 characters.
-#Your password can’t be a commonly used password.
-#Your password can’t be entirely numeric.
+from .tasks import Create_membership
 
 
+
+
+stripe.api_key = settings.STRIPE_SECRET_KEY
 
 
 
@@ -71,139 +63,84 @@ def LandingPage(request):
 
 
 
-
-
-@only_non_authenticated
-def Signup_as_company(request):
-    form = CompanySignUpForm()
-    if request.method == 'POST':
-        form = CompanySignUpForm(request.POST)
-        if form.is_valid():
-            company= form.save()
-            company.is_company= True
-            company.save()
-            new_co= authenticate(
-                username= form.cleaned_data['username'], 
-                password= form.cleaned_data['password1']
-            )
-            login(request, new_co)
-            Confirm_message(request, request.user, request.user.email)
-            return redirect('company_setup')
-        
-    else:
-        CompanySignUpForm()
-    return render(request,'company/register.html', {'form':form} )
-
-
-@notLogged
-def Company_setup(request):
-    form = CompanyProfileForm()
-    if request.method == 'POST':
-        form = CompanyProfileForm(request.POST, request.FILES)
-        if form.is_valid():
-            company = form.save(commit=False)
-            company.owner= request.user   
-            company.is_profile_completed = True       
-            company.save()
-
-            customer = stripe.Customer.create(
-                        email=request.user.email,
-                        name = request.user.full_name,
-                        )
-            end_date = datetime.date.today() + timedelta(days=30)
-            unix_time = int(time.mktime(end_date.timetuple()))
-            subscription = stripe.Subscription.create(
-            customer=customer.id,
-            items=[{"price": 'price_1MRyVAKORmC2RvgXFQV3ZIIM'}],
-            trial_end=unix_time,
-            )
-            Customer.objects.create(
-                user = request.user,
-                stripeid = customer.id,
-                stripe_subscription_id = subscription.id,
-                membership = True,
-                selected_membership = 'Large enterprise',
-            )
-            mail_subject = 'Free Trial Subscription Activated - Travaii'
-            html_message = 'Hello!<br><br>'
-            html_message += f'Hi {request.user.full_name} <br> We are excited to inform you that you have received a free trial subscription to our platform. During this trial period, you can start sharing job openings for free.<br><br>'
-            html_message += 'Thank you for choosing us!<br><br>'
-            html_message += 'Best regards,<br>The Travaii Team'
-            from_email= 'support@travaii.com'
-            message = EmailMessage(mail_subject, html_message,from_email, to=[request.user.email])
-            message.content_subtype = 'html' # this is required because there is no plain text email version
-            message.send()
-
-            try:
-                company_input = request.POST.get('industry')
-                Get_industry.objects.create(
-                    industry_name = company_input
-                )
-            except:
-                pass
-            return redirect('email_confirm')
-            
-
-    else:
-        form = CompanyProfileForm()
-
-    
-    return render(request, 'company/my/companyinfo.html',{'form':form})
-
-
-def Setup_Profile(request, pk):
-    data = User.objects.get(id=pk)
-    co_data= CompanyProfile.objects.filter(owner__id=pk)
-    publisher= Jobs.objects.filter(publisher__id=pk, is_published=True)
-    app= Applying.objects.filter(id=pk)
-    photos= Photos_c.objects.filter(photo_publisher__id= pk, is_public=True)
-    
-    context={
-    'data':data, 'co_data':co_data, 'publisher': publisher, 'app':app, 'photos':photos
-    }
-    return render(request, 'company/my/company_profile.html', context)
+class Signup_as_company(generic.FormView):
+    form_class = CompanySignUpForm
+    template_name = 'company/register.html'
+    def form_valid(self, form):
+        company= form.save()
+        company.is_company= True
+        company.save()
+        new_co= authenticate(
+            username= form.cleaned_data['username'], 
+            password= form.cleaned_data['password1']
+        )
+        login(self.request, new_co)
+        # Confirm_message(self.request, self.request.user, self.request.user.email)
+        return redirect('company_setup')
 
 
 
 
 
-def Side_Bar(request):
-    co_data= CompanyProfile.objects.filter(owner=request.user)
-    if co_data:
-        print('GOOD')
-    else:
-        print('false')
-    context = {'co_data':co_data}
-    return render(request, 'company/co_sidebar.html', context)
 
 
-@notLogged
-@check_sub
-def U_Profile(request, pk):
-    data = User.objects.get(id=pk)
-    co_data= CompanyProfile.objects.filter(owner=request.user)
-    publisher= Jobs.objects.filter(publisher__id=pk)
-    app= Applying.objects.filter(id=pk)
+class Company_Setup(CompanyAndLogin, generic.FormView):
+    form_class = CompanyProfileForm
+    template_name = 'company/my/companyinfo.html'
 
-    if request.user.is_authenticated and request.user == data:
-        if request.method == 'POST':
-            form1= UpdateUserForm(request.POST, request.FILES, instance=data)
-            if form1.is_valid():
-                form1.save()
-                messages.success(request, 'Info Updated')
-                return redirect(request.META['HTTP_REFERER'])
-        else:
-            form1= UpdateUserForm(instance=data)
-    else:
-        return redirect('error_page')
-    
-    
+    def form_valid(self, form):
+        company = form.save(commit=False)
+        company.owner = self.request.user   
+        company.is_profile_completed = True       
+        company.save()
+        user_id = self.request.user.id
+        #Celery Create Subscription and send_email to user
+        Create_membership.delay(user_id)
 
-    context={
-    'data':data, 'co_data':co_data, 'publisher': publisher, 'app':app,
-    'form1':form1
-    }
-    return render(request, 'company/my/co_manager.html', context)
+        return redirect('email_confirm')
+
+
+
+
+
+class Company_Page(generic.View):
+    def get(self,request,  pk):
+        data = User.objects.get(id=pk)
+        co_data= CompanyProfile.objects.filter(owner__id=pk)
+        publisher= Jobs.objects.filter(publisher__id=pk, is_published=True)
+        app= Applying.objects.filter(id=pk)
+        photos= Photos_c.objects.filter(photo_publisher__id= pk, is_public=True)
+        context={
+        'data':data, 'co_data':co_data, 'publisher': publisher, 'app':app, 'photos':photos
+        }
+        return render(request, 'company/my/company_profile.html', context)
+
+
+
+
+
+
+
+
+
+class RecruiterProfile(generic.UpdateView):
+    template_name = 'company/my/co_manager.html'
+    def get(self, request, pk):
+        data = User.objects.get(id=pk)
+        co_data= CompanyProfile.objects.filter(owner=request.user)
+        publisher= Jobs.objects.filter(publisher__id=pk)
+        app= Applying.objects.filter(id=pk)
+
+
+
+
+class RecruiterProfile(generic.UpdateView):
+    model = User
+    form_class = UpdateUserForm
+    template_name = 'company/my/co_manager.html'
+    def get_success_url(self) -> str:
+        messages.success(self.request, 'Info Updated')
+        return reverse("u_profile", args=[self.kwargs['pk']])
 
 
 
@@ -213,15 +150,13 @@ def account_categories(request):
 
 
 
+
 @notLogged
 @check_sub
 def manage_subscription(request):
-    
-    co_data= CompanyProfile.objects.filter(owner=request.user)
     try:
         stripe_customer = Customer.objects.get(user=request.user)
         customer_data= stripe.Customer.retrieve(stripe_customer.stripeid)
-        stripe.api_key = settings.STRIPE_SECRET_KEY
         subscription = stripe.Subscription.retrieve(stripe_customer.stripe_subscription_id)
         product = stripe.Product.retrieve(subscription.plan.product)
         user_balance = abs(customer_data.balance)
@@ -230,8 +165,6 @@ def manage_subscription(request):
         all_invoices = stripe.Invoice.list(limit=10,
         customer = stripe_customer.stripeid,
         )
-            
-        
         payment_method = stripe.Customer.list_payment_methods(
             customer=stripe_customer.stripeid,
             type="card",
@@ -244,17 +177,17 @@ def manage_subscription(request):
         
             
         context={'customer_data':customer_data,'user_balance':user_balance,'last4digits':last4digits,
-            'subscription':subscription, 'product':product, 'end_date':end_date,  'co_data':co_data,
+            'subscription':subscription, 'product':product, 'end_date':end_date,
             'start_date':start_date, 'stripe_customer':stripe_customer,'all_invoices':all_invoices
         , 'client_secret':intent.client_secret}
         return render(request, 'company/manage_sub.html', context)
     except Customer.DoesNotExist:
-        co_data= CompanyProfile.objects.filter(owner=request.user)
-        return render(request, 'company/manage_sub.html', {'co_data':co_data})
-        context= {
-                'co_data':co_data
-            }
-    return render(request, 'company/manage_sub.html', context)
+        return render(request, 'company/manage_sub.html')
+
+
+
+
+
 
 
 
@@ -354,100 +287,107 @@ def Cancel_sub_or_reactivate(request, subscription_id):
 
 
 
-@notLogged
-@check_sub
-def UpdateCompany(request, pk):
-    edit_info= get_object_or_404(CompanyProfile, id=pk)
-    co_data= CompanyProfile.objects.filter(owner=request.user)
-    
-    if edit_info.owner == request.user:
-        if request.method == 'POST':
-                form= CompanyProfileForm(request.POST, request.FILES, instance=edit_info)
-                if form.is_valid():
-                    form.save()
-                    messages.success(request, 'Info Updated')
-                    return redirect(request.META['HTTP_REFERER'])
-                else:
-                    messages.warning(request, form.errors)
+
+
+
+
+class UpdateCompany(generic.UpdateView):
+    model = CompanyProfile
+    form_class = CompanyProfileForm
+    template_name =  'company/my/update_company.html'
+
+    def get(self, request, pk):
+        edit_info= get_object_or_404(CompanyProfile, id=pk)
+        if edit_info.owner != request.user:
+            return redirect("error_page")
         else:
-            form= CompanyProfileForm(instance=edit_info)
-    else:
-        return redirect('error_page')
+            form = self.form_class(instance=edit_info)
 
-    context= {
-        'co_data':co_data,'form':form
-    }
-    return render(request, 'company/my/update_company.html', context )
+        context = {"edit_info":edit_info, "form":form}
+        return render(request, 'company/my/update_company.html', context )
 
-@notLogged
-@check_sub
-def PostPhotos(request):
-    form = PhotoForm()
-    if request.method == 'POST':
-        form = PhotoForm(request.POST, request.FILES)
-        if form.is_valid():
-            publisher = form.save()
-            publisher.photo_publisher= request.user
-            publisher.is_public = True
-            publisher.save()
-            messages.success(request, 'Photo published')
-            return redirect(request.META['HTTP_REFERER'])
-            
+    def form_valid(self, form):
+        form.save()
+        messages.success(self.request, 'Info Updated')
+        return redirect(self.request.META['HTTP_REFERER'])
+
+
+
+
+
+class PostPhotos(CompanyAndLogin,generic.CreateView):
+    form_class = PhotoForm
+    model = Photos_c
+    template_name = 'company/my/post_photo.html'
+    def form_valid(self, form):
+        publisher = form.save()
+        publisher.photo_publisher= self.request.user
+        publisher.is_public = True
+        publisher.save()
+        messages.success(self.request, 'Photo published')
+        return redirect(self.request.META['HTTP_REFERER'])
+
+
+
+
+
+
+
+
+class EditPhotoPrivacy(generic.UpdateView):
+    model = Photos_c
+    form_class = PhotoForm
+    template_name = 'company/my/edit_photo.html'
+
+    def get(self, request, pk):
+        edit_info= get_object_or_404(Photos_c, id=pk)
+        if edit_info.photo_publisher != request.user: 
+            return redirect("error_page")
         else:
-            print(form.errors)
-    else:
-        PhotoForm()
-    return render(request, 'company/my/post_photo.html', {'form':form})
+            form = self.form_class(instance=edit_info)
+
+        context = {"edit_info":edit_info, "form":form}
+        return render(request, 'company/my/edit_photo.html', context )
+
+    def form_valid(self, form):
+        form.save()
+        messages.success(self.request, 'Photo Edited')
+        return redirect(self.request.META['HTTP_REFERER'])
 
 
-@notLogged
-def Edit_photo_privacy(request, pk):
-    edit_info= get_object_or_404(Photos_c, id=pk)
+
+class ViewPhotos(CompanyAndLogin, generic.View):
+    def get(self, request, pk):
+        own = User.objects.get(id=pk)
+        photos= Photos_c.objects.filter(photo_publisher=own)
+        
+        context= {
+            'photos':photos
+        }
+        return render(request, 'company/my/view_photos.html', context)
+
+
+
+class DeletePhoto(CompanyAndLogin, generic.DeleteView):
+    model = Photos_c
+    template_name = 'company/my/delete_photo.html'
     
-    form = PhotoForm()
-    if request.user.is_authenticated and edit_info.photo_publisher == request.user: 
-        if request.method == 'POST':
-            form = PhotoForm(request.POST, request.FILES, instance=edit_info)
-            if form.is_valid():
-                publisher = form.save()
-                publisher.save()
-                messages.success(request, 'Photo Edited')
-                return redirect(request.META['HTTP_REFERER'])
-        else:
-            form = PhotoForm(instance=edit_info)
-    else:
-        return redirect('error_page')
-    context= {
-        'form':form, 'edit_info':edit_info
-    }
-    return render(request, 'company/my/edit_photo.html', context)
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["photo_delete"] = get_object_or_404(Photos_c, id = self.kwargs["pk"])
+        return context
 
-def View_all(request, pk):
-    own = User.objects.get(id=pk)
-    photos= Photos_c.objects.filter(photo_publisher=own)
+    def get_success_url(self):
+        return reverse("view_company_photos", args=[self.request.user.id])
     
-    context= {
-        'photos':photos
-    }
-    return render(request, 'company/my/view_photos.html', context)
 
-
-
-@notLogged
-def DeletePhotos(request, pk):
-    photo_delete = get_object_or_404(Photos_c, id = pk)
-    if request.method =="POST":
-        photo_delete.delete()
-        messages.success(request, 'Photo deleted')
-        return redirect(request.META['HTTP_REFERER'])
-    return render(request, 'company/my/delete_photo.html', {'photo_delete':photo_delete})
 
 
 
 @notLogged
 def view_application(request):
     if request.user.is_authenticated and request.user.is_company:
-        to_filter= ApplicantsFilter(request.GET, queryset=Applying.objects.filter(job__publisher=request.user))
+        to_filter= ApplicantsFilter(request.GET, queryset=Applying.objects.filter(job__publisher=request.user).order_by("-sent_at"))
         applications = to_filter.qs
         paginator = Paginator(applications, 7)
         page_number = request.GET.get('page', 1)

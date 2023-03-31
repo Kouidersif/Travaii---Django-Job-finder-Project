@@ -20,8 +20,6 @@ DEBUG = True
 ALLOWED_HOSTS = ['https//travaii.com', 'https//travaii.com', '192.169.177.207', 'http://192.169.177.207', 'travaii.com', 'www.travaii.com', '127.0.0.1']
 CSRF_TRUSTED_ORIGINS = ['https://*.travaii.com','https://*.127.0.0.1']
 
-#static root 
-STATIC_ROOT =  os.path.join(BASE_DIR, 'static/')
 
 # Application definition
 
@@ -149,11 +147,14 @@ CELERY_TASK_TIME_LIMIT = 30 * 60
 #test
 STATIC_URL = '/static/'
 STATICFILES_DIRS = [
-    os.path.join(BASE_DIR, 'mystaticfiles/static'),
+    os.path.join(BASE_DIR, 'JobPortal/static'),
 ]
 
+#static root 
+STATIC_ROOT =  os.path.join(BASE_DIR, 'static/')
+
 MEDIA_URL= '/images/'
-MEDIA_ROOT = os.path.join(BASE_DIR, 'mystaticfiles/images/')
+MEDIA_ROOT = os.path.join(BASE_DIR, 'images/')
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field
@@ -165,12 +166,12 @@ AUTH_USER_MODEL= 'main.User'
 
 #APPEND_SLASH=False
 
-#STRIPE_PUBLISHABLE_KEY = 'pk_test_51Lz03SKORmC2RvgXRhtthq6yKQVLC1xLCCSq7PWqJ8HqFClSjSOtvQBDN7ImsLdRilbvCTbe1XBQE7ppeKP3D5tL007zG2iI6B'
+# STRIPE_PUBLISHABLE_KEY = 'pk_test_51Lz03SKORmC2RvgXRhtthq6yKQVLC1xLCCSq7PWqJ8HqFClSjSOtvQBDN7ImsLdRilbvCTbe1XBQE7ppeKP3D5tL007zG2iI6B'
 STRIPE_PUBLISHABLE_KEY = 'pk_live_51Lz03SKORmC2RvgXf0IAm5tseSPsDozduvh8jFgRwCdn4fxeMKZAAPL6JC7btx654sLBbJBhvvhKo6o7Xc0NYWHB00Xm3uEJE0'
 STRIPE_SECRET_KEY = config('STPCEY')
-#STRIPE_SECRET_KEY = 'sk_test_51Lz03SKORmC2RvgXBDXoH9ulCpO8Bg4S8PniDbXU5PleTK4bRXyuBGVWXKaQ8ICYCT9XEIWSLi80lwIo8mQ5tut600SicR7GGr'
+# STRIPE_SECRET_KEY = 'sk_test_51Lz03SKORmC2RvgXBDXoH9ulCpO8Bg4S8PniDbXU5PleTK4bRXyuBGVWXKaQ8ICYCT9XEIWSLi80lwIo8mQ5tut600SicR7GGr'
 STRIPE_ENDPOINT_SECRET = config('wbhk')
-
+# STRIPE_ENDPOINT_SECRET = "whsec_23636b68c54e8c74bce145860e8196efc1ec047b5714a3d665180809b9f9ae53"
 
 
 

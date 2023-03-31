@@ -1,8 +1,8 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from django.urls import reverse
-from django.http import HttpResponseRedirect, HttpResponse
+from django.http import HttpResponse
 from .forms import *
-from django.views.generic import CreateView, View, ListView, UpdateView, FormView, DeleteView, TemplateView, DetailView
+from django.views import generic
 from main.models import *
 from django.contrib.auth import authenticate, login
 from django.contrib import messages
@@ -11,22 +11,18 @@ from main.forms import *
 from .filtering import *
 from django.contrib.auth.decorators import login_required
 from django.core.paginator import Paginator
-from subscriptions.models import Customer
 from django.conf import settings
-import stripe
 from .decorators import notApplicant
 from .email_token import TokenGenerator
 from .email_token import account_activation_token
 from company.decorators import notLogged
+from django.template.loader import render_to_string
 from django.contrib.sites.shortcuts import get_current_site  
 from django.utils.encoding import force_bytes, force_str
 from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode  
 from django.contrib.auth import get_user_model
 from django.template import Context
-from company.decorators import only_non_authenticated
-import datetime
 from .mixins import MustbeUnauthenticated, ApplicantsAccess
-from django.contrib.auth.mixins import LoginRequiredMixin
 from .tasks import inform_company
 
 
@@ -79,7 +75,7 @@ def Confirm_message(request, user, to_email):
 
 
 
-class SignUpApplicant(MustbeUnauthenticated, FormView):
+class SignUpApplicant(MustbeUnauthenticated, generic. FormView):
     form_class = ApplicantSignUpForm
     template_name = 'users/registration/signup.html'
     def form_valid(self, form):
@@ -100,7 +96,7 @@ class SignUpApplicant(MustbeUnauthenticated, FormView):
 
 
 
-class Profile(ApplicantsAccess, DetailView):
+class Profile(ApplicantsAccess, generic. DetailView):
     template_name = 'users/profile_page.html'
     model = User
     context_object_name = "user"
@@ -127,7 +123,7 @@ def Account_settings(request):
 
 
 
-class ShowSkills(ApplicantsAccess, FormView):
+class ShowSkills(ApplicantsAccess, generic. FormView):
     template_name = 'users/info/skills/show_skills.html'
     form_class = SkillsForm
     def get(self, request):
@@ -181,7 +177,7 @@ def Applicant_cv(request):
 
 
 
-class ApplicantSetup(ApplicantsAccess ,FormView):
+class ApplicantSetup(ApplicantsAccess ,generic. FormView):
     form_class = ApplicantProfileForm
     template_name = 'users/applicant_set_up.html'
     def form_valid(self, form):
@@ -198,7 +194,7 @@ class ApplicantSetup(ApplicantsAccess ,FormView):
 
 
 
-class ShowProfile(ApplicantsAccess, UpdateView):
+class ShowProfile(ApplicantsAccess, generic.UpdateView):
     model = ApplicantProfile
     form_class = ApplicantProfileForm
     template_name = 'users/profile_settings.html'
@@ -230,7 +226,7 @@ def noProfile(request):
 ##################STUDIES ###################
 
 
-class ShowEducation(ApplicantsAccess ,FormView):
+class ShowEducation(ApplicantsAccess ,generic. FormView):
     form_class = EducationForm
     template_name = 'users/info/show_education.html'
 
@@ -247,7 +243,7 @@ class ShowEducation(ApplicantsAccess ,FormView):
 
 
 
-class UpdateEducation(ApplicantsAccess, UpdateView):
+class UpdateEducation(ApplicantsAccess, generic. UpdateView):
     model = Education
     template_name= 'users/info/update_studies.html'
     form_class= EducationForm
@@ -271,7 +267,7 @@ class DeleteEdu(ApplicantsAccess, generic.DeleteView):
 ##### WorkExperience #######
 
 
-class ShowExperience(ApplicantsAccess ,FormView):
+class ShowExperience(ApplicantsAccess ,generic. FormView):
     form_class = ExperienceForm
     template_name = 'users/info/work/show_work.html'
 
@@ -290,7 +286,7 @@ class ShowExperience(ApplicantsAccess ,FormView):
 
 
 
-class UpdateExperience(ApplicantsAccess, UpdateView):
+class UpdateExperience(ApplicantsAccess, generic. UpdateView):
     model = Experience
     template_name= 'users/info/work/edit_experience.html'
     form_class= ExperienceForm
@@ -322,7 +318,7 @@ class DeleteExperience(ApplicantsAccess, generic.DeleteView):
 
 
 
-class P_settings(ApplicantsAccess , DetailView):
+class P_settings(ApplicantsAccess , generic. DetailView):
     template_name = 'users/settings.html'
     model = User
     def get_context_data(self, **kwargs):
@@ -334,7 +330,7 @@ class P_settings(ApplicantsAccess , DetailView):
 
 
 
-class EditUser(ApplicantsAccess , UpdateView):
+class EditUser(ApplicantsAccess , generic. UpdateView):
     model = User
     form_class = UserUpdateForm
     template_name = 'users/crud_users/update_applicant.html'
@@ -353,7 +349,7 @@ class EditUser(ApplicantsAccess , UpdateView):
 
 
 
-class Manage_apps(ApplicantsAccess,TemplateView):
+class Manage_apps(ApplicantsAccess,generic. TemplateView):
     template_name = 'users/view/applications.html'
 
     def get_context_data(self, **kwargs):
@@ -372,7 +368,7 @@ class Manage_apps(ApplicantsAccess,TemplateView):
 
 
 
-class Apply_for(ApplicantsAccess ,View):
+class Apply_for(ApplicantsAccess ,generic. View):
 
     def get(self, request, pk):
         added = False

@@ -5,6 +5,7 @@ mystaticfiles/images
 __pycache__/
 *.py[cod]
 *$py.class
+.pyc
 
 # Dependency directories
 env/
