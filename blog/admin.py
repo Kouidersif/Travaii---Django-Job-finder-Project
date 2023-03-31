@@ -7,3 +7,4 @@ from .models import *
 admin.site.register(Article)
 admin.site.register(ArticleCategory)
 admin.site.register(Tags)
+admin.site.register(BlogNewsLetter)

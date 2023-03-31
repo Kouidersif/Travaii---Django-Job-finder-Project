@@ -1,3 +1,56 @@
 .env
 static
 mystaticfiles/images
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Dependency directories
+env/
+venv/
+node_modules/
+bower_components/
+
+# Distribution / packaging
+dist/
+build/
+*.egg-info/
+*.egg
+
+# Development
+*.swp
+*.log
+*.bak
+db.sqlite3
+
+# Static files
+staticfiles/
+static/
+
+# Media files
+media/
+
+# Django Secret Key
+*.secret_key
+
+# IDE files
+.vscode/
+.idea/
+
+# Ignore all .pyc files in the project
+*.pyc
+
+# Ignore migration files
+*/migrations/*.py
+*/migrations/*.pyc
+*/__pycache__/ 
+
+# Ignore coverage report files
+htmlcov/
+
+# Ignore celerybeat-schedule file
+celerybeat-schedule
+
+# Ignore local settings file
+local_settings.py

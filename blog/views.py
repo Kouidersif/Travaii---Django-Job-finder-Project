@@ -1,42 +1,41 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from .models import Article, Tags
 from .forms import BlogNewsLetterForm, PostBlogForm
-from django.views.generic import *
-# Create your views here.
+from django.views.generic import FormView, CreateView
 
 
-def BlogHome(request):
-    blogs = Article.objects.all()
-    tags = Tags.objects.all()
-    if request.method == 'POST':
-        form = BlogNewsLetterForm(request.POST)
-        if form.is_valid():
-            form.save()
-            return redirect(request.META['HTTP_REFERER'])
-    else:
-        form = BlogNewsLetterForm()
-    context= {
+
+
+
+
+class BlogHome(FormView):
+    form_class = BlogNewsLetterForm
+    template_name = 'main.html'
+    def form_valid(self, form):
+        form.save()
+        return redirect(self.request.META['HTTP_REFERER'])
+    def get(self, request):
+        blogs = Article.objects.all()
+        tags = Tags.objects.all()
+        context= {
         'blogs':blogs,
-        'form':form,
-        'tags': tags
-
-    }
-    return render(request, 'main.html', context)
-
+        'tags': tags,
+        "form":self.form_class
+        }
+        return render(request, 'main.html', context)
 
 
-def CreateBlog(request):
-    form = PostBlogForm()
-    if request.method == 'POST':
-        form = PostBlogForm(request.POST, request.FILES)
-        if form.is_valid():
-            job = form.save(commit=False)
-            job.author_name = request.user
-            job.save()
-            return redirect('blog-home')
-    else:
-        form = PostBlogForm()
-    return render(request, 'blog_create.html', {'form':form})
+
+
+
+class CreateBlog(CreateView):
+    form_class = PostBlogForm
+    template_name = 'blog_create.html'
+    def form_valid(self, form):
+        job = form.save(commit=False)
+        job.author_name = self.request.user
+        job.save()
+        return redirect('blog-home')
 
 
 def BlogDetails(request, pk, slug):

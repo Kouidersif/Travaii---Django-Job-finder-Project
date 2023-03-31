@@ -161,7 +161,7 @@
               {% if request.user.is_applicant %}
                 {% for work in job %}
                 {% if applying %}
-                <a class="btn btn-success btn-transition" href="{% url 'my_applications' request.user.id %}">you have already applied - Press to check status</a>
+                <a class="btn btn-success btn-transition" href="{% url 'my_applications' %}">you have already applied - Press to check status</a>
                 {% elif not request.user.applicantprofile.applicant_cv %}
                 <div class="alert alert-warning" role="alert">
                   <div class="d-flex">

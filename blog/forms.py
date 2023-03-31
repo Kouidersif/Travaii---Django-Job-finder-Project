@@ -1,6 +1,11 @@
 from django.forms import ModelForm
 from .models import *
 
+
+
+
+
+
 class BlogNewsLetterForm(ModelForm):
     class Meta:
         model = BlogNewsLetter

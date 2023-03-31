@@ -36,7 +36,7 @@
 
       <div class="mb-4">
         <p class="fs-4 mb-0">Congrats! you have succesfully applied for {{job.position}}</p>
-        <p class="fs-4">To check the status of the application, visit <a class="link" href="{% url 'my_applications' request.user.id %}">Applications Status</a>.</p>
+        <p class="fs-4">To check the status of the application, visit <a class="link" href="{% url 'my_applications' %}">Applications Status</a>.</p>
       </div>
 
       <a class="btn btn-primary" href="{% url 'home' %}">or, Go back home</a>
