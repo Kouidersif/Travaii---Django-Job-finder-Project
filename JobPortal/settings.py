@@ -15,7 +15,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = config('NOT_SECRET')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = ['https//travaii.com', 'https//travaii.com', '192.169.177.207', 'http://192.169.177.207', 'travaii.com', 'www.travaii.com', '127.0.0.1']
 CSRF_TRUSTED_ORIGINS = ['https://*.travaii.com','https://*.127.0.0.1']
@@ -293,3 +293,9 @@ CACHES = {
         'LOCATION': 'my_cache_table',
     }
 }
+
+# Redis as message broker
+CELERY_BROKER_URL = 'redis://localhost:6379/0'
+
+# Redis as backend
+CELERY_RESULT_BACKEND = 'redis://localhost:6379/0'
