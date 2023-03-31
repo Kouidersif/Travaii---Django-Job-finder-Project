@@ -292,3 +292,9 @@ CACHES = {
         'LOCATION': 'my_cache_table',
     }
 }
+
+# Redis as message broker
+CELERY_BROKER_URL = 'redis://localhost:6379/0'
+
+# Redis as backend
+CELERY_RESULT_BACKEND = 'redis://localhost:6379/0'
