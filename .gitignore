@@ -1,5 +1,5 @@
 .env
-static
+# static
 mystaticfiles/images
 # Byte-compiled / optimized / DLL files
 __pycache__/
@@ -26,8 +26,8 @@ build/
 db.sqlite3
 
 # Static files
-staticfiles/
-static/
+# staticfiles/
+# static/
 
 # Media files
 media/
