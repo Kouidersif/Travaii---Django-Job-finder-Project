@@ -1,6 +1,6 @@
 .env
-# static
 mystaticfiles/images
+/images
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
@@ -10,24 +10,11 @@ __pycache__/
 # Dependency directories
 env/
 venv/
-node_modules/
-bower_components/
-
-# Distribution / packaging
-dist/
-build/
-*.egg-info/
-*.egg
-
-# Development
-*.swp
-*.log
-*.bak
-db.sqlite3
 
 # Static files
-# staticfiles/
-# static/
+staticfiles/
+static/
+static
 
 # Media files
 media/
