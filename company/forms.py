@@ -41,6 +41,11 @@ class CompanySignUpForm(UserCreationForm):
         self.fields['password2'].widget.attrs['placeholder'] = 'Confirm Password'
         self.fields['source'].widget.attrs['class'] = 'form-select'
 
+
+
+
+
+
 class UpdateUserForm(UserChangeForm):
     class Meta:
         model = User
@@ -158,9 +163,6 @@ class CompanyProfileForm(ModelForm):
         else:
             return profile_bg
 
-#if facebook and 'facebook' not in company:
-        #forms.validator('error')
-#else:
 
         
         

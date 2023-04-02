@@ -1,15 +1,10 @@
 import stripe
-from stripe import Subscription
 from django.shortcuts import render, get_object_or_404, redirect
 from django.urls import reverse, reverse_lazy
 from django.conf import settings
-from django.http.response import JsonResponse # new
-from django.views.decorators.csrf import csrf_exempt # new
 from django.http import HttpResponse
 from django.views import generic
-from django.http import HttpResponseRedirect
 from subscriptions.models import Customer
-from datetime import timedelta
 from .forms import *
 from applicants.mixins import CompanyAndLogin
 from django.contrib import messages
@@ -18,19 +13,18 @@ from company.models import CompanyProfile
 from applicants.models import *
 from django.contrib.auth.views import PasswordChangeView
 from applicants.forms import *
-from django.contrib.auth.forms import PasswordChangeForm
 from .filters import *
 from django.contrib.auth.decorators import login_required
 from subscriptions.decorators import check_sub
 from django.core.mail import EmailMessage
-from django.template.loader import render_to_string, get_template
-from django.core.mail import EmailMultiAlternatives
-from django.template import Context
 from django.core.paginator import Paginator
-import random
 from django.utils import timezone
 from applicants.forms import NewsLetterForm
-import geoip2.database
+from .tasks import Notify_user_account_deleted
+from django.contrib.auth.mixins import LoginRequiredMixin
+
+
+
 
 
 #Create Trial 
@@ -76,15 +70,17 @@ def PrivacyPolicy(request):
     return render(request, 'privacy_policy.html')
 
 
-#Your password can’t be too similar to your other personal information.
-#Your password must contain at least 8 characters.
-#Your password can’t be a commonly used password.
-#Your password can’t be entirely numeric.
+
+
+
 
 
 class PwdChange(PasswordChangeView):
     form_class= PwdChangingForm
     success_url= reverse_lazy('changed')
+
+
+
 
 
 def Successpwd(request):
@@ -109,218 +105,101 @@ class UpdateStatus(CompanyAndLogin,generic.UpdateView):
     
 
 
-@login_required 
-@check_sub
-def CreateJob(request):
-    
-    user = User.objects.get(id=request.user.id)
-    try:
-        if request.user.customer.membership:
-            c = Customer.objects.filter(user= request.user)
-            stripe_customer = Customer.objects.get(user=request.user)
-            
-            stripe.api_key = settings.STRIPE_SECRET_KEY
-            subscription = stripe.Subscription.retrieve(stripe_customer.stripe_subscription_id)
-            d = datetime.datetime.fromtimestamp(subscription.current_period_end)
-            start_date = timezone.make_aware(timezone.datetime.fromtimestamp(subscription.current_period_start))
-            end_date = timezone.make_aware(timezone.datetime.fromtimestamp(subscription.current_period_end))
-            
-            
-            # Filter the posts by the start and end date of the current billing interval
-            to_count = user.work.filter(creation_date__gte=start_date, creation_date__lte=end_date)
-            number_of_posts = to_count.count()
-            product = stripe.Product.retrieve(subscription.plan.product)
-            
-            ##Small business PLAN 
-            if request.user.customer.selected_membership == 'Small business':
-                
-                if subscription.current_period_end != datetime.date.today() and subscription.status == 'active':
-                    # need to add max can be published for each plan
-                    if number_of_posts >= 10:
-                        return render(request, 'upgrade_message.html' )
-                    else:
-                        form = JobForm()
-                        if request.method == 'POST':
-                            form = JobForm(request.POST)
-                            if form.is_valid():
-                                job = form.save(commit=False)
-                                job.publisher= request.user
-                                job.save()
-                                job.is_published=True
-                                job.save()
-                                return redirect('alljobs')
-                            else:
-                                messages.warning(request, form.errors)
-                        else:
-                            form = JobForm()
-                        info={
-                            'form': form
-                            }
-                    return render(request, 'main/crud/create_job.html',info )
-                else:
-                    return render(request, 'upgrade_message.html' )
-            #### Mid-market enterprises PLAN
-            elif request.user.customer.selected_membership == 'Mid-market enterprises':
-                
-                if subscription.current_period_end != datetime.date.today() and subscription.status == 'active':
-                    # need to add max can be published for each plan
-                    if number_of_posts >= 20:
-                        return render(request, 'upgrade_message.html' )
-                    else:
-                        form = JobForm()
-                        if request.method == 'POST':
-                            form = JobForm(request.POST)
-                            if form.is_valid():
-                                job = form.save(commit=False)
-                                job.publisher= request.user
-                                job.save()
-                                job.is_published=True
-                                job.save()
-                                return redirect('alljobs')
-                            else:
-                                messages.warning(request, form.errors)
-                        else:
-                            form = JobForm()
-                        info={
-                            'form': form
-                            }
-                    return render(request, 'main/crud/create_job.html',info )
-                else:
-                    return render(request, 'upgrade_message.html' )
-                
 
 
-            #### LARG   enterprise PLAN 
-            elif request.user.customer.selected_membership == 'Large enterprise':
-                
-                if subscription.current_period_end != datetime.date.today() and subscription.status == 'active':
-                    # need to add max can be published for each plan
-                    if number_of_posts >= 40:
-                        return render(request, 'upgrade_message.html' )
-                    else:
-                        form = JobForm()
-                        if request.method == 'POST':
-                            form = JobForm(request.POST)
-                            if form.is_valid():
-                                job = form.save(commit=False)
-                                job.publisher= request.user
-                                job.save()
-                                job.is_published=True
-                                job.save()
-                                return redirect('alljobs')
-                            else:
-                                messages.warning(request, form.errors)
-                        else:
-                            form = JobForm()
-                        info={
-                            'form': form
-                            }
-                    return render(request, 'main/crud/create_job.html',info )
-            else:
-                return render(request, 'upgrade_message.html' )
-                
-            if subscription.status == 'trialing':
-                
-                    # need to add max can be published for each plan
-                    if number_of_posts >= 5:
-                        return render(request, 'upgrade_message.html' )
-                    else:
-                        form = JobForm()
-                        if request.method == 'POST':
-                            form = JobForm(request.POST)
-                            if form.is_valid():
-                                job = form.save(commit=False)
-                                job.publisher= request.user
-                                job.save()
-                                job.is_published=True
-                                job.save()
-                                return redirect('alljobs')
-                            else:
-                                messages.warning(request, form.errors)
-                        else:
-                            form = JobForm()
-                        info={
-                            'form': form
-                            }
-                    return render(request, 'main/crud/create_job.html',info )
-            else:
-                return render(request, 'upgrade_message.html' )
 
-    except Customer.DoesNotExist:
-        if user.work.count() >= 1:
-            return render(request, 'upgrade_message.html' )
-        else:
-            form = JobForm()
-            if request.method == 'POST':
-                form = JobForm(request.POST)
-                if form.is_valid():
-                    job = form.save(commit=False)
-                    job.publisher= request.user
-                    job.save()
-                    job.is_published=True
-                    job.save()
-                    return redirect('alljobs')
+# @login_required 
+# @check_sub
+class CreateJobView(CompanyAndLogin, generic.View):
+    login_url = 'log_in'
+
+    def get(self, request):
+        user = User.objects.get(id=request.user.id)
+        try:
+            if request.user.customer.membership:
+                c = Customer.objects.filter(user= request.user)
+                stripe_customer = Customer.objects.get(user=request.user)
+                stripe.api_key = settings.STRIPE_SECRET_KEY
+                subscription = stripe.Subscription.retrieve(stripe_customer.stripe_subscription_id)
+                d = datetime.datetime.fromtimestamp(subscription.current_period_end)
+                start_date = timezone.make_aware(timezone.datetime.fromtimestamp(subscription.current_period_start))
+                end_date = timezone.make_aware(timezone.datetime.fromtimestamp(subscription.current_period_end))
+                to_count = user.work.filter(creation_date__gte=start_date, creation_date__lte=end_date)
+                number_of_posts = to_count.count()
+                product = stripe.Product.retrieve(subscription.plan.product)
+
+                selected_membership = request.user.customer.selected_membership
+
+                if selected_membership == 'Small business' and number_of_posts >= 10:
+                    return render(request, 'upgrade_message.html')
+                elif selected_membership == 'Mid-market enterprises' and number_of_posts >= 20:
+                    return render(request, 'upgrade_message.html')
+                elif selected_membership == 'Large enterprise' and number_of_posts >= 40:
+                    return render(request, 'upgrade_message.html')
+                elif subscription.status == 'trialing' and number_of_posts >= 5:
+                    return render(request, 'upgrade_message.html')
                 else:
-                    messages.warning(request, form.errors)
+                    form = JobForm()
+                    info={
+                        'form': form
+                    }
+                    return render(request, 'main/crud/create_job.html',info)
+
+        except Customer.DoesNotExist:
+            if user.work.count() >= 1:
+                return render(request, 'upgrade_message.html')
             else:
                 form = JobForm()
+                info={
+                    'form': form
+                }
+                return render(request, 'main/crud/create_job.html', info)
+
+    def post(self, request):
+        form = JobForm(request.POST)
+        if form.is_valid():
+            job = form.save(commit=False)
+            job.publisher = request.user
+            job.is_published = True
+            job.save()
+            return redirect('alljobs')
+        else:
+            messages.warning(request, form.errors)
+            form = JobForm()
             info={
                 'form': form
-                }
-            return render(request, 'main/crud/create_job.html', info )
-        
+            }
+            return render(request, 'main/crud/create_job.html', info)
 
     
-### need to work on form.errors Create job
 
 
 
-@check_sub
-def HomePage(request):
 
-    jobs=Jobs.objects.filter(is_published=True)
-    
-    companies=CompanyProfile.objects.all()
-    candidates=ApplicantProfile.objects.filter(is_public=True)
-    categ= Category.objects.all()
-    s = Wilaya.objects.all()
-    form = NewsLetterForm()
-    #counting number of visits from facebook
-    try:
-        from_where = 'fbclid'
-        if from_where in request.GET:
-            count, created = number_user_facebook.objects.get_or_create()
-            count.users_l += 1
-            count.save()
-    except:
-        pass
-    
 
-    if request.method == 'POST':
-        form =NewsLetterForm(request.POST)
-        if form.is_valid():
-            form.save()
-            return redirect('sign_up')
-    else:
+
+
+
+class HomePage(generic.FormView):
+    form_class = NewsLetterForm
+    template_name = 'main/index.html'
+    def get(self, request):
+        jobs=Jobs.objects.filter(is_published=True)
+        companies=CompanyProfile.objects.all()
+        candidates=ApplicantProfile.objects.filter(is_public=True)
+        categ= Category.objects.all()
+        s = Wilaya.objects.all()
         form = NewsLetterForm()
-    
-    f = SnippetFilter(request.GET, queryset=Jobs.objects.filter(is_published=True))
-    all_jobs = f.qs
-    categories = category= Category.objects.all()
-    #getting what people are searching for
-    try:
-        if request.method == 'GET':
-            search = request.GET.get('position')
-            if search:
-                SearchedJobs.objects.create(
-                    search_content = search
-                )
-    except:
-        pass
+        f = SnippetFilter(request.GET, queryset=Jobs.objects.filter(is_published=True))
+        all_jobs = f.qs
+        categories = category= Category.objects.all()
+        context={'jobs':jobs, 'companies':companies, 'f':f,'all_jobs':all_jobs,'categories':categories, 'candidates':candidates, 'form':form}
+        return render(request, self.template_name, context)  
+    def form_valid(self, form):
+        form.save()
+        return redirect('sign_up')
     
 
-    context={'jobs':jobs, 'companies':companies, 'f':f,'all_jobs':all_jobs,'categories':categories, 'candidates':candidates, 'form':form}
-    return render(request, 'main/index.html', context)
 
 
 def Search_for(request):
@@ -364,22 +243,23 @@ def ConfirmEmailPage(request):
 
 
 
-def Contact(request):
-    form = ContactForm()
-    if request.method == 'POST':
-        form = ContactForm(request.POST)
-        if form.is_valid():
-            form.save()
-            messages.success(request, 'Thank you for reaching us, we will be back to you as soon as possible')
-            return redirect(request.META['HTTP_REFERER'])
-        else:
-            messages.success(request, form.errors)
-    else:
-        ContactForm()
-    context= {
-        'form':form
-    }
-    return render(request, 'contact.html', context)
+
+
+class Contact(generic.FormView):
+    form_class = ContactForm
+    template_name = 'contact.html'
+
+    def form_valid(self, form):
+        form.save()
+        messages.success(self.request, 'Thank you for reaching us, we will be back to you as soon as possible')
+        return redirect(self.request.META['HTTP_REFERER'])
+    
+    def form_invalid(self, form):
+        messages.success(self.request, form.errors)
+
+
+
+
 
 
 
@@ -404,32 +284,26 @@ def DisplayJobs(request):
 
 
 
-@login_required
-def DeleteUser(request, pk):
-    user = User.objects.get(id=pk)
-    try:
-        if request.method == 'POST':
-            user_reason= request.POST.get('user_field')
-            text_field = request.POST.get('textfield')
-            Delete_account_Feedback.objects.create(
-                the_reason = user_reason,
-                reason_txt= text_field,
-                email_user = request.user.email,
-            )
-            user.delete()
-            mail_subject = 'Travaii Team: Account has been deleted'
-            templ = render_to_string('account_deleted.html', {
-                'name':request.user.full_name,
-            })
-            success_email = EmailMessage(
-                        mail_subject, templ, 
-                        to=[request.user.email],
-                    )
-            success_email.send()
-            return redirect('log_in')
-    except:
-        pass
-    return render(request, 'users/delete_account.html')
+
+class DeleteUser(LoginRequiredMixin,generic.View):
+    def get(self, request, pk):
+        return render(request, 'users/delete_account.html')
+    def post(self, request, pk):
+        user = User.objects.get(id = pk)
+        user_reason= request.POST.get('user_field')
+        text_field = request.POST.get('textfield')
+        Delete_account_Feedback.objects.create(
+            the_reason = user_reason,
+            reason_txt= text_field,
+            email_user = request.user.email,
+        )
+        Notify_user_account_deleted.delay(
+                pk
+        )
+        user.delete()
+        return redirect("log_in")
+
+
 
 
 
@@ -445,23 +319,29 @@ class UpdateJob(CompanyAndLogin, generic.UpdateView):
     def get_success_url(self):
         messages.success(self.request, 'Your changes have been saved.')
         return reverse('manage_jobs')
+    
 
-@check_sub
-def DetailJob(request, pk):
-    job = Jobs.objects.filter(id=pk)
-    job2= get_object_or_404(Jobs, id=pk)  
-    
-    
-    added= bool
-    
-    if job2.save_job.filter(id=request.user.id).exists():
-        added=True
-    #print(job2)
-    applying= Applying.objects.filter(sender_id=request.user.id, job_id=job2.pk)
-    context={
-        'job':job, 'applying':applying, 'added':added
-    }
-    return render(request, 'main/crud/job_detail.html' , context)
+
+
+class DetailJob(generic.View):
+    def get(self, request, pk):
+        job = Jobs.objects.filter(id=pk)
+        job2= get_object_or_404(Jobs, id=pk)  
+        
+        
+        added= bool
+        
+        if job2.save_job.filter(id=request.user.id).exists():
+            added=True
+        #print(job2)
+        applying= Applying.objects.filter(sender_id=request.user.id, job_id=job2.pk)
+        context={
+            'job':job, 'applying':applying, 'added':added
+        }
+        return render(request, 'main/crud/job_detail.html' , context)
+
+
+
 
 
 class DeleteJob(CompanyAndLogin, generic.DeleteView):
@@ -471,19 +351,27 @@ class DeleteJob(CompanyAndLogin, generic.DeleteView):
         return reverse('manage_jobs')
 
 
+
+
+
 def CategoryView(request):
     view_cat= Category.objects.all().order_by('name')
     context= {'view_cat':view_cat}
     return render(request, 'main/category.html' ,context)
+
+
+
 
 def Category_list(request, pk):
     cat_list= Jobs.objects.filter(job_category_id=pk)
     context= {'cat_list':cat_list}
     return render(request, 'main/display/display_cat.html', context)
 
+
+
 @login_required
-def SaveJob(request, id):
-    to_save= get_object_or_404(Jobs, id=id)
+def SaveJob(request, pk):
+    to_save= get_object_or_404(Jobs, id=pk)
     if to_save.save_job.filter(id=request.user.id).exists():
         to_save.save_job.remove(request.user)
         

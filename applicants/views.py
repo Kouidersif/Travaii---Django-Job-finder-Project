@@ -194,11 +194,15 @@ class ApplicantSetup(ApplicantsAccess ,generic. FormView):
 
 
 
+
+
+
+
 class ShowProfile(ApplicantsAccess, generic.UpdateView):
     model = ApplicantProfile
     form_class = ApplicantProfileForm
     template_name = 'users/profile_settings.html'
-
+    
     def get_object(self):
         return ApplicantProfile.objects.get(owner__id=self.kwargs['pk'])
 
@@ -208,7 +212,11 @@ class ShowProfile(ApplicantsAccess, generic.UpdateView):
         return context
     
     def get_success_url(self) -> str:
+        messages.success(self.request, "Info Updated")
         return reverse("applicant_info", args=[self.kwargs["pk"]])
+
+
+
 
 
 
