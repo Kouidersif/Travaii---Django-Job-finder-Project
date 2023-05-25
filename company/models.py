@@ -5,6 +5,16 @@ from main.models import *
 from applicants.models import Wilaya, Cities
 from django.core.exceptions import ValidationError
 now = datetime
+from django.dispatch import receiver
+from django.db.models.signals import pre_save
+from django.contrib.auth import get_user_model
+
+
+
+User = get_user_model()
+
+
+
 
 company_size=[
     ('1-10', '1-10'),
@@ -41,7 +51,7 @@ class CompanyProfile(models.Model):
     instagram=models.URLField(max_length=100, null=True, blank=True)
     
     def __str__(self):
-        return self.company_name
+        return self.company_name if self.company_name else self.owner.username
 
     
     
@@ -59,3 +69,12 @@ class Photos_c(models.Model):
 
 
 
+
+
+@receiver(signal=post_save, sender=User)
+def create_company_profile(instance, created,  **kwargs):
+
+    if created and instance.is_company == True:
+        
+        user = User.objects.get(id=instance.id)
+        CompanyProfile.objects.create(owner = user)

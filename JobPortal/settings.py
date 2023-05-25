@@ -15,7 +15,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = config('NOT_SECRET')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 ALLOWED_HOSTS = ['https//travaii.com', 'https//travaii.com', '192.169.177.207', 'http://192.169.177.207', 'travaii.com', 'www.travaii.com', '127.0.0.1']
 CSRF_TRUSTED_ORIGINS = ['https://*.travaii.com','https://*.127.0.0.1']
@@ -34,7 +34,6 @@ INSTALLED_APPS = [
     'company',
     'applicants',
     'fontawesomefree',
-    'subscriptions',
     'django_filters',
     'bootstrapform',
     'ckeditor',
@@ -80,25 +79,12 @@ WSGI_APPLICATION = 'JobPortal.wsgi.application'
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases
 
 
-
 DATABASES = {
-'default': {
-    'ENGINE': 'django.db.backends.postgresql_psycopg2',
-    'NAME': 'travaiidb',
-    'USER': 'dbtravaii_user',
-    'PASSWORD': config('mdpdeb'),
-    'HOST': 'localhost',
-    'PORT': '',
+    'default': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': BASE_DIR / 'db.sqlite3',
+    }
 }
-}
-
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.sqlite3',
-#         'NAME': BASE_DIR / 'db.sqlite3',
-#     }
-# }
-
 
 
 
@@ -147,7 +133,7 @@ CELERY_TASK_TIME_LIMIT = 30 * 60
 #test
 STATIC_URL = '/static/'
 STATICFILES_DIRS = [
-    os.path.join(BASE_DIR, 'JobPortal/static'),
+    os.path.join(BASE_DIR, 'JobPortal/static')
 ]
 
 #static root 

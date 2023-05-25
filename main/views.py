@@ -1,10 +1,8 @@
-import stripe
 from django.shortcuts import render, get_object_or_404, redirect
 from django.urls import reverse, reverse_lazy
 from django.conf import settings
 from django.http import HttpResponse
 from django.views import generic
-from subscriptions.models import Customer
 from .forms import *
 from applicants.mixins import CompanyAndLogin
 from django.contrib import messages
@@ -15,46 +13,11 @@ from django.contrib.auth.views import PasswordChangeView
 from applicants.forms import *
 from .filters import *
 from django.contrib.auth.decorators import login_required
-from subscriptions.decorators import check_sub
 from django.core.mail import EmailMessage
 from django.core.paginator import Paginator
-from django.utils import timezone
 from applicants.forms import NewsLetterForm
 from .tasks import Notify_user_account_deleted
 from django.contrib.auth.mixins import LoginRequiredMixin
-
-
-
-
-
-#Create Trial 
-def CreateTrial(request):
-    if request.user.is_authenticated and request.user.is_superuser:
-        if request.method == 'POST':
-            the_user = request.POST.get('user')
-            myuser= User.objects.get(id=the_user)
-            customer_id= request.POST.get('customerID')
-            item_id = request.POST.get('item')
-            end_date = request.POST.get('trial_end')
-            membership_user = request.POST.get('selected')
-            track = request.POST.get('track')
-            subscription = stripe.Subscription.create(
-            customer=customer_id,
-            items=[{"price": item_id}],
-            trial_end=end_date,
-            )
-            Customer.objects.create(
-                user = myuser,
-                stripeid = customer_id,
-                stripe_subscription_id = subscription.id,
-                membership = True,
-                selected_membership = membership_user,
-                track_id = f"{the_user}{track}"
-            )
-            messages.success(request, 'Succesfully Created')
-    else:
-        return redirect('error_page')
-    return render(request, 'trial_month.html')
 
 
 
@@ -68,8 +31,6 @@ def CreateTrial(request):
 
 def PrivacyPolicy(request):
     return render(request, 'privacy_policy.html')
-
-
 
 
 
@@ -108,70 +69,17 @@ class UpdateStatus(CompanyAndLogin,generic.UpdateView):
 
 
 
-# @login_required 
-# @check_sub
-class CreateJobView(CompanyAndLogin, generic.View):
-    login_url = 'log_in'
-
-    def get(self, request):
-        user = User.objects.get(id=request.user.id)
-        try:
-            if request.user.customer.membership:
-                c = Customer.objects.filter(user= request.user)
-                stripe_customer = Customer.objects.get(user=request.user)
-                stripe.api_key = settings.STRIPE_SECRET_KEY
-                subscription = stripe.Subscription.retrieve(stripe_customer.stripe_subscription_id)
-                d = datetime.datetime.fromtimestamp(subscription.current_period_end)
-                start_date = timezone.make_aware(timezone.datetime.fromtimestamp(subscription.current_period_start))
-                end_date = timezone.make_aware(timezone.datetime.fromtimestamp(subscription.current_period_end))
-                to_count = user.work.filter(creation_date__gte=start_date, creation_date__lte=end_date)
-                number_of_posts = to_count.count()
-                product = stripe.Product.retrieve(subscription.plan.product)
-
-                selected_membership = request.user.customer.selected_membership
-
-                if selected_membership == 'Small business' and number_of_posts >= 10:
-                    return render(request, 'upgrade_message.html')
-                elif selected_membership == 'Mid-market enterprises' and number_of_posts >= 20:
-                    return render(request, 'upgrade_message.html')
-                elif selected_membership == 'Large enterprise' and number_of_posts >= 40:
-                    return render(request, 'upgrade_message.html')
-                elif subscription.status == 'trialing' and number_of_posts >= 5:
-                    return render(request, 'upgrade_message.html')
-                else:
-                    form = JobForm()
-                    info={
-                        'form': form
-                    }
-                    return render(request, 'main/crud/create_job.html',info)
-
-        except Customer.DoesNotExist:
-            if user.work.count() >= 1:
-                return render(request, 'upgrade_message.html')
-            else:
-                form = JobForm()
-                info={
-                    'form': form
-                }
-                return render(request, 'main/crud/create_job.html', info)
-
-    def post(self, request):
-        form = JobForm(request.POST)
-        if form.is_valid():
-            job = form.save(commit=False)
-            job.publisher = request.user
-            job.is_published = True
-            job.save()
-            return redirect('alljobs')
-        else:
-            messages.warning(request, form.errors)
-            form = JobForm()
-            info={
-                'form': form
-            }
-            return render(request, 'main/crud/create_job.html', info)
-
+class CreateJobView(CompanyAndLogin, generic.CreateView):
+    form_class = JobForm
+    template_name = 'main/crud/create_job.html'
     
+    def form_valid(self, form):
+        
+        job = form.save(commit=False)
+        job.publisher = self.request.user
+        job.is_published = True
+        job.save()
+        return redirect('alljobs')
 
 
 
@@ -217,25 +125,15 @@ def Search_for(request):
 
 
 
-def Test(request):
-    mail_subject = 'hello'
-    html_message= 'hello testing'
-    from_email='support@travaii.com'
-    message = EmailMessage(mail_subject, html_message,from_email, to=['kouidersif04@gmail.com'])
-    message.content_subtype = 'html' # this is required because there is no plain text email version
-    message.send()
-    return HttpResponse('dibe')
-    #test
-    #return render(request, 'test.html')
-    # user_ip_address = request.META.get('HTTP_X_FORWARDED_FOR')
-    # if user_ip_address:
-    #     ip = user_ip_address.split(',')[0]
-    # else:
-    #     ip = request.META.get('REMOTE_ADDR')
-    # with geoip2.database.Reader('GeoLite2-City.mmdb') as reader:
-    #     response = reader.city(ip)
-    # return HttpResponse(response)
-    
+# def Test(request):
+#     mail_subject = 'hello'
+#     html_message= 'hello testing'
+#     from_email='support@travaii.com'
+#     message = EmailMessage(mail_subject, html_message,from_email, to=['kouidersif04@gmail.com'])
+#     message.content_subtype = 'html' # this is required because there is no plain text email version
+#     message.send()
+#     return HttpResponse('dibe')
+#     #test
 
 
 def ConfirmEmailPage(request):
@@ -263,7 +161,6 @@ class Contact(generic.FormView):
 
 
 
-@check_sub
 def DisplayJobs(request):
     jobs= Jobs.objects.filter(is_published=True).order_by('-creation_date')
     f = SnippetFilter(request.GET, queryset=Jobs.objects.filter(is_published=True))

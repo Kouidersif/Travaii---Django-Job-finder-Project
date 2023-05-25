@@ -3,7 +3,16 @@ from main.models import *
 import datetime
 from datetime import date
 now = datetime
+from django.db.models.signals import pre_save
+from django.dispatch import receiver
 from django.core.validators import FileExtensionValidator
+from django.contrib.auth import get_user_model
+
+
+
+User = get_user_model()
+
+
 
 # Create your models here.
 
@@ -56,7 +65,7 @@ class ApplicantProfile(models.Model):
     applicant_cv= models.FileField(blank=True, upload_to='resume/applicant/%y/%m/%d',
     validators=[FileExtensionValidator( ['pdf', 'jpg', 'jpeg', 'png', 'docx'] ) ]
     )
-    birthday= models.DateField()
+    birthday= models.DateField(null=True)
     about= models.TextField(null=True, blank=True)
     is_public= models.CharField(max_length=20, choices=privacy, default='Anyone')
     facebook= models.URLField(blank=True, null=True)
@@ -93,3 +102,14 @@ class NewsLetter(models.Model):
     job_category = models.CharField(max_length=300, null=True, blank = True)
     def __str__(self):
         return str(self.job_category) or (self.email_field) or ''
+    
+
+
+@receiver(signal=post_save, sender=User)
+def create_applicant_profile(instance, created,  **kwargs):
+
+    if created and instance.is_applicant == True:
+        
+        user = User.objects.get(id=instance.id)
+        ApplicantProfile.objects.create(owner = user)
+

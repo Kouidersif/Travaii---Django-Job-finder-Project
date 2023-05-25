@@ -4,17 +4,17 @@ from django.forms import ModelForm
 from django.contrib.auth.forms import UserCreationForm, UserChangeForm
 from main.models import User
 from .models import CompanyProfile,Photos_c
-from subscriptions.models import Customer
+# from subscriptions.models import Customer
 #Add to a form containing a FileField and change the field names accordingly.
 from django.template.defaultfilters import filesizeformat
 from django.conf import settings
 import os
 
 
-class Cancel_SubscForm(forms.ModelForm):
-    class Meta:
-        model= Customer
-        fields = []
+# class Cancel_SubscForm(forms.ModelForm):
+#     class Meta:
+#         model= Customer
+#         fields = []
 
 
 

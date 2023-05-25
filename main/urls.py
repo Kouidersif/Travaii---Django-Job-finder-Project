@@ -7,8 +7,6 @@ from .views import *
 
 urlpatterns= [
     path('', HomePage.as_view(), name='home'),
-    #path('webhook/', stripe_webhook),  # new
-    #privacy and Policy
     path('privacy-policy/', PrivacyPolicy, name='privacyandpolicy'),
 
 
@@ -42,7 +40,5 @@ urlpatterns= [
     path('applyList/', ApplyList, name='apply_list'),
     path('contact/', Contact.as_view(), name='contact'),
     path('search/', Search_for, name='search_for'),
-    path('test/', Test, name='test_app'),
-    path('trial/', CreateTrial, name='create_trial'),
 
 ]

@@ -42,6 +42,7 @@ class CreateBlog(LoginRequiredMixin, generic.CreateView):
 def BlogDetails(request, pk, slug):
     blogs= get_object_or_404(Article, id=pk, slug=slug)
     
+    # add related blogs except blog with same id
     related_blogs = Article.objects.filter(category = blogs.category).exclude(pk=pk)
     if request.method == 'POST':
         form = BlogNewsLetterForm(request.POST)
