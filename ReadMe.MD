@@ -5,7 +5,9 @@ Travaii - Job Finder Project
 Travaii is a web application built using Django and Bootstrap that aims to simplify the job search process for users. It provides a platform where job seekers can explore and discover various job opportunities while allowing employers to post their job listings.
 
 Features
+
 User Authentication: Users can create accounts, log in, and manage their profiles.
+
 Job Search: Job seekers can search for job listings based on various criteria such as location, industry, and keywords.
 Job Listing: Employers can create and manage job listings, including job title, description, requirements, and contact information.
 User Profiles: Users can create and update their profiles, including personal information, work experience, and education.
