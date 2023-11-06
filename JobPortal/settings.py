@@ -3,6 +3,9 @@
 from pathlib import Path
 from decouple import config
 import os
+from dotenv import load_dotenv
+
+load_dotenv()
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -12,7 +15,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/4.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = config('NOT_SECRET')
+SECRET_KEY = os.getenv('NOT_SECRET')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -153,10 +156,10 @@ AUTH_USER_MODEL= 'main.User'
 #APPEND_SLASH=False
 
 # STRIPE_PUBLISHABLE_KEY = 'pk_test_51Lz03SKORmC2RvgXRhtthq6yKQVLC1xLCCSq7PWqJ8HqFClSjSOtvQBDN7ImsLdRilbvCTbe1XBQE7ppeKP3D5tL007zG2iI6B'
-STRIPE_PUBLISHABLE_KEY = 'pk_live_51Lz03SKORmC2RvgXf0IAm5tseSPsDozduvh8jFgRwCdn4fxeMKZAAPL6JC7btx654sLBbJBhvvhKo6o7Xc0NYWHB00Xm3uEJE0'
-STRIPE_SECRET_KEY = config('STPCEY')
+# STRIPE_PUBLISHABLE_KEY = 'pk_live_51Lz03SKORmC2RvgXf0IAm5tseSPsDozduvh8jFgRwCdn4fxeMKZAAPL6JC7btx654sLBbJBhvvhKo6o7Xc0NYWHB00Xm3uEJE0'
+# STRIPE_SECRET_KEY = config('STPCEY')
 # STRIPE_SECRET_KEY = 'sk_test_51Lz03SKORmC2RvgXBDXoH9ulCpO8Bg4S8PniDbXU5PleTK4bRXyuBGVWXKaQ8ICYCT9XEIWSLi80lwIo8mQ5tut600SicR7GGr'
-STRIPE_ENDPOINT_SECRET = config('wbhk')
+# STRIPE_ENDPOINT_SECRET = config('wbhk')
 # STRIPE_ENDPOINT_SECRET = "whsec_23636b68c54e8c74bce145860e8196efc1ec047b5714a3d665180809b9f9ae53"
 
 
@@ -235,7 +238,7 @@ CKEDITOR_CONFIGS = {
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 #EMAIL_HOST = 'server163.web-hosting.com'
 EMAIL_HOST = 'mail.privateemail.com'
-EMAIL_HOST_PASSWORD =config('EMLPDW')
+# EMAIL_HOST_PASSWORD =config('EMLPDW')
 EMAIL_HOST_USER = 'support@travaii.com'
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True

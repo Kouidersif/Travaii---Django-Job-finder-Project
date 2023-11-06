@@ -7,9 +7,12 @@ __pycache__/
 *$py.class
 .pyc
 # static
+/static
+static/
 # Dependency directories
 env/
 venv/
 db.sqlite3
+.env
 
 # static

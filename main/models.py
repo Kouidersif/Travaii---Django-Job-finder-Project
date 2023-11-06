@@ -14,12 +14,12 @@ now = timezone.now()
 
 salary_range=[
 
-        ('par an', 'par an'),
-        ('par mois', 'par mois'),
-        ('par semaine', 'par semaine'),
-        ('par jour', 'par jour'),
-        ('par heure', 'par heure'),
-        ('par projet', 'par projet'),
+        ('Per Year', 'Per Year'),
+        ('Per Month', 'Per Month'),
+        ('Per week', 'Per week'),
+        ('Per Day', 'Per Day'),
+        ('Per Hour', 'Per Hour'),
+        ('Per Project', 'Per Project'),
     ]
 interview=[
         ('Online', 'Online'),
@@ -41,7 +41,7 @@ class User(AbstractUser):
     full_name= models.CharField(max_length=25)
     is_company= models.BooleanField('is_company', default=False)
     is_applicant= models.BooleanField('is_applicant', default=False)
-    phone_number= models.CharField(max_length=15,null=True, blank=True)
+    phone_number= models.CharField(max_length=15,null=True, blank=True, unique=True)
     gender= models.CharField(max_length=10,choices=Gender)
     email= models.EmailField(unique=True)
     is_email_confirmed= models.BooleanField(default=False)
@@ -51,8 +51,6 @@ class User(AbstractUser):
 
 
 
-class Billing (models.Model):
-    user = models.OneToOneField(to=User, on_delete=models.CASCADE)
 
 
 
@@ -231,7 +229,6 @@ def getNotified(sender, instance, **kwargs):
             message.send()
     except sender.DoesNotExist:
         # This means the instance is being created for the first time,
-        # so there's no need to compare the old and new values.
         print('no')
         
 

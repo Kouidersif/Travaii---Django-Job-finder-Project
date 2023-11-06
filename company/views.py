@@ -27,14 +27,6 @@ from django.core.paginator import Paginator
 
 
 def LandingPage(request):
-    try:
-        from_where = 'fbclid'
-        if from_where in request.GET:
-            count, created = number_user_facebook.objects.get_or_create()
-            count.users_l += 1
-            count.save()
-    except:
-        pass
     form = ContactForm()
     if request.method == 'POST':
         form = ContactForm(request.POST)
@@ -87,8 +79,6 @@ class Company_Setup(CompanyAndLogin, generic.FormView):
         company.owner = self.request.user   
         company.is_profile_completed = True       
         company.save()
-        user_id = self.request.user.id
-        #Celery Create Subscription and send_email to user
         return redirect('email_confirm')
 
 
