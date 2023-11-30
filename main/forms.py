@@ -4,7 +4,7 @@ from django import forms
 from django.contrib.auth.forms import PasswordChangeForm
 from django.contrib.auth.forms import AuthenticationForm
 from .models import User
-from captcha.fields import ReCaptchaField
+from django_recaptcha.fields import ReCaptchaField
 
 
 

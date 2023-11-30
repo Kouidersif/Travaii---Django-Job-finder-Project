@@ -22,7 +22,7 @@ urlpatterns = [
     path('akhtina/yarham/malik/', admin.site.urls),
     path('', include('main.urls')), 
     path('company/', include('company.urls')),
-    path('tinymce/', include('tinymce.urls')),
+    # path('tinymce/', include('tinymce.urls')),
     path('applicant/', include('applicants.urls')),
     path('blog/',include('blog.urls')),
     path('ckeditor/', include('ckeditor_uploader.urls')),

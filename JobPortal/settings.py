@@ -1,7 +1,6 @@
 
 
 from pathlib import Path
-from decouple import config
 import os
 from dotenv import load_dotenv
 
@@ -44,8 +43,7 @@ INSTALLED_APPS = [
     'ckeditor',
     'mathfilters',
     'blog',
-    'geoip2',
-    'captcha',
+    'django_recaptcha',
     'django_celery_results',
 ]
 
