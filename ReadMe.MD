@@ -1,5 +1,7 @@
 Travaii - Job Finder Project
 
+Sorry, for the protectection of my work i can not share the Static files, please contact me if you would like more details on how this work.
+
 ![image](https://github.com/Kouidersif/Travaii---Django-Job-finder-Project/assets/109435929/5f3cb26d-3653-43aa-abbf-8f2b644bb895)
 
 Travaii is a web application built using Django and Bootstrap that aims to simplify the job search process for users. It provides a platform where job seekers can explore and discover various job opportunities while allowing employers to post their job listings.
