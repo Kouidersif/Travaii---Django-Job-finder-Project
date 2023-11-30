@@ -2,8 +2,6 @@ from django.shortcuts import render, get_object_or_404, redirect
 from django.urls import reverse
 from django.http import HttpResponse
 from .forms import *
-from django.views import generic
-from main.models import *
 from django.contrib.auth import authenticate, login
 from django.contrib import messages
 from django.views import generic
@@ -11,9 +9,7 @@ from main.forms import *
 from .filtering import *
 from django.contrib.auth.decorators import login_required
 from django.core.paginator import Paginator
-from django.conf import settings
 from .decorators import notApplicant
-from .email_token import TokenGenerator
 from .email_token import account_activation_token
 from company.decorators import notLogged
 from django.template.loader import render_to_string
@@ -21,7 +17,6 @@ from django.contrib.sites.shortcuts import get_current_site
 from django.utils.encoding import force_bytes, force_str
 from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode  
 from django.contrib.auth import get_user_model
-from django.template import Context
 from .mixins import MustbeUnauthenticated, ApplicantsAccess
 from .tasks import inform_company
 
@@ -75,7 +70,7 @@ def Confirm_message(request, user, to_email):
 
 
 
-class SignUpApplicant(MustbeUnauthenticated, generic. FormView):
+class SignUpApplicant(MustbeUnauthenticated, generic.FormView):
     form_class = ApplicantSignUpForm
     template_name = 'users/registration/signup.html'
     def form_valid(self, form):
@@ -164,19 +159,6 @@ def candidates(request):
 
 
 
-
-
-
-def Applicant_cv(request):
-    my_cv= ApplicantProfile.objects.filter(owner=request.user)
-    return render(request, 'users/crud_users/cv_info.html', {'my_cv':my_cv})
-
-
-
-
-
-
-
 class ApplicantSetup(ApplicantsAccess ,generic. FormView):
     form_class = ApplicantProfileForm
     template_name = 'users/applicant_set_up.html'
@@ -187,15 +169,6 @@ class ApplicantSetup(ApplicantsAccess ,generic. FormView):
         applicant.submited = True
         applicant.save()
         return redirect('email_confirm')
-
-
-
-
-
-
-
-
-
 
 
 class ShowProfile(ApplicantsAccess, generic.UpdateView):
@@ -406,8 +379,8 @@ class Apply_for(ApplicantsAccess ,generic. View):
             application.submited=True
             application.save()
             #notify company :
-            if people_applied.count() <= 1:
-                inform_company.delay(job.id, user.id)
+            # if people_applied.count() <= 1:
+            #     inform_company.delay(job.id, user.id)
         return render(request, 'users/applied.html', {'job':job})
 
 

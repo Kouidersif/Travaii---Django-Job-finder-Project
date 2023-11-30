@@ -236,13 +236,14 @@ CKEDITOR_CONFIGS = {
 
 
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-#EMAIL_HOST = 'server163.web-hosting.com'
-EMAIL_HOST = 'mail.privateemail.com'
-# EMAIL_HOST_PASSWORD =config('EMLPDW')
-EMAIL_HOST_USER = 'support@travaii.com'
-EMAIL_PORT = 587
-EMAIL_USE_TLS = True
-DEFAULT_FROM_EMAIL = 'support@travaii.com'
+if DEBUG == False:
+    #EMAIL_HOST = 'server163.web-hosting.com'
+    EMAIL_HOST = 'mail.privateemail.com'
+    # EMAIL_HOST_PASSWORD =config('EMLPDW')
+    EMAIL_HOST_USER = 'support@travaii.com'
+    EMAIL_PORT = 587
+    EMAIL_USE_TLS = True
+    DEFAULT_FROM_EMAIL = 'support@travaii.com'
 PASSWORD_RESET_TIMEOUT= 14400
 
 
@@ -264,8 +265,8 @@ LOGIN_REDIRECT_URL = 'home'
 LOGIN_URL = 'log_in'
 
 
-RECAPTCHA_PUBLIC_KEY = '6LfnTFokAAAAAPdlwtGq20ksNoaA2rIlxCjIruMI'
-RECAPTCHA_PRIVATE_KEY = '6LfnTFokAAAAAICX3t4kX7Cj1QtsoPCj_PIaeocr'
+RECAPTCHA_PUBLIC_KEY = os.getenv("CAPATCHA_PUBLIC")
+RECAPTCHA_PRIVATE_KEY = os.getenv("CAPATCHA_PRIVATE")
 
 
 

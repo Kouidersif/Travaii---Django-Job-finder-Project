@@ -19,7 +19,7 @@ class SnippetFilter(django_filters.FilterSet):
     
     class Meta:
         model = Jobs
-        fields= {'job_category':['exact'],'work_from':['exact'],'job_type':['exact'],'job_shift':['exact'],'pay_per':['exact'],'interview_type':['exact'], 'creation_date': ['range']
+        fields= {'job_category':['exact'],'work_from':['exact'],'job_type':['exact'],'job_shift':['exact'],'pay_per':['exact'], 'creation_date': ['range']
         }  
 
     def filter_by_order(self, queryset, name, value ):

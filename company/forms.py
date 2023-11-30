@@ -24,7 +24,7 @@ import os
 class CompanySignUpForm(UserCreationForm):
     class Meta:
         model = User
-        fields= ['full_name', 'username', 'email', 'phone_number', 'password1', 'password2', 'source']
+        fields= ['full_name', 'username', 'email', 'phone_number', 'password1', 'password2']
     def __init__(self, *args, **kwargs):
         super(CompanySignUpForm, self).__init__(*args, **kwargs)
         self.fields['full_name'].widget.attrs['class'] = 'form-control' 

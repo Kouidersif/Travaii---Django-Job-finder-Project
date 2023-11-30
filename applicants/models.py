@@ -3,7 +3,7 @@ from main.models import *
 import datetime
 from datetime import date
 now = datetime
-from django.db.models.signals import pre_save
+from django.db.models.signals import pre_save, post_save
 from django.dispatch import receiver
 from django.core.validators import FileExtensionValidator
 from django.contrib.auth import get_user_model

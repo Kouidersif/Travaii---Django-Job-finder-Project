@@ -6,9 +6,6 @@ from django.contrib.auth.forms import AuthenticationForm
 from .models import User
 from django_recaptcha.fields import ReCaptchaField
 
-
-
-
 class PwdChangingForm(PasswordChangeForm):
     class Meta:
         model = User
@@ -41,17 +38,13 @@ class UserLoginForm(AuthenticationForm):
 class JobForm(ModelForm):
     class Meta:
         model = Jobs
-        fields= ['position', 'job_category','job_type', 'num_people', 'job_shift', 'work_from', 'description','salary_from','salary_to','salary_currency','interview_type', 'is_published']
-        widgets= {
-        'position': forms.TextInput(attrs={'placeholder':'Customer support representative'}),
-        
-        'description': forms.Textarea(attrs={'placeholder':'Requirements or experience needed'}),
-        
-        
-        } 
+        fields= ['position', 'job_category','job_type', 'num_people', 'job_shift', 'work_from', 'description',
+                 'salary_from','salary_to','salary_currency', 'is_published']
+
     def __init__(self, *args, **kwargs):
         super(JobForm, self).__init__(*args, **kwargs)
         self.fields['position'].widget.attrs['class']= 'form-control'
+        self.fields['position'].widget.attrs['placeholder']= 'Customer support representative'
         self.fields['work_from'].widget.attrs['class']= 'form-select'
         self.fields['num_people'].widget.attrs['class']= 'form-select'
         self.fields['num_people'].widget.attrs['placeholder']= 'How many people needed for this job?'
@@ -66,9 +59,9 @@ class JobForm(ModelForm):
         self.fields['salary_to'].widget.attrs['class']= 'form-control'
         self.fields['salary_to'].widget.attrs['placeholder']= 'to'
         self.fields['salary_currency'].widget.attrs['class']= 'form-select'
-        #self.fields['pay_per'].widget.attrs['class']= 'form-select'
-        self.fields['interview_type'].widget.attrs['class']= 'form-select'
+        self.fields['pay_per'].widget.attrs['class']= 'form-select'
         self.fields['description'].widget.attrs['class']= 'form-control'
+        self.fields['description'].widget.attrs['placeholder'] = 'Requirements or experience needed'
         self.fields['is_published'].widget.attrs['class']='form-check-input'
 
 
@@ -95,12 +88,14 @@ class ContactForm(ModelForm):
 class EditApplyForm(ModelForm):
     class Meta:
         model = Applying
-        fields= ['request', 'response_message']
-        widgets= {
-        'request': forms.Select(attrs={'class':'form-select'}),
-        'response_message': forms.Textarea(attrs={'class':'form-control', 'placeholder':"Do you have any message or information to share with the applicant?"}),
-        }
+        fields = ['request', 'response_message']
 
+    def __init__(self, *args, **kwargs):
+        super(EditApplyForm, self).__init__(*args, **kwargs)
+        self.fields["request"].widget.attrs["class"] = "form-select"
+        self.fields["response_message"].widget.attrs["class"] = "form-control"
+        self.fields["response_message"].widget.attrs["placeholder"] = "Do you have any message or information to " \
+                                                                      "share with the applicant?"
 
 class DateInput(forms.DateInput):
     input_type= 'date'
